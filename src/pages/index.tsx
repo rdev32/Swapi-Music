@@ -1,8 +1,18 @@
-import type { NextPage } from 'next';
-import NavBar from '../components/NavBar/NavBar';
+import { FC } from 'react';
+import Link from 'next/link';
+interface IProps {}
 
-const Home: NextPage = () => {
-  return <NavBar></NavBar>;
+const Index: FC<IProps> = (props) => {
+  return (
+    <main>
+      <h1>Landing</h1>
+      <hr />
+      <h2>Welcome to Swagger</h2>
+      <Link href="/auth/Login">
+        <a>Login</a>
+      </Link>
+    </main>
+  );
 };
 
-export default Home;
+export default Index;
