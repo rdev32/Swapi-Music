@@ -1,5 +1,5 @@
 interface IColors {
-  [string: string]: string;
+  blue: string;
 }
 
 export const colors: IColors = {

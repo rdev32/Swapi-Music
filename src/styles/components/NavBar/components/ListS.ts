@@ -11,13 +11,16 @@ const Options = ['Home', 'Search', 'Library', 'Liked Songs'];
 
 export const ItemList = styled.a<IItemList>`
   display: flex;
+  align-items: center;
   width: 150px;
+  height: 20px;
+
   ${({ active }) =>
     active &&
     css`
       color: ${colors.blue};
       border-right: 2px solid ${colors.blue};
-      line-height: 18.39px;
+      /* line-height: 10.39px; */
     `}
 `;
 export const ItemTitle = styled.h2`
@@ -27,8 +30,13 @@ export const ItemTitle = styled.h2`
 export const ItemLink = styled(Link)`
   cursor: pointer;
 `;
-export const ItemUl = styled.ul`
+export const ItemDiv = styled.div`
   padding: 0;
+  height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 export const ItemPhrase = styled.p`
   margin: 10px;

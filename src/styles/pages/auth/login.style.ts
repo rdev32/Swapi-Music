@@ -2,10 +2,17 @@ import styled from '@emotion/styled';
 import { colors } from '../../colors';
 import { fontWeight } from '../../fonts';
 
+export const LoginChangeMethod = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  color: ${colors.blue};
+`;
 export const Login = styled.div`
   display: flex;
   justify-content: space-between;
   height: 100vh;
+  width: 100%;
 `;
 
 export const LoginBgBox = styled.div`
@@ -74,4 +81,7 @@ export const LoginSubmit = styled.button`
 `;
 export const LoginTitle = styled.h1`
   font-size: 24px;
+  span {
+    color: ${colors.blue};
+  }
 `;

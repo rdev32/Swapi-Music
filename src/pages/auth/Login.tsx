@@ -1,28 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
-import UseAuth from '../../hooks/useActiveOptContext/useAuth';
+import UseAuth from '../../hooks/useAuth';
 import * as S from '../../styles/pages/auth/login.style';
 import WithLogged from './WithLogged';
 import { useRouter } from 'next/router';
-
+import UserInit from '../../assets/user.json';
+import FormLogin from '../../components/FormLogin/FormLogin';
 interface IProps {}
 
-interface IForm {
+export interface IData {
   username: string;
   password: string;
 }
 
-interface IData {}
+interface IForm {
+  user: IData;
+  type: string;
+}
 
 const Login: FC<IProps> = (props) => {
-  const [dataUser, setDataUser] = useState<IForm>({
-    username: '',
-    password: '',
-  } as IForm);
+  const [dataUser, setDataUser] = useState<IData>(UserInit as IData);
+  const [mount, setMount] = useState<boolean>(false);
   const [form, setForm] = useState<IForm>({} as IForm);
   const [message, setMessage] = useState<string>('');
   const router = useRouter();
+
   const handleUserChange = (event: {
     target: { name: string; value: string };
   }) => {
@@ -32,68 +35,49 @@ const Login: FC<IProps> = (props) => {
     });
   };
 
+  const handleMount = () => {
+    setMount(!mount);
+    setForm({ type: '', user: UserInit });
+    setDataUser(UserInit);
+    setMessage('');
+  };
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    if (dataUser.username && dataUser.password) {
-      setForm(dataUser);
+    if (mount && dataUser.username && dataUser.password) {
+      setForm({ type: 'sign', user: dataUser });
+      setMessage('');
+    } else if (!mount && dataUser.username && dataUser.password) {
+      setForm({ type: 'login', user: dataUser });
+    } else {
+      setMessage('Fill in the fields');
     }
   };
-  const userAuth = UseAuth({ user: form, type: 'login' });
+
+  const userAuth = UseAuth(form);
 
   useEffect(() => {
-    // const { authentication, token, message } = userAuth;
     if (Object.keys(userAuth).length !== 0) {
+      userAuth && localStorage.setItem('@!user', JSON.stringify(userAuth));
+      userAuth.message && setMessage(userAuth.message);
       userAuth.authentication &&
         setTimeout(() => {
           router.replace('/Home');
         }, 500);
-      userAuth && localStorage.setItem('@!user', JSON.stringify(userAuth));
-      message && setMessage(message);
     }
   }, [userAuth]);
-
-  console.log(userAuth);
   return (
     <S.Login>
-      <S.LoginFormBox>
-        <S.LoginBox>
-          <S.LoginTitle>Welcome to Swagger Music!</S.LoginTitle>
-          <p>
-            Already have account?
-            <span>
-              <button type="button">Sign In</button>
-            </span>
-          </p>
-          <S.LoginForm onSubmit={handleSubmit}>
-            <div
-              style={{
-                height: '100px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
-              <S.LoginInput
-                onChange={handleUserChange}
-                name="username"
-                type="text"
-                placeholder="Username"
-                value={dataUser.username}
-              />
-              <S.LoginInput
-                onChange={handleUserChange}
-                value={dataUser.password}
-                name="password"
-                type="text"
-                placeholder="Password"
-              />
-            </div>
-            {message && <p>{message}</p>}
-            <S.LoginSubmit type="submit">Sign Up</S.LoginSubmit>
-          </S.LoginForm>
-          <p>Forgot Password?</p>
-        </S.LoginBox>
-      </S.LoginFormBox>
+      <FormLogin
+        props={{
+          mount,
+          handleMount,
+          handleSubmit,
+          handleUserChange,
+          dataUser,
+          message,
+        }}
+      />
       <S.LoginBgBox>
         <img src="https://i.imgur.com/GbiIsHM.png" alt="bg" height="100%" />
       </S.LoginBgBox>

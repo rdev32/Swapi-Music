@@ -6,8 +6,8 @@ const WithLogged = (WrappedComponent) => {
   return (props) => {
     const Router = useRouter();
     if (typeof window !== 'undefined') {
-      const { token } = JSON.parse(localStorage.getItem('@!user'))
-      if (token) {
+      const user = JSON.parse(localStorage.getItem('@!user'))
+      if (user?.token) {
         Router.replace('/Home');
         return null;
       }

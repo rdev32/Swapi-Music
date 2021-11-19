@@ -1,15 +1,13 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext } from 'react';
 import useActiveOptContext from '../../hooks/useActiveOptContext/useActiveOptContext';
 import * as S from '../../styles/components/NavBar/NavBarStyle';
 import List from './components/List';
 import Title from './components/Title/Title';
 
-interface IProps {}
-
 const Menu = ['Home', 'Search'];
 const Library = ['Library', 'Liked Songs'];
 
-const NavBar: FC<IProps> = (props) => {
+const NavBar: FC = () => {
   const { active, setActive } = useContext(useActiveOptContext);
   return (
     <S.NavBar>
