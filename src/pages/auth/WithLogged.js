@@ -6,7 +6,7 @@ const WithLogged = (WrappedComponent) => {
   return (props) => {
     const Router = useRouter();
     if (typeof window !== 'undefined') {
-      const user = JSON.parse(localStorage.getItem('@!user'))
+      const user = JSON.parse(localStorage.getItem('@!accessTokenSpotify'))
       if (user?.token) {
         Router.replace('/Home');
         return null;

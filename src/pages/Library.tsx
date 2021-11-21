@@ -11,4 +11,4 @@ const Library: FC<IProps> = (props) => {
   );
 };
 
-export default withAuth(Library);
+export default Library;

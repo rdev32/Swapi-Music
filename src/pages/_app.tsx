@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   const [active, setActive] = useState(
     router.pathname.replace(/\s+/g, '').substring(1, 999999)
   );
-  console.log(router.pathname.substring(1, 999999));
+
   return (
     <useActiveOptContext.Provider value={{ active, setActive }}>
       <AppHead title="Swagger Music" />

@@ -11,4 +11,4 @@ const LikedSongs: FC<IProps> = (props) => {
   );
 };
 
-export default withAuth(LikedSongs);
+export default LikedSongs;

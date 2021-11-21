@@ -1,6 +1,12 @@
+import styled from '@emotion/styled';
 import { FC } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
+import ButtonUser from '../ButtonUser/ButtonUser';
 
+const AppMain = styled.main`
+  display: flex;
+  width: 100%;
+`;
 interface IProps {
   router: {
     pathname: string;
@@ -8,13 +14,16 @@ interface IProps {
 }
 
 const Layout: FC<IProps> = ({ children, router }) => {
-  const validIncludes = ['/', '/auth/Login'];
+  const invalidPages = ['/', '/auth/Login'];
 
   return (
-    <main style={{ display: 'flex', width: '100%' }}>
-      {!validIncludes.includes(router?.pathname) && <NavBar />}
-      {children}
-    </main>
+    <AppMain>
+      {!invalidPages.includes(router?.pathname) && <NavBar />}
+      <main>
+        {children}
+        {!invalidPages.includes(router?.pathname) && <ButtonUser />}
+      </main>
+    </AppMain>
   );
 };
 

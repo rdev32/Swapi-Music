@@ -26,6 +26,12 @@ const Login: FC<IProps> = (props) => {
   const [message, setMessage] = useState<string>('');
   const router = useRouter();
 
+  const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+  const baseUrl = 'https://accounts.spotify.com/authorize';
+  const redirect = 'http://localhost:3000/Home';
+  const Scopes = ['user-read-currently-playing', 'user-read-playback-state'];
+  const ScopesUrlParams = Scopes.join('%20');
+
   const handleUserChange = (event: {
     target: { name: string; value: string };
   }) => {
@@ -62,7 +68,7 @@ const Login: FC<IProps> = (props) => {
       userAuth.message && setMessage(userAuth.message);
       userAuth.authentication &&
         setTimeout(() => {
-          router.replace('/Home');
+          window.location = `${baseUrl}?client_id=${clientId}&redirect_uri=${redirect}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`;
         }, 500);
     }
   }, [userAuth]);
@@ -85,4 +91,4 @@ const Login: FC<IProps> = (props) => {
   );
 };
 
-export default WithLogged(Login);
+export default Login;

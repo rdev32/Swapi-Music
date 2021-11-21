@@ -16,13 +16,14 @@ export const ItemList = styled.a<IItemList>`
   height: 20px;
 
   ${({ active }) =>
-    active &&
-    css`
-      color: ${colors.blue};
-      border-right: 2px solid ${colors.blue};
-      /* line-height: 10.39px; */
-    `}
+    active
+      ? css`
+          color: ${colors.blue};
+          border-right: 2px solid ${colors.blue};
+        `
+      : false}
 `;
+
 export const ItemTitle = styled.h2`
   font-size: 14px;
   color: rgba(0, 0, 0, 0.5);

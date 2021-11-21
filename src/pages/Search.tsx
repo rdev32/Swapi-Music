@@ -11,4 +11,4 @@ const Search: FC<IProps> = (props) => {
   );
 };
 
-export default withAuth(Search);
+export default Search;
