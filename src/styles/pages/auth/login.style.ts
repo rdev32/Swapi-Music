@@ -29,7 +29,7 @@ export const LoginFormBox = styled.div`
 `;
 
 export const LoginForm = styled.form`
-  height: 200px;
+  /* height: 200px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

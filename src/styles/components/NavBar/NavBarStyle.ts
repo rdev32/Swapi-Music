@@ -9,4 +9,5 @@ export const NavBar = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: fixed;
 `;

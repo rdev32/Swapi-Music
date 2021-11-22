@@ -1,8 +1,9 @@
-import axios from 'axios';
+import styled from '@emotion/styled';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FC, useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
-import styled from '@emotion/styled';
+import GetUsersProfile from '../../hooks/GetUsersProfile/GetUsersProfile';
+import { IDataUser } from '../../hooks/GetUsersProfile/types';
 import useActiveOptContext from '../../hooks/useActiveOptContext/useActiveOptContext';
 
 const UserImg = styled(Image)`
@@ -14,31 +15,11 @@ const UserButton = styled.button`
   cursor: pointer;
   height: 80px;
   width: 80px;
+  position: fixed;
+  right: 0;
 `;
-interface IDataImgUser {
-  url: string;
-  height: number;
-  width: number;
-}
 
-interface IDataUser {
-  display_name: string;
-  external_urls: {
-    spotify: string;
-  };
-  followers: {
-    href: string;
-    total: number;
-  };
-  href: string;
-  id: string;
-  images: IDataImgUser[];
-  type: string;
-  uri: string;
-}
-interface IProps {}
-
-const ButtonUser: FC<IProps> = (props) => {
+const ButtonUser: FC = () => {
   const [data, setData] = useState<IDataUser>({} as IDataUser);
   const { setActive } = useContext(useActiveOptContext);
   const router = useRouter();
@@ -52,16 +33,10 @@ const ButtonUser: FC<IProps> = (props) => {
       setActive('/user/[pid]');
   };
 
+  const userData = GetUsersProfile(`https://api.spotify.com/v1/me`);
   useEffect(() => {
-    axios
-      .get(`https://api.spotify.com/v1/me`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      .then((resp) => setData(resp.data))
-      .catch((err) => console.log(err));
-  }, []);
+    Object.keys(userData).length !== 0 && setData(userData);
+  }, [userData]);
   return (
     <UserButton type="button" onClick={handleViewUser}>
       {data?.images?.map((img) => (
