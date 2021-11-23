@@ -15,6 +15,9 @@ const Login: FC = () => {
         <S.LoginTitle>
           Welcome to <span>Swagger Music!</span>
         </S.LoginTitle>
+        <S.LoginQuestion>
+          Already have account in <span>Spotify</span>?
+        </S.LoginQuestion>
         <S.LoginLink
           href={`${baseUrl}?client_id=${clientId}&redirect_uri=${redirect}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`}
         >

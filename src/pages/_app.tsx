@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <useActiveOptContext.Provider value={{ active, setActive }}>
       <AppHead title="Swagger Music" />
-      <Global styles={() => Materialize()} />
+      <Global styles={Materialize} />
       <Layout router={router}>
         <Component {...pageProps} />
       </Layout>

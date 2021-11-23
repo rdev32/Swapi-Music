@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { domain } from '../../assets/spotify';
 import Following from '../../components/Spotify/Following/Following';
+import MainSongs from '../../components/Spotify/MainSongs/MainSongs';
 import UserImage from '../../components/Spotify/UserImage/UserImage';
 import GetUsersProfile from '../../hooks/GetUsersProfile/GetUsersProfile';
 import * as S from '../../styles/pages/user/user.style';
@@ -28,6 +29,7 @@ const User: FC = () => {
         </div>
       </S.UserStyle>
       <Following />
+      <MainSongs />
     </S.UserBody>
   );
 };

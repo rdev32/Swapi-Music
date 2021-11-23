@@ -6,8 +6,9 @@ import * as S from '../../../styles/components/Spotify/Following/Following.style
 interface IProps {}
 
 const Following: FC<IProps> = () => {
-  const { artists } = GetFollowedArtists(`${domain}/following?type=artist`);
-  console.log(artists);
+  const { artists } = GetFollowedArtists(
+    `${domain}/following?type=artist&limit=10`
+  );
 
   return (
     <div>

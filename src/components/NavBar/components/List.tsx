@@ -8,7 +8,6 @@ interface IProps {
 }
 const List: FC<IProps> = ({ Section, Title }) => {
   const { active, setActive } = useContext(useActiveOptContext);
-  console.log(active);
 
   return (
     <S.ItemDiv>

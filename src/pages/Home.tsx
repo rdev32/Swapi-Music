@@ -8,7 +8,6 @@ const Home = () => {
     const paramsUrl = strHashTag.split('&');
     const paramsSplit = paramsUrl.reduce((acc: any, curr) => {
       console.log(curr);
-
       const [key, value] = curr.split('=');
       acc[key] = value;
       return acc;
@@ -21,7 +20,6 @@ const Home = () => {
       const { access_token, token_type, expires_in } = getTokenParams(
         window.location.hash
       );
-      console.log(access_token);
 
       localStorage.setItem('token', access_token);
       localStorage.setItem('tokenType', token_type);

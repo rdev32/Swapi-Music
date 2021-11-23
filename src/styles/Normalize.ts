@@ -1,15 +1,14 @@
 import { css } from '@emotion/react';
 
-export const Materialize = () => {
-  return css`
+export const Materialize = css`
 
   html {
     line-height: 1.15; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
-    font-family: 'Inter', sans-serif;
   }
-
+  
   body {
+    font-family: 'Inter', sans-serif;
     margin: 0;
     transition: 0.3s;
   }
@@ -199,4 +198,3 @@ export const Materialize = () => {
       U+2215, U+FEFF, U+FFFD;
   }
 `;
-};

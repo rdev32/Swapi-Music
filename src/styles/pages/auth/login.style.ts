@@ -85,6 +85,11 @@ export const LoginTitle = styled.h1`
     color: ${colors.blue};
   }
 `;
+export const LoginQuestion = styled.p`
+  span {
+    color: ${colors.green};
+  }
+`;
 export const LoginBody = styled.main`
   display: flex;
   justify-content: space-between;
