@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import withAuth from './auth/WithAuth';
 
 interface IProps {}
 

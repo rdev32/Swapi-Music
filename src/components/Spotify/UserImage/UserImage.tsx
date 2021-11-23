@@ -7,14 +7,14 @@ const UImage = styled(Image)`
   border-radius: ${({ bradius }: { bradius: number | undefined }) =>
     `${bradius}%`};
 `;
-const UserImage: FC<IDataImgUser> = ({ url, displayName, bradius }) => {
+const UserImage: FC<IDataImgUser> = ({ url, displayName, bradius, size }) => {
   return (
     <UImage
       bradius={bradius}
       src={url}
       alt={displayName}
-      width={180}
-      height={180}
+      width={size || 180}
+      height={size || 180}
     />
   );
 };

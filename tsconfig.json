@@ -23,8 +23,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/pages/auth/WithAuth.js",
-    "src/pages/auth/WithLogged.js"
+    "src/pages/login/WithAuth.js",
+    "src/pages/login/WithLogged.js"
   ],
   "exclude": [
     "node_modules"

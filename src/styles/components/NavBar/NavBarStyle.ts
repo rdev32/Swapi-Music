@@ -10,4 +10,5 @@ export const NavBar = styled.nav`
   flex-direction: column;
   align-items: flex-start;
   position: fixed;
+  z-index: 1;
 `;

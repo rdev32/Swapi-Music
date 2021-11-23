@@ -4,6 +4,7 @@ export interface IDataImgUser {
   width?: number;
   displayName?: string;
   bradius?: number;
+  size?: number;
 }
 
 export interface IDataUser {

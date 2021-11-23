@@ -7,3 +7,7 @@ export const UserStyle = styled.div`
   width: 420px;
   justify-content: space-between;
 `;
+
+export const UserBody = styled.main`
+  margin: 65px 0 0 250px;
+`;

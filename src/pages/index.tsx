@@ -8,8 +8,7 @@ const Index: FC<IProps> = (props) => {
       <h1>Landing</h1>
       <hr />
       <h2>Welcome to Swagger</h2>
-      {/* <button onClick={handleLogin}>Login to spotify</button> */}
-      <Link href="/auth/Login">
+      <Link href="/login/login">
         <a>Login</a>
       </Link>
     </main>

@@ -17,7 +17,7 @@ export const Login = styled.div`
 
 export const LoginBgBox = styled.div`
   display: inline-block;
-  @media (max-width: 768px) {
+  @media (max-width: 1140px) {
     display: none;
   }
 `;
@@ -36,7 +36,7 @@ export const LoginForm = styled.form`
   align-items: center;
 `;
 export const LoginBox = styled.div`
-  width: 334px;
+  width: 100%;
   /* height: 29px; */
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@ export const LoginInput = styled.input`
   border-radius: 10px;
   outline: none;
 `;
-export const LoginSubmit = styled.button`
+export const LoginLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,4 +84,9 @@ export const LoginTitle = styled.h1`
   span {
     color: ${colors.blue};
   }
+`;
+export const LoginBody = styled.main`
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
 `;

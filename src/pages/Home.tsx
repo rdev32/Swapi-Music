@@ -1,8 +1,6 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
-import GetPlayList from '../components/Spotify/GetPlayList/GetPlayList';
-import withAuth from './auth/WithAuth';
 
 const Home = () => {
   const getTokenParams = (hash: string) => {
@@ -33,7 +31,7 @@ const Home = () => {
   return (
     <>
       <h1>Home</h1>
-      <GetPlayList />
+      {/* <GetPlayList /> */}
     </>
   );
 };

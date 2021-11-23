@@ -1,41 +1,18 @@
-import styled from '@emotion/styled';
 import { FC } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-import ButtonUser from '../ButtonUser/ButtonUser';
-
-const AppMain = styled.main`
-  display: flex;
-  justify-content: space-between;
-  /*width: 100%; */
-`;
-
-const AppBodyBox = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
-const AppBody = styled.div`
-  width: 100%;
-  margin: 0 0 0 245px;
-  padding: 30px;
-`;
-interface IProps {
-  router: {
-    pathname: string;
-  };
-}
+import * as S from '../../styles/components/layout/layout.style';
+import ButtonUser from '../toUserPage/ToUserPage';
+import { IProps } from './types';
 
 const Layout: FC<IProps> = ({ children, router }) => {
-  const invalidPages = ['/', '/auth/Login'];
+  const invalidPages = ['/', '/login/login'];
 
   return (
-    <AppMain>
-      <AppBodyBox>
-        {!invalidPages.includes(router?.pathname) && <NavBar />}
-        <AppBody>{children}</AppBody>
-      </AppBodyBox>
+    <S.AppMain>
+      {!invalidPages.includes(router?.pathname) && <NavBar />}
+      <S.AppBodyBox>{children}</S.AppBodyBox>
       {!invalidPages.includes(router?.pathname) && <ButtonUser />}
-    </AppMain>
+    </S.AppMain>
   );
 };
 
