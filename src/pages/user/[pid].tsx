@@ -28,8 +28,8 @@ const User: FC = () => {
           <p>{data?.followers?.total} Followers</p>
         </div>
       </S.UserStyle>
-      <Following />
       <MainSongs />
+      <Following />
     </S.UserBody>
   );
 };
