@@ -1,14 +1,15 @@
 import { FC } from 'react'
-import { domain } from '../../assets/spotify'
-import Following from '../../components/Spotify/Following/Following'
-import MainSongs from '../../components/Spotify/MainSongs/MainSongs'
-import UserImage from '../../components/Spotify/UserImage/UserImage'
-import GetUsersProfile from '../../hooks/GetUsersProfile/GetUsersProfile'
-import * as S from '../../styles/pages/profile/profile.style'
+import { domain } from '../assets/spotify'
+import Following from '../components/Spotify/Following/Following'
+import TopSongs from '../components/Spotify/MainSongs/MainSongs'
+import TopArtist from '../components/Spotify/TopArtist/TopArtist'
+import UserImage from '../components/Spotify/UserImage/UserImage'
+import * as S from '../styles/pages/profile/profile.style'
+import GetData from '../hooks/GetData/GetData'
+import { IDataUser } from '../hooks/types/GetUserProfile'
 
-const User: FC = () => {
-    const data = GetUsersProfile(domain)
-
+const Profile: FC = () => {
+    const data = GetData<IDataUser>(domain)
     return (
         <S.UserBody>
             <S.UserStyle>
@@ -28,10 +29,11 @@ const User: FC = () => {
                     <p>{data?.followers?.total} Followers</p>
                 </div>
             </S.UserStyle>
-            <MainSongs />
+            <TopArtist />
+            <TopSongs />
             <Following />
         </S.UserBody>
     )
 }
 
-export default User
+export default Profile

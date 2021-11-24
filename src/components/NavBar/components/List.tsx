@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useContext } from 'react';
+import { FC, useContext } from 'react';
 import useActiveOptContext from '../../../hooks/useActiveOptContext/useActiveOptContext';
 import * as S from '../../../styles/components/NavBar/components/ListS';
 
