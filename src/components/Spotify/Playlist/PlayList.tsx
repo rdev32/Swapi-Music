@@ -36,4 +36,3 @@ const PlayList: FC<IProps> = ({ playlist }) => {
 }
 
 export default PlayList
-//playlist.name.slice(0, 16)

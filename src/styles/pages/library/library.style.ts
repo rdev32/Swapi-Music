@@ -22,6 +22,7 @@ export const PlaylistCard = styled.button`
     align-items: flex-start;
     transition: 0.3s;
     cursor: pointer;
+    font-family: Inter;
 
     &:hover {
         padding: 10px;

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { NextPage } from 'next'
 import { domain } from '../../assets/spotify'
 import Following from '../../components/Spotify/Following/Following'
 import MainSongs from '../../components/Spotify/MainSongs/MainSongs'
@@ -7,9 +7,8 @@ import GetData from '../../hooks//GetData/GetData'
 import { IDataUser } from '../../hooks/types/GetUserProfile'
 import * as S from '../../styles/pages/profile/profile.style'
 
-const User: FC = () => {
+const User: NextPage = () => {
     const data = GetData<IDataUser>(domain)
-
     return (
         <S.UserBody>
             <S.UserStyle>

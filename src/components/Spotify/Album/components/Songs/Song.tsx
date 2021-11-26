@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
+import GetTimeSongs from '../../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { IArtist } from '../../../../../hooks/types/GetTopSongs'
 import * as S from '../../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 
@@ -7,15 +8,7 @@ interface IProps {
 }
 
 const Song: FC<IProps> = ({ song }) => {
-    const [duration, setDuration] = useState('')
-
-    useEffect(() => {
-        const minutes = Math.floor(song?.duration_ms / 60000)
-        const seconds = ((song?.duration_ms % 60000) / 1000).toFixed()
-        const zero = minutes + ':' + (Number(seconds) < 10 ? '0' : '') + seconds
-        setDuration(zero)
-    }, [song?.duration_ms])
-
+    const [hour, minutes, seconds] = GetTimeSongs({ ms: song?.duration_ms })
     return (
         <S.Song key={song?.id}>
             <S.SongMain>
@@ -25,7 +18,17 @@ const Song: FC<IProps> = ({ song }) => {
                 </S.SongDescription>
             </S.SongMain>
             <S.SongMinutesBox>
-                <p>{duration}</p>
+                <p>
+                    {' '}
+                    {hour ? `${hour} ${minutes}` : ''}{' '}
+                    {!hour
+                        ? `${minutes}:${
+                              seconds?.toFixed(0).length === 1
+                                  ? `0${seconds.toFixed()}`
+                                  : seconds?.toFixed()
+                          }`
+                        : ''}
+                </p>
             </S.SongMinutesBox>
         </S.Song>
     )
