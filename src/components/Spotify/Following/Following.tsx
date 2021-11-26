@@ -11,7 +11,7 @@ const Following: FC<IProps> = () => {
         `${domain}/following?type=artist&limit=10`
     )
     return (
-        <div>
+        <S.BoxStyle>
             <h2>Following</h2>
             <S.ArtistCards>
                 {artists?.items.map((artist) => (
@@ -28,7 +28,7 @@ const Following: FC<IProps> = () => {
                     </S.ArtistCard>
                 ))}
             </S.ArtistCards>
-        </div>
+        </S.BoxStyle>
     )
 }
 

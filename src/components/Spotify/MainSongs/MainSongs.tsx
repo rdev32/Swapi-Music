@@ -6,13 +6,11 @@ import ISong, { SongItem } from '../../../hooks/types/GetTopSongs'
 import * as S from '../../../styles/components/Spotify/MainSongs/Main.style'
 import Song from './components/Song/Song'
 
-interface IProps {}
-
-const TopSongs: FC<IProps> = (props) => {
+const TopSongs: FC = () => {
     const { items } = GetData<ISong>(`${domain}/top/tracks?limit=5`)
 
     return (
-        <div>
+        <S.BoxStyle>
             <h2>Top Tracks this month</h2>
             <div>
                 {items?.map((item: SongItem, index: number) => (
@@ -25,7 +23,7 @@ const TopSongs: FC<IProps> = (props) => {
                     </S.SongCard>
                 ))}
             </div>
-        </div>
+        </S.BoxStyle>
     )
 }
 

@@ -6,19 +6,16 @@ import GetData from '../../../hooks/GetData/GetData'
 import { Artist, Artists } from '../../../hooks/types/GetTopArtist'
 import * as S from '../../../styles/components/Spotify/Following/Following.style'
 
-interface IProps {}
-
-const TopArtist: FC<IProps> = (props) => {
-    // const { items } = GetTopArtist(`${domain}/top/artists?limit=10&offset=0`)
+const TopArtist: FC = () => {
     const { items } = GetData<Artists>(
         `${domain}/top/artists?limit=10&offset=0`
     )
 
     return (
-        <div>
+        <S.BoxStyle>
             <h2>Top artists this month</h2>
             <S.ArtistCards>
-                {items?.map((item: Artist, index: number) => (
+                {items?.map((item: Artist) => (
                     <S.ArtistCard key={item.id}>
                         <UserImage
                             key={item.images[0].url}
@@ -32,7 +29,7 @@ const TopArtist: FC<IProps> = (props) => {
                     </S.ArtistCard>
                 ))}
             </S.ArtistCards>
-        </div>
+        </S.BoxStyle>
     )
 }
 

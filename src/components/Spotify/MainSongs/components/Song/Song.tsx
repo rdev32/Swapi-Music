@@ -1,21 +1,16 @@
-import { FC, useEffect, useState } from 'react'
+import Link from 'next/link'
+import { FC } from 'react'
+import GetTimeSongs from '../../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { SongItem } from '../../../../../hooks/types/GetTopSongs'
 import * as S from '../../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import UserImage from '../../../UserImage/UserImage'
-import Link from 'next/link'
 interface IProps {
     item: SongItem
 }
 
 const Song: FC<IProps> = ({ item }) => {
-    const [duration, setDuration] = useState('')
+    const [hour, minutes, seconds] = GetTimeSongs({ ms: item.duration_ms })
 
-    useEffect(() => {
-        const minutes = Math.floor(item.duration_ms / 60000)
-        const seconds = ((item.duration_ms % 60000) / 1000).toFixed()
-        const zero = minutes + ':' + (Number(seconds) < 10 ? '0' : '') + seconds
-        setDuration(zero)
-    }, [item.duration_ms])
     return (
         <S.Song key={item.id}>
             <S.SongMain>
@@ -44,7 +39,17 @@ const Song: FC<IProps> = ({ item }) => {
                 </Link>
             </S.SongTitleAlbum>
             <S.SongMinutesBox>
-                <p>{duration}</p>
+                <p>
+                    {' '}
+                    {hour ? `${hour} ${minutes}` : ''}{' '}
+                    {!hour
+                        ? `${minutes}:${
+                              seconds?.toFixed(0).length === 1
+                                  ? `0${seconds.toFixed()}`
+                                  : seconds?.toFixed()
+                          }`
+                        : ''}
+                </p>
             </S.SongMinutesBox>
         </S.Song>
     )
