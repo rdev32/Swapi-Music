@@ -19,7 +19,7 @@ const Following: FC<IProps> = () => {
                         <UserImage
                             key={artist.images[0].url}
                             url={artist.images[0].url}
-                            bradius={50}
+                            bradius={100}
                             displayName={artist.name}
                             size={160}
                         />

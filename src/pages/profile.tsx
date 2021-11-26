@@ -18,7 +18,7 @@ const Profile: FC = () => {
                         <UserImage
                             key={img.url}
                             url={img.url}
-                            bradius={50}
+                            bradius={100}
                             displayName={data.display_name}
                         />
                     ))}

@@ -23,8 +23,8 @@ const ButtonUser: FC = () => {
                     key={img.url}
                     src={img.url}
                     alt={data?.display_name}
-                    width={45}
-                    height={45}
+                    width={40}
+                    height={40}
                 />
             ))}
         </S.UserPage>

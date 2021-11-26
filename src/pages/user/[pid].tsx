@@ -3,11 +3,12 @@ import { domain } from '../../assets/spotify'
 import Following from '../../components/Spotify/Following/Following'
 import MainSongs from '../../components/Spotify/MainSongs/MainSongs'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
-import GetUsersProfile from '../../hooks/GetUsersProfile/GetUsersProfile'
+import GetData from '../../hooks//GetData/GetData'
+import { IDataUser } from '../../hooks/types/GetUserProfile'
 import * as S from '../../styles/pages/profile/profile.style'
 
 const User: FC = () => {
-    const data = GetUsersProfile(domain)
+    const data = GetData<IDataUser>(domain)
 
     return (
         <S.UserBody>

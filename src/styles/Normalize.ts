@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css } from '@emotion/react'
 
 export const Materialize = css`
 
@@ -10,7 +10,8 @@ export const Materialize = css`
   body {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    transition: 0.3s;
+    transition: 0.4s;
+    
   }
 
 
@@ -197,4 +198,4 @@ export const Materialize = css`
       U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
       U+2215, U+FEFF, U+FFFD;
   }
-`;
+`

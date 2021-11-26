@@ -10,13 +10,17 @@ interface IProps {}
 
 const TopSongs: FC<IProps> = (props) => {
     const { items } = GetData<ISong>(`${domain}/top/tracks?limit=5`)
+
     return (
         <div>
             <h2>Top Tracks this month</h2>
             <div>
                 {items?.map((item: SongItem, index: number) => (
                     <S.SongCard key={item.id}>
-                        <S.SongNumber>{index + 1}</S.SongNumber>
+                        <div style={{ width: '1%' }}>
+                            <S.SongNumber>{index + 1}</S.SongNumber>
+                        </div>
+
                         <Song item={item} />
                     </S.SongCard>
                 ))}

@@ -23,7 +23,7 @@ const TopArtist: FC<IProps> = (props) => {
                         <UserImage
                             key={item.images[0].url}
                             url={item.images[0].url}
-                            bradius={50}
+                            bradius={100}
                             displayName={item.name}
                             size={160}
                         />
