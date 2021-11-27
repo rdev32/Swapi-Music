@@ -12,7 +12,7 @@ const Album: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
     const url = pid ? `https://api.spotify.com/v1/albums/${pid}` : ''
-    const { images, name, artists, tracks } = GetData<Album>(url)
+    const { images, name, artists, tracks, type } = GetData<Album>(url)
     const [[hour, minutes, seconds], setDuration] = useState<number[]>([])
 
     useLayoutEffect(() => {
@@ -34,11 +34,12 @@ const Album: NextPage = () => {
                 bradius={10}
                 size={220}
             />
+            <h5>{type?.toUpperCase()}</h5>
             <h1>{name}</h1>
             {artists?.map((artist) => (
                 <h4 key={artist.id}>{artists[0].name}</h4>
             ))}
-            <h4>
+            <p>
                 {tracks?.total > 0 ? (
                     <>
                         {tracks?.total} Songs,{' '}
@@ -50,7 +51,7 @@ const Album: NextPage = () => {
                 ) : (
                     ''
                 )}
-            </h4>
+            </p>
             <div>
                 {tracks?.items?.map((song, index) => (
                     <SSong.SongCard key={song.id}>

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import dynamic from 'next/dynamic'
-import { useMemo } from 'react'
+import { ReactChild, useMemo } from 'react'
 import { colors } from '../../styles/colors'
 interface SvgDynamicProps {
     active: boolean
@@ -26,9 +26,8 @@ const SvgBox = styled.div<SvgDynamicProps>`
 export type IconProps = {
     name: string
     active: boolean
-    children: JSX.Element
+    children: any
 }
-
 const AtomIcon = ({ children, name, active }: IconProps) => {
     const DynamicIcon = useMemo(
         () => dynamic(() => import(`../../../public/icons/NavBar/${name}.svg`)),

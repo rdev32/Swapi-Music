@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router'
 import { FC, useContext } from 'react'
-import PlayList from '../../../components/Spotify/Playlist/PlayList'
-import GetData from '../../../hooks/GetData/GetData'
-import { GetPlayList } from '../../../hooks/types/GetPlayList'
 import useActiveOptContext from '../../../hooks/useActiveOptContext/useActiveOptContext'
 import * as S from '../../../styles/pages/library/library.style'
+import { GetPlayList, IPlaylist } from '../../../hooks/types/GetPlayList'
+import PlayList from './PlayList'
 
-const Playlists: FC = () => {
-    const url = 'https://api.spotify.com/v1/me/playlists'
-    const { items } = GetData<GetPlayList>(url)
+interface IPlayList {
+    items: GetPlayList['items']
+}
+const Playlists: FC<IPlayList> = ({ items }) => {
     const { setActive } = useContext(useActiveOptContext)
     const router = useRouter()
     const handleSetActive = () => {
@@ -20,7 +20,7 @@ const Playlists: FC = () => {
             <S.LikedSongsWrapper onClick={handleSetActive}>
                 Liked Songs
             </S.LikedSongsWrapper>
-            {items?.map((playlist) => (
+            {items?.map((playlist: IPlaylist) => (
                 <PlayList key={playlist.id} playlist={playlist} />
             ))}
         </S.Playlists>

@@ -3,7 +3,7 @@ type GetPlaylistImgs = {
     width: number
     url: string
 }
-export type Playlist = {
+export type IPlaylist = {
     collaborative: boolean
     description: string
     external_urls: {
@@ -33,7 +33,7 @@ export type Playlist = {
     uri: string
 }
 export type GetPlayList = {
-    items: Playlist[]
+    items: IPlaylist[]
 }
 
 /*

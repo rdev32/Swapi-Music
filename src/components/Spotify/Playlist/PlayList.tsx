@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { FC, useContext } from 'react'
-import { Playlist } from '../../../hooks/types/GetPlayList'
+import { IPlaylist } from '../../../hooks/types/GetPlayList'
 import useActiveOptContext from '../../../hooks/useActiveOptContext/useActiveOptContext'
 import * as S from '../../../styles/pages/library/library.style'
 import UserImage from '../UserImage/UserImage'
 
 interface IProps {
-    playlist: Playlist
+    playlist: IPlaylist
 }
 
 const PlayList: FC<IProps> = ({ playlist }) => {
@@ -19,12 +19,20 @@ const PlayList: FC<IProps> = ({ playlist }) => {
 
     return (
         <S.PlaylistCard onClick={handlePlaylist}>
-            <UserImage
+            {playlist.images.length > 0 && (
+                <UserImage
+                    url={playlist.images[0].url}
+                    displayName={playlist.name}
+                    size={136}
+                    bradius={10}
+                />
+            )}
+            {/* <UserImage
                 url={playlist?.images[0]?.url}
                 displayName={playlist.name}
                 size={136}
                 bradius={10}
-            />
+            /> */}
             <S.PlaylistTitle>
                 {playlist.name.length > 16
                     ? `${playlist.name.slice(0, 16).trim()}...`

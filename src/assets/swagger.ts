@@ -6,5 +6,6 @@ export const Scopes = [
     'user-read-playback-state',
     'user-follow-read',
     'user-library-read',
+    'user-read-private',
 ]
 export const ScopesUrlParams = Scopes.join('%20')
