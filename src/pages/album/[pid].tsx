@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useLayoutEffect, useState } from 'react'
 import Song from '../../components/Spotify/Album/components/Songs/Song'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
 import GetData from '../../hooks/GetData/GetData'
+import GetTimeSongs from '../../hooks/GetTimeSongs/GetTimeSongs'
 import { Album } from '../../hooks/types/GetAlbum'
 import * as SSong from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../../styles/pages/album/album.style'
@@ -13,18 +13,13 @@ const Album: NextPage = () => {
     const { pid } = router.query
     const url = pid ? `https://api.spotify.com/v1/albums/${pid}` : ''
     const { images, name, artists, tracks, type } = GetData<Album>(url)
-    const [[hour, minutes, seconds], setDuration] = useState<number[]>([])
 
-    useLayoutEffect(() => {
-        const ms = tracks?.items?.reduce(
-            (acc, curr) => (acc = acc + curr.duration_ms),
-            0
-        )
-        const hour = Math.floor(ms / 3600000)
-        const minutes = Math.floor(ms / 60000) - hour * 60
-        const seconds = (ms % 60000) / 1000
-        setDuration([hour, minutes, seconds])
-    }, [tracks?.items])
+    const ms = tracks?.items?.reduce(
+        (acc, curr) => (acc = acc + curr.duration_ms),
+        0
+    )
+
+    const [hour, minutes, seconds] = GetTimeSongs({ ms: ms })
 
     return (
         <S.AlbumStyle>

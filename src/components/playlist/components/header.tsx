@@ -21,7 +21,13 @@ const Header: FC = () => {
             <h5>PLAYLIST</h5>
             <h1>{name}</h1>
             <S.PlaylistHeaderDetails>
-                <Link href={'/profile'} passHref>
+                <Link
+                    href={{
+                        pathname: '/users/[pid]',
+                        query: { pid: owner?.id },
+                    }}
+                    passHref
+                >
                     <a>{owner?.display_name}</a>
                 </Link>
                 <p>

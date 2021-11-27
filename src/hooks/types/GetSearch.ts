@@ -33,7 +33,7 @@ type IAlbums = {
     uri: string
 }
 
-type IArtists = {
+export type IArtists = {
     external_urls: {
         spotify: string
     }
@@ -72,7 +72,7 @@ type IShow = {
     uri: string
 }
 
-type ITracks = {
+export type ITracks = {
     album: IAlbums
     artists: IArtist[]
     available_markets: string[]

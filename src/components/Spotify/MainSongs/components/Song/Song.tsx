@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { FC } from 'react'
 import GetTimeSongs from '../../../../../hooks/GetTimeSongs/GetTimeSongs'
+import { ITracks } from '../../../../../hooks/types/GetSearch'
 import { SongItem } from '../../../../../hooks/types/GetTopSongs'
 import * as S from '../../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import UserImage from '../../../UserImage/UserImage'
 interface IProps {
-    item: SongItem
+    item: SongItem | ITracks
 }
 
 const Song: FC<IProps> = ({ item }) => {

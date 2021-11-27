@@ -19,7 +19,7 @@ function GetSearch<Type>(search: string) {
                 .then((resp) => setData(resp.data))
                 .catch((err) => console.log(err))
         }
-        if (count === 20) {
+        if (count === 20 && search !== '') {
             handler()
         }
     }, [count])
@@ -32,7 +32,6 @@ function GetSearch<Type>(search: string) {
         }, 50)
         return () => clearTimeout(handler)
     }, [count, search])
-
     return { data, setCount }
 }
 
