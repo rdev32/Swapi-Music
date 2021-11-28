@@ -22,9 +22,12 @@ const Song: FC<IProps> = ({ item }) => {
                     size={50}
                 />
                 <S.SongDescription>
-                    <S.SontTitle>{item.name}</S.SontTitle>
+                    <S.SontTitle>{item.name.slice(0, 25)}</S.SontTitle>
                     <S.SongArtist>
-                        {item.artists.map((name) => name.name).join(', ')}
+                        {item.artists
+                            .map((name) => name.name)
+                            .join(', ')
+                            .slice(0, 20)}
                     </S.SongArtist>
                 </S.SongDescription>
             </S.SongMain>
@@ -36,7 +39,7 @@ const Song: FC<IProps> = ({ item }) => {
                     }}
                     passHref
                 >
-                    <a>{item.album.name}</a>
+                    <a>{item.album.name.slice(0, 20)}</a>
                 </Link>
             </S.SongTitleAlbum>
             <S.SongMinutesBox>

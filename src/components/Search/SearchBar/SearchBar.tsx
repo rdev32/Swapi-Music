@@ -19,9 +19,10 @@ interface IProps {
     onChange: ChangeEventHandler<HTMLInputElement>
     value: string
     setSearch: Dispatch<SetStateAction<string>>
+    setMount: Dispatch<SetStateAction<boolean>>
 }
 
-const SearchBar: FC<IProps> = ({ onChange, value, setSearch }) => {
+const SearchBar: FC<IProps> = ({ onChange, value, setSearch, setMount }) => {
     const SearchIcon = useMemo(
         () =>
             dynamic(() => import('../../../../public/icons/search/Search.svg')),
@@ -42,7 +43,13 @@ const SearchBar: FC<IProps> = ({ onChange, value, setSearch }) => {
                 onChange={onChange}
             />
             {value && (
-                <FormCancel type="button" onClick={() => setSearch('')}>
+                <FormCancel
+                    type="button"
+                    onClick={() => {
+                        setSearch('')
+                        setMount(false)
+                    }}
+                >
                     <CancelIcon />
                 </FormCancel>
             )}

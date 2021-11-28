@@ -26,4 +26,5 @@ export const FormCancel = styled.button`
 `
 export const FormContainer = styled.div`
     display: flex;
+    margin: 0 0 20px 0;
 `

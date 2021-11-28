@@ -1,7 +1,10 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-function GetSearch<Type>(search: string) {
+function GetSearch<Type>(
+    search: string,
+    setMount: Dispatch<SetStateAction<boolean>>
+) {
     const [data, setData] = useState<Type>({} as Type)
     const [count, setCount] = useState<number>(0)
 
@@ -16,7 +19,10 @@ function GetSearch<Type>(search: string) {
                         )}`,
                     },
                 })
-                .then((resp) => setData(resp.data))
+                .then((resp) => {
+                    resp.data && setMount(true)
+                    return setData(resp.data)
+                })
                 .catch((err) => console.log(err))
         }
         if (count === 20 && search !== '') {
@@ -28,6 +34,7 @@ function GetSearch<Type>(search: string) {
         const handler = setTimeout(() => {
             if (search !== '' && count < 20) {
                 setCount(count + 1)
+                setMount(false)
             }
         }, 50)
         return () => clearTimeout(handler)

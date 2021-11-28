@@ -5,6 +5,7 @@ export interface IDataImgUser {
     displayName?: string
     bradius?: number
     size?: number
+    linear?: boolean
 }
 
 export interface IDataUser {

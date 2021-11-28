@@ -33,15 +33,13 @@ const AtomIcon = ({ children, name, active }: IconProps) => {
         () => dynamic(() => import(`../../../public/icons/NavBar/${name}.svg`)),
         [name]
     )
-
-    if (DynamicIcon) {
-        return (
-            <SvgBox active={active}>
-                <DynamicIcon />
-                {children}
-            </SvgBox>
-        )
-    }
+    if (!DynamicIcon) return null
+    return (
+        <SvgBox active={active}>
+            <DynamicIcon />
+            {children}
+        </SvgBox>
+    )
 }
 
 export default AtomIcon

@@ -7,7 +7,8 @@ import GetTimeSongs from '../../hooks/GetTimeSongs/GetTimeSongs'
 import { Album } from '../../hooks/types/GetAlbum'
 import * as SSong from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../../styles/pages/album/album.style'
-
+import * as SPlaylist from '../../styles/components/playlist/header.style'
+import Link from 'next/link'
 const Album: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
@@ -31,22 +32,34 @@ const Album: NextPage = () => {
             />
             <h5>{type?.toUpperCase()}</h5>
             <h1>{name}</h1>
-            {artists?.map((artist) => (
-                <h4 key={artist.id}>{artists[0].name}</h4>
-            ))}
-            <p>
-                {tracks?.total > 0 ? (
-                    <>
-                        {tracks?.total} Songs,{' '}
-                        {hour ? `${hour} Hrs ${minutes}Min` : ''}{' '}
-                        {!hour
-                            ? `${minutes} Min ${Math.round(seconds)} Sec`
-                            : ''}
-                    </>
-                ) : (
-                    ''
-                )}
-            </p>
+            <SPlaylist.PlaylistHeaderDetails>
+                <Link
+                    href={{
+                        pathname: '/users/[pid]',
+                        query: { pid: artists && artists[0].id },
+                    }}
+                    passHref
+                >
+                    <a>{artists && artists[0].name}</a>
+                </Link>
+                <p>
+                    {tracks?.total > 0 ? (
+                        <>
+                            <SPlaylist.PlayListSeparator>
+                                {' '}
+                                •{' '}
+                            </SPlaylist.PlayListSeparator>
+                            {tracks?.total} Songs,{' '}
+                            {hour ? `${hour} Hrs ${minutes}Min` : ''}{' '}
+                            {!hour
+                                ? `${minutes} Min ${Math.round(seconds)} Sec`
+                                : ''}
+                        </>
+                    ) : (
+                        ''
+                    )}
+                </p>
+            </SPlaylist.PlaylistHeaderDetails>
             <div>
                 {tracks?.items?.map((song, index) => (
                     <SSong.SongCard key={song.id}>

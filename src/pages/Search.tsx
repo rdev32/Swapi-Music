@@ -11,19 +11,26 @@ import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as SFollow from '../styles/components/Spotify/Following/Following.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../styles/pages/profile/profile.style'
+import {
+    SearchArtist,
+    SearchImageContainer,
+    SearchProfileContainer,
+    SearchSection1,
+    SearchTracksContainer,
+    SearchType,
+} from '../styles/pages/Search/Search.style'
 const Search: FC = () => {
     const [search, setSearch] = useState('')
+    const [mount, setMount] = useState(false)
     const {
         data: { albums, artists, playlists, episodes, tracks, shows },
         setCount,
-    } = GetSearch<IGetSearch>(search)
+    } = GetSearch<IGetSearch>(search, setMount)
     const urlArtist = `https://api.spotify.com/v1/artists/${
-        tracks?.items && tracks?.items[0]?.artists[0]?.id
+        artists?.items && artists?.items[0]?.id
     }`
 
-    const Artist = GetData<IArtists>(
-        tracks?.items[0].artists[0].id ? urlArtist : ''
-    )
+    const Artist = GetData<IArtists>(mount ? urlArtist : '')
 
     return (
         <S.UserBody>
@@ -35,73 +42,86 @@ const Search: FC = () => {
                     }}
                     setSearch={setSearch}
                     value={search}
+                    setMount={setMount}
                 />
             </FormContainer>
-            <div>
-                <div>
-                    {Artist && (
-                        <>
-                            <div>
-                                {Artist.images && (
+            {mount && (
+                <>
+                    <SearchSection1>
+                        {artists?.items?.length !== 0 && (
+                            <SearchProfileContainer>
+                                <SearchImageContainer>
                                     <UserImage
-                                        url={Artist.images[0].url}
-                                        displayName={Artist.name}
-                                        bradius={10}
-                                        size={200}
+                                        url={
+                                            artists?.items[0]?.images &&
+                                            artists?.items[0]?.images[0]?.url
+                                        }
+                                        displayName={artists?.items[0].name}
+                                        bradius={500}
+                                        height={250}
+                                        width={250}
                                     />
-                                )}
-                            </div>
-                            <h1>{Artist?.name}</h1>
-                            <h4>{Artist?.type?.toUpperCase()}</h4>
-                        </>
-                    )}
-                </div>
-                <div>
-                    {tracks && (
-                        <>
-                            <h4>Tracks</h4>
-                            {tracks?.items?.map((track, index) => (
-                                <STracks.SongCard key={track.id}>
-                                    <div style={{ width: '1%' }}>
-                                        <STracks.SongNumber>
-                                            {index + 1}
-                                        </STracks.SongNumber>
-                                    </div>
+                                </SearchImageContainer>
+                                <SearchType>
+                                    {artists?.items[0]?.type?.toUpperCase()}
+                                </SearchType>
+                                <SearchArtist>
+                                    {artists?.items[0]?.name}
+                                </SearchArtist>
+                            </SearchProfileContainer>
+                        )}
 
-                                    <Song item={track} />
-                                </STracks.SongCard>
-                            ))}
-                        </>
-                    )}
-                </div>
-            </div>
-            <div>
-                {playlists && (
-                    <>
-                        <h4>Playlists</h4>
-                        <SFollow.ArtistCards height="228px">
-                            {playlists?.items?.map((playlist) => (
-                                <PlayList
-                                    key={playlist.id}
-                                    playlist={playlist}
-                                />
-                            ))}
-                        </SFollow.ArtistCards>
-                    </>
-                )}
-            </div>
-            <div>
-                {artists && (
-                    <>
-                        <h4>Artist</h4>
-                        <SFollow.ArtistCards height="260px">
-                            {artists?.items?.map((artist) => (
-                                <ArtistCard key={artist.id} item={artist} />
-                            ))}
-                        </SFollow.ArtistCards>
-                    </>
-                )}
-            </div>
+                        {tracks?.items?.length !== 0 && (
+                            <SearchTracksContainer>
+                                <h4>Tracks</h4>
+                                {tracks?.items?.map((track, index) => (
+                                    <STracks.SongCard key={track.id}>
+                                        <div style={{ width: '1%' }}>
+                                            <STracks.SongNumber>
+                                                {index + 1}
+                                            </STracks.SongNumber>
+                                        </div>
+
+                                        <Song item={track} />
+                                    </STracks.SongCard>
+                                ))}
+                            </SearchTracksContainer>
+                        )}
+                    </SearchSection1>
+                    <div>
+                        {playlists?.items?.length !== 0 && (
+                            <>
+                                <h4>Playlists</h4>
+                                <SFollow.ArtistCards height="228px">
+                                    {playlists?.items?.map((playlist) => (
+                                        <PlayList
+                                            key={playlist.id}
+                                            playlist={playlist}
+                                        />
+                                    ))}
+                                </SFollow.ArtistCards>
+                            </>
+                        )}
+                    </div>
+                    <div>
+                        {artists?.items?.length !== 0 ? (
+                            <>
+                                <h4>Artist</h4>
+                                <SFollow.ArtistCards height="260px">
+                                    {artists?.items?.map((artist) => (
+                                        <ArtistCard
+                                            key={artist.id}
+                                            item={artist}
+                                        />
+                                    ))}
+                                </SFollow.ArtistCards>
+                            </>
+                        ) : (
+                            false
+                        )}
+                    </div>
+                </>
+            )}
         </S.UserBody>
     )
 }
