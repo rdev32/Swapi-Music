@@ -111,7 +111,7 @@ export type GetPlaylistId = {
     id: string
     images: images[]
     name: string
-    owner: owner
+    owner: IOwner
     public: boolean
     snapshot_id: string
     tracks: tracks

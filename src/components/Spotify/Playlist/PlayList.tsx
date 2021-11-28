@@ -23,16 +23,10 @@ const PlayList: FC<IProps> = ({ playlist }) => {
                 <UserImage
                     url={playlist.images[0].url}
                     displayName={playlist.name}
-                    size={136}
+                    size={166}
                     bradius={10}
                 />
             )}
-            {/* <UserImage
-                url={playlist?.images[0]?.url}
-                displayName={playlist.name}
-                size={136}
-                bradius={10}
-            /> */}
             <S.PlaylistTitle>
                 {playlist.name.length > 16
                     ? `${playlist.name.slice(0, 16).trim()}...`

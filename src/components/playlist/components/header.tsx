@@ -23,7 +23,11 @@ const Header: FC = () => {
             <S.PlaylistHeaderDetails>
                 <Link
                     href={{
-                        pathname: '/users/[pid]',
+                        pathname: `${
+                            owner?.type === 'user'
+                                ? '/users/[pid]'
+                                : '/artist/[pid]'
+                        }`,
                         query: { pid: owner?.id },
                     }}
                     passHref
@@ -35,7 +39,7 @@ const Header: FC = () => {
                         <>
                             <S.PlayListSeparator> • </S.PlayListSeparator>
                             {tracks?.total} Songs,{' '}
-                            {hour ? `${hour} Hrs ${minutes}Min` : ''}{' '}
+                            {hour ? `${hour} Hrs ${minutes} Min` : ''}{' '}
                             {!hour
                                 ? `${minutes} Min ${Math.round(seconds)} Sec`
                                 : ''}

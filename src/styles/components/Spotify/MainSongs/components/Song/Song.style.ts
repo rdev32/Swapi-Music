@@ -20,7 +20,7 @@ export const SongTitleAlbum = styled.div`
 export const SontTitle = styled.h4`
     margin: 10px 0;
 `
-export const SongArtist = styled.p`
+export const SongArtist = styled.a`
     margin: 0;
 `
 

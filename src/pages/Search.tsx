@@ -4,9 +4,8 @@ import SearchBar from '../components/Search/SearchBar/SearchBar'
 import Song from '../components/Spotify/MainSongs/components/Song/Song'
 import PlayList from '../components/Spotify/Playlist/PlayList'
 import UserImage from '../components/Spotify/UserImage/UserImage'
-import GetData from '../hooks/GetData/GetData'
 import GetSearch from '../hooks/GetSearch/GetSearch'
-import { IArtists, IGetSearch } from '../hooks/types/GetSearch'
+import { IGetSearch } from '../hooks/types/GetSearch'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as SFollow from '../styles/components/Spotify/Following/Following.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
@@ -26,11 +25,6 @@ const Search: FC = () => {
         data: { albums, artists, playlists, episodes, tracks, shows },
         setCount,
     } = GetSearch<IGetSearch>(search, setMount)
-    const urlArtist = `https://api.spotify.com/v1/artists/${
-        artists?.items && artists?.items[0]?.id
-    }`
-
-    const Artist = GetData<IArtists>(mount ? urlArtist : '')
 
     return (
         <S.UserBody>
@@ -92,7 +86,7 @@ const Search: FC = () => {
                         {playlists?.items?.length !== 0 && (
                             <>
                                 <h4>Playlists</h4>
-                                <SFollow.ArtistCards height="228px">
+                                <SFollow.ArtistCards height="248px">
                                     {playlists?.items?.map((playlist) => (
                                         <PlayList
                                             key={playlist.id}

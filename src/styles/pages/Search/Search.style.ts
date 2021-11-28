@@ -27,7 +27,7 @@ export const SearchProfileContainer = styled.div`
 export const SearchTracksContainer = styled.div`
     height: 395px;
     /* margin: 0 0 0 20px; */
-    width: 59%;
+    width: 70%;
     overflow: hidden;
 `
 export const SearchImageContainer = styled.div`

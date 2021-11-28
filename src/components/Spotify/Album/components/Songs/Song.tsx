@@ -2,7 +2,7 @@ import { FC } from 'react'
 import GetTimeSongs from '../../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { IArtist } from '../../../../../hooks/types/GetTopSongs'
 import * as S from '../../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
-
+import Link from 'next/link'
 interface IProps {
     song: IArtist
 }
@@ -14,7 +14,22 @@ const Song: FC<IProps> = ({ song }) => {
             <S.SongMain>
                 <S.SongDescription>
                     <S.SontTitle>{song?.name}</S.SontTitle>
-                    <S.SongArtist>{song?.artists[0].name}</S.SongArtist>
+                    <Link
+                        href={{
+                            pathname: '/artists/[pid]',
+                            query: {
+                                pid: song?.artists[0].id,
+                            },
+                        }}
+                        passHref
+                    >
+                        <S.SongArtist>
+                            {song.artists
+                                .map((name) => name.name)
+                                .join(', ')
+                                .slice(0, 25)}
+                        </S.SongArtist>
+                    </Link>
                 </S.SongDescription>
             </S.SongMain>
             <S.SongMinutesBox>

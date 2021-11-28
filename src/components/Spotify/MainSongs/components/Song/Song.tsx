@@ -23,12 +23,22 @@ const Song: FC<IProps> = ({ item }) => {
                 />
                 <S.SongDescription>
                     <S.SontTitle>{item.name.slice(0, 25)}</S.SontTitle>
-                    <S.SongArtist>
-                        {item.artists
-                            .map((name) => name.name)
-                            .join(', ')
-                            .slice(0, 20)}
-                    </S.SongArtist>
+                    <Link
+                        href={{
+                            pathname: '/artists/[pid]',
+                            query: {
+                                pid: item.artists[0].id,
+                            },
+                        }}
+                        passHref
+                    >
+                        <S.SongArtist>
+                            {item.artists
+                                .map((name) => name.name)
+                                .join(', ')
+                                .slice(0, 27)}
+                        </S.SongArtist>
+                    </Link>
                 </S.SongDescription>
             </S.SongMain>
             <S.SongTitleAlbum>
@@ -39,7 +49,7 @@ const Song: FC<IProps> = ({ item }) => {
                     }}
                     passHref
                 >
-                    <a>{item.album.name.slice(0, 20)}</a>
+                    <a>{item.album.name}</a>
                 </Link>
             </S.SongTitleAlbum>
             <S.SongMinutesBox>

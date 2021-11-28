@@ -23,7 +23,22 @@ const Song: FC<IProps> = ({ track }) => {
             <S.SongMain>
                 <S.SongDescription>
                     <S.SontTitle>{track?.name}</S.SontTitle>
-                    <S.SongArtist>{track?.artists[0].name}</S.SongArtist>
+                    <Link
+                        href={{
+                            pathname: '/artists/[pid]',
+                            query: {
+                                pid: track.artists[0].id,
+                            },
+                        }}
+                        passHref
+                    >
+                        <S.SongArtist>
+                            {track.artists
+                                .map((name) => name.name)
+                                .join(', ')
+                                .slice(0, 25)}
+                        </S.SongArtist>
+                    </Link>
                 </S.SongDescription>
             </S.SongMain>
             <S.SongTitleAlbum>

@@ -35,7 +35,7 @@ const Album: NextPage = () => {
             <SPlaylist.PlaylistHeaderDetails>
                 <Link
                     href={{
-                        pathname: '/users/[pid]',
+                        pathname: '/artists/[pid]',
                         query: { pid: artists && artists[0].id },
                     }}
                     passHref

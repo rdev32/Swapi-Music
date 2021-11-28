@@ -42,7 +42,7 @@ export const LikedSongsWrapper = styled.button`
     background-color: ${colors.blue};
     border: none;
     width: 290px;
-    height: 220px;
+    height: 236px;
     border-radius: 10px;
     display: flex;
     align-items: flex-end;

@@ -9,7 +9,7 @@ const Library: NextPage = () => {
     const { items } = GetData<GetPlayList>(url)
     return (
         <S.LibraryStyleWrapper>
-            <h1>Playlist</h1>
+            <h1>Library</h1>
             <Playlists items={items} />
         </S.LibraryStyleWrapper>
     )
