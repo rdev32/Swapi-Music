@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import ArtistCard from '../components/Artist/Artist'
 import Categories from '../components/Search/Categories/Categories'
 import SearchBar from '../components/Search/SearchBar/SearchBar'
@@ -9,6 +9,7 @@ import GetData from '../hooks/GetData/GetData'
 import GetSearch from '../hooks/GetSearch/GetSearch'
 import { GetCategories } from '../hooks/types/GetCategories'
 import { GeneralTypes, IGetSearch } from '../hooks/types/GetSearch'
+import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as SFollow from '../styles/components/Spotify/Following/Following.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
@@ -28,10 +29,15 @@ const Search: FC = () => {
         data: { albums, artists, playlists, episodes, tracks, shows },
         setCount,
     } = GetSearch<IGetSearch>(search, setMount)
+    const { setIdTrack } = useContext(UserTrackContext)
 
     const url = `https://api.spotify.com/v1/browse/categories?limit=50`
 
     const { categories } = GetData<GetCategories>(url)
+
+    const handlePlay = (id: string) => {
+        setIdTrack(id)
+    }
 
     return (
         <S.UserBody>
@@ -83,7 +89,15 @@ const Search: FC = () => {
                                                 {index + 1}
                                             </STracks.SongNumber>
                                         </div>
-
+                                        <div>
+                                            <button
+                                                onClick={() =>
+                                                    handlePlay(track.id)
+                                                }
+                                            >
+                                                Play
+                                            </button>
+                                        </div>
                                         <Song item={track} />
                                     </STracks.SongCard>
                                 ))}

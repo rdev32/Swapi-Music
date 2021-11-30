@@ -1,10 +1,10 @@
-type IImages = {
+export type IImages = {
     height: number
     url: string
     width: number
 }
 
-type IArtist = {
+export type IArtist = {
     external_urls: {
         spotify: string
     }
@@ -15,7 +15,7 @@ type IArtist = {
     uri: string
 }
 
-type IAlbums = {
+export type IAlbums = {
     album_type: string
     artists: IArtist[]
     available_markets: string[]
