@@ -11,23 +11,24 @@ interface IProps {
 
 const Song: FC<IProps> = ({ song }) => {
     const [hour, minutes, seconds] = GetTimeSongs({
-        ms: song?.track.duration_ms,
+        ms: song?.track?.duration_ms,
     })
 
     return (
-        <SSong.Song key={song.track.id}>
+        <SSong.Song key={song?.track?.id}>
             <SSong.SongMain>
                 <UserImage
-                    url={song.track.album.images[0].url}
+                    url={song?.track?.album?.images[0]?.url}
                     displayName={song.track.album.name}
                     size={50}
                     bradius={10}
+                    name="songout"
                 />
                 <SSong.SongDescription>
-                    <SSong.SontTitle>{song.track.name}</SSong.SontTitle>
+                    <SSong.SontTitle>{song.track?.name}</SSong.SontTitle>
                     <SSong.SongArtist>
-                        {song.track.artists
-                            .map((name) => `${name.name}`)
+                        {song?.track?.artists
+                            ?.map((name) => `${name.name}`)
                             .join(', ')}
                     </SSong.SongArtist>
                 </SSong.SongDescription>
@@ -36,11 +37,11 @@ const Song: FC<IProps> = ({ song }) => {
                 <Link
                     href={{
                         pathname: '/album/[pid]',
-                        query: { pid: song.track.album.id },
+                        query: { pid: song?.track?.album?.id },
                     }}
                     passHref
                 >
-                    <a>{song.track.album.name}</a>
+                    <a>{song?.track?.album?.name}</a>
                 </Link>
             </SSong.SongTitleAlbum>
             <SSong.SongMinutesBox>

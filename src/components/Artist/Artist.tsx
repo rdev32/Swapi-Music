@@ -26,6 +26,7 @@ const ArtistCard: FC<IProps> = ({ item }) => {
                         bradius={100}
                         displayName={item.name}
                         size={160}
+                        name="artistout"
                     />
                 )}
 

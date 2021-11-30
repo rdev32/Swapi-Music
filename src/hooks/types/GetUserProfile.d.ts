@@ -1,11 +1,11 @@
 export interface IDataImgUser {
-    url: string
+    url: string | undefined
     height?: number
     width?: number
     displayName?: string
     bradius?: number
     size?: number
-    linear?: boolean
+    name: string
 }
 
 export interface IDataUser {

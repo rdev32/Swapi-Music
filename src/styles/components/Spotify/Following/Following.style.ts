@@ -25,7 +25,6 @@ export const ArtistTag = styled.p`
 `
 export const ArtistCards = styled.div`
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
     height: ${({ height }: { height?: string }) => height || '265px'};
     width: 100%;

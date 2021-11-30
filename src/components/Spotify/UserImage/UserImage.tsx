@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { IDataImgUser } from '../../../hooks/types/GetUserProfile'
-
 const UImage = styled(Image)`
     border-radius: ${({ bradius }: { bradius: number | undefined }) =>
         `${bradius}px`};
@@ -16,16 +16,26 @@ const UserImage: FC<IDataImgUser> = ({
     size,
     width,
     height,
-    linear,
+    name,
 }) => {
+    const DynamicIcon = useMemo(
+        () => dynamic(() => import(`../../../../public/icons/${name}.svg`)),
+        [name]
+    )
+
     return (
-        <UImage
-            bradius={bradius}
-            src={url || '/playlist/withoutimg.jpg'}
-            alt={displayName}
-            width={size || width || 180}
-            height={size || height || 180}
-        />
+        <>
+            {url && (
+                <UImage
+                    bradius={bradius}
+                    src={url}
+                    alt={displayName}
+                    width={size || width || 180}
+                    height={size || height || 180}
+                />
+            )}
+            {!url && DynamicIcon && <DynamicIcon />}
+        </>
     )
 }
 
