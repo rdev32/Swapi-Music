@@ -148,7 +148,7 @@ type Episodes = {
     uri: string
 }
 
-type GeneralTypes<T> = {
+export type GeneralTypes<T> = {
     href: string
     limit: number
     next: string

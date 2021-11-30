@@ -1,11 +1,14 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import ArtistCard from '../components/Artist/Artist'
+import Categories from '../components/Search/Categories/Categories'
 import SearchBar from '../components/Search/SearchBar/SearchBar'
 import Song from '../components/Spotify/MainSongs/components/Song/Song'
 import PlayList from '../components/Spotify/Playlist/PlayList'
 import UserImage from '../components/Spotify/UserImage/UserImage'
+import GetData from '../hooks/GetData/GetData'
 import GetSearch from '../hooks/GetSearch/GetSearch'
-import { IGetSearch } from '../hooks/types/GetSearch'
+import { GetCategories } from '../hooks/types/GetCategories'
+import { GeneralTypes, IGetSearch } from '../hooks/types/GetSearch'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as SFollow from '../styles/components/Spotify/Following/Following.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
@@ -26,6 +29,10 @@ const Search: FC = () => {
         setCount,
     } = GetSearch<IGetSearch>(search, setMount)
 
+    const url = `https://api.spotify.com/v1/browse/categories?limit=50`
+
+    const { categories } = GetData<GetCategories>(url)
+
     return (
         <S.UserBody>
             <FormContainer>
@@ -39,6 +46,7 @@ const Search: FC = () => {
                     setMount={setMount}
                 />
             </FormContainer>
+            {!search && <Categories Categories={categories} />}
             {mount && (
                 <>
                     <SearchSection1>

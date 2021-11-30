@@ -1,9 +1,7 @@
-import { FC } from 'react'
-import Image from 'next/image'
-import { IDataImgUser } from '../../../hooks/types/GetUserProfile'
 import styled from '@emotion/styled'
-import withoutimg from '/playlist/withoutimg.jpg'
-import { css } from '@emotion/react'
+import Image from 'next/image'
+import { FC } from 'react'
+import { IDataImgUser } from '../../../hooks/types/GetUserProfile'
 
 const UImage = styled(Image)`
     border-radius: ${({ bradius }: { bradius: number | undefined }) =>
