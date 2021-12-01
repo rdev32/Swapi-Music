@@ -14,7 +14,6 @@ interface IProps {
 }
 const List: FC<IProps> = ({ Section, Title, icon }) => {
     const { active, setActive } = useContext(useActiveOptContext)
-    console.log(active)
 
     return (
         <>
@@ -24,7 +23,7 @@ const List: FC<IProps> = ({ Section, Title, icon }) => {
                     {Section.map((options) => (
                         <S.ItemLink
                             key={options.id}
-                            href={`/${options.path.replace(/\s+/g, '')}`}
+                            href={`${options.path.replace(/\s+/g, '')}`}
                             passHref
                         >
                             <S.ItemList

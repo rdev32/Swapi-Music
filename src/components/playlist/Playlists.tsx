@@ -10,18 +10,19 @@ import * as S from '../../styles/components/Spotify/MainSongs/Main.style'
 import Song from '../../components/Spotify/LikedSong/components/Song'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import { LikedSongs } from '../../hooks/types/GetLikedSongs'
+import { spotify } from '../../assets/spotify'
 
 const Playlists: FC = () => {
     const router = useRouter()
     const { pid } = router.query
-    const url = pid ? `https://api.spotify.com/v1/playlists/${pid}` : ''
+    const url = pid ? `${spotify}v1/playlists/${pid}` : ''
     const { setIdTrack } = useContext(UserTrackContext)
 
     const { tracks } = GetData<GetPlaylistId>(url)
     return (
         <div>
             {tracks?.items?.map((track: LikedSongs, index: number) => (
-                <S.SongCard key={track.track.id}>
+                <S.SongCard key={`${track.track.id}`}>
                     <div style={{ width: '1%' }}>
                         <p>{index + 1}</p>
                     </div>

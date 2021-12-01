@@ -13,7 +13,6 @@ const Playlist: NextPage = () => {
     useEffect(() => {
         asPath && setActive(asPath)
     }, [asPath])
-    console.log(asPath)
 
     return (
         <S.UserBody>

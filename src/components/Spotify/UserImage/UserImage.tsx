@@ -3,11 +3,17 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { FC, useMemo } from 'react'
 import { IDataImgUser } from '../../../hooks/types/GetUserProfile'
+
 const UImage = styled(Image)`
     border-radius: ${({ bradius }: { bradius: number | undefined }) =>
         `${bradius}px`};
     object-fit: cover;
     z-index: 0;
+`
+
+const DynamicUserImage = styled.div`
+    height: 180px;
+    width: 180px;
 `
 const UserImage: FC<IDataImgUser> = ({
     url,
@@ -18,10 +24,7 @@ const UserImage: FC<IDataImgUser> = ({
     height,
     name,
 }) => {
-    const DynamicIcon = useMemo(
-        () => dynamic(() => import(`../../../../public/icons/${name}.svg`)),
-        [name]
-    )
+    // const DynamicIcon = dynamic(() => import(`/icons/${name}.svg`))
 
     return (
         <>
@@ -34,7 +37,21 @@ const UserImage: FC<IDataImgUser> = ({
                     height={size || height || 180}
                 />
             )}
-            {!url && DynamicIcon && <DynamicIcon />}
+            {!url && (
+                <UImage
+                    bradius={bradius}
+                    src={`/icons/${name}.svg`}
+                    alt={displayName}
+                    width={size || width || 180}
+                    height={size || height || 180}
+                />
+            )}
+            {/* {!url && (
+                <DynamicUserImage>
+                    <DynamicIcon />
+                </DynamicUserImage>
+            )} */}
+            {/* {!url && DynamicIcon && <DynamicIcon />} */}
         </>
     )
 }
