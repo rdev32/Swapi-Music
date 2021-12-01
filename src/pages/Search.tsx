@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import ArtistCard from '../components/Artist/Artist'
 import Categories from '../components/Search/Categories/Categories'
 import SearchBar from '../components/Search/SearchBar/SearchBar'
@@ -8,7 +8,7 @@ import UserImage from '../components/Spotify/UserImage/UserImage'
 import GetData from '../hooks/GetData/GetData'
 import GetSearch from '../hooks/GetSearch/GetSearch'
 import { GetCategories } from '../hooks/types/GetCategories'
-import { GeneralTypes, IGetSearch } from '../hooks/types/GetSearch'
+import { IGetSearch } from '../hooks/types/GetSearch'
 import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as SFollow from '../styles/components/Spotify/Following/Following.style'
@@ -16,9 +16,11 @@ import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../styles/pages/profile/profile.style'
 import {
     SearchArtist,
+    SearchArtistMain,
     SearchImageContainer,
     SearchProfileContainer,
     SearchSection1,
+    SearchTitleCategory,
     SearchTracksContainer,
     SearchType,
 } from '../styles/pages/Search/Search.style'
@@ -57,31 +59,43 @@ const Search: FC = () => {
                 <>
                     <SearchSection1>
                         {artists?.items?.length !== 0 && (
-                            <SearchProfileContainer>
-                                <SearchImageContainer>
-                                    <UserImage
-                                        url={
-                                            artists?.items[0]?.images &&
-                                            artists?.items[0]?.images[0]?.url
-                                        }
-                                        displayName={artists?.items[0].name}
-                                        bradius={500}
-                                        height={250}
-                                        width={250}
-                                    />
-                                </SearchImageContainer>
-                                <SearchType>
-                                    {artists?.items[0]?.type?.toUpperCase()}
-                                </SearchType>
-                                <SearchArtist>
-                                    {artists?.items[0]?.name}
-                                </SearchArtist>
-                            </SearchProfileContainer>
+                            <>
+                                <SearchProfileContainer>
+                                    <SearchTitleCategory>
+                                        Result
+                                    </SearchTitleCategory>
+                                    <SearchArtistMain>
+                                        <SearchImageContainer>
+                                            <UserImage
+                                                url={
+                                                    artists?.items[0]?.images &&
+                                                    artists?.items[0]?.images[0]
+                                                        ?.url
+                                                }
+                                                displayName={
+                                                    artists?.items[0].name
+                                                }
+                                                bradius={500}
+                                                height={250}
+                                                width={250}
+                                            />
+                                        </SearchImageContainer>
+                                        <SearchType>
+                                            {artists?.items[0]?.type?.toUpperCase()}
+                                        </SearchType>
+                                        <SearchArtist>
+                                            {artists?.items[0]?.name}
+                                        </SearchArtist>
+                                    </SearchArtistMain>
+                                </SearchProfileContainer>
+                            </>
                         )}
 
                         {tracks?.items?.length !== 0 && (
                             <SearchTracksContainer>
-                                <h4>Tracks</h4>
+                                <SearchTitleCategory>
+                                    Tracks
+                                </SearchTitleCategory>
                                 {tracks?.items?.map((track, index) => (
                                     <STracks.SongCard key={track.id}>
                                         <div style={{ width: '1%' }}>
@@ -107,7 +121,9 @@ const Search: FC = () => {
                     <div>
                         {playlists?.items?.length !== 0 && (
                             <>
-                                <h4>Playlists</h4>
+                                <SearchTitleCategory>
+                                    Playlists
+                                </SearchTitleCategory>
                                 <SFollow.ArtistCards height="248px">
                                     {playlists?.items?.map((playlist) => (
                                         <PlayList
@@ -122,7 +138,9 @@ const Search: FC = () => {
                     <div>
                         {artists?.items?.length !== 0 ? (
                             <>
-                                <h4>Artist</h4>
+                                <SearchTitleCategory>
+                                    Artist
+                                </SearchTitleCategory>
                                 <SFollow.ArtistCards height="260px">
                                     {artists?.items?.map((artist) => (
                                         <ArtistCard

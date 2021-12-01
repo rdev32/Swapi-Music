@@ -5,17 +5,24 @@ export const SearchSection1 = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    /* justify-content: space-between; */
 `
-export const SearchProfileContainer = styled.div`
-    /* height: 262px; */
-    /* width: 41%; */
-    width: 345px;
-    height: 366px;
+
+export const SearchTitleCategory = styled.h3`
+    font-size: 1.5rem;
+`
+
+export const SearchArtistMain = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+`
+export const SearchProfileContainer = styled.div`
+    width: 345px;
+    height: 425px;
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
     padding: 20px;
     margin: 0 20px 0 0;

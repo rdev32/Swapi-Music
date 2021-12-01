@@ -1,5 +1,14 @@
 import dynamic from 'next/dynamic'
-import { FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import {
+    ChangeEvent,
+    FC,
+    InputHTMLAttributes,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react'
 import GetData from '../../hooks/GetData/GetData'
 import GetTrack from '../../hooks/types/GetTrack'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
@@ -11,18 +20,18 @@ import * as SSong from '../../styles/components/Spotify/MainSongs/components/Son
 import UserImage from '../Spotify/UserImage/UserImage'
 
 const NavBarPlayer: FC = () => {
+    const [playing, setPlaying] = useState(false)
+    const [volumen, setVolumen] = useState(5)
     const { idTrack } = useContext(UserTrackContext)
     const url = idTrack ? `https://api.spotify.com/v1/tracks/${idTrack}` : ''
     const track = GetData<GetTrack>(url)
-    const [playing, setPlaying] = useState(false)
-    const [volumen, setVolumen] = useState(5)
     const audio = useRef<HTMLAudioElement>(null)
 
-    const IconPause = useMemo(
+    const PauseIcon = useMemo(
         () => dynamic(() => import(`../../../public/icons/Player/pause.svg`)),
         []
     )
-    const IconPlay = useMemo(
+    const PlayIcon = useMemo(
         () => dynamic(() => import(`../../../public/icons/Player/play.svg`)),
         []
     )
@@ -30,13 +39,11 @@ const NavBarPlayer: FC = () => {
     const handlePlay = () => {
         audio.current?.play()
         setPlaying(true)
-        audio.current.volume = 5 / 100
     }
 
     const handlePause = () => {
         audio.current?.pause()
         setPlaying(false)
-        audio.current.volume = 0
     }
     useEffect(() => {
         if (audio.current) {
@@ -50,7 +57,6 @@ const NavBarPlayer: FC = () => {
             audio.current.volume = volumen / 100
         }
     }, [volumen])
-    console.log(volumen)
 
     return (
         <>
@@ -84,19 +90,21 @@ const NavBarPlayer: FC = () => {
                                 playing ? handlePause() : handlePlay()
                             }}
                         >
-                            {playing ? <IconPause /> : <IconPlay />}
+                            {playing ? <PauseIcon /> : <PlayIcon />}
                         </SSong.SongButton>
                     </div>
-                    <input
-                        type="range"
-                        min="5"
-                        max="100"
-                        value={volumen}
-                        onChange={(event: any) =>
-                            setVolumen(parseInt(event.target.value))
-                        }
-                        step="any"
-                    />
+                    <div>
+                        <input
+                            type="range"
+                            min="5"
+                            max="50"
+                            value={volumen}
+                            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                                setVolumen(parseInt(event.target.value))
+                            }
+                            step="any"
+                        />
+                    </div>
                 </NavPlayer>
             )}
         </>

@@ -15,6 +15,7 @@ const Head: FC = () => {
                         key={img.url}
                         url={img.url}
                         bradius={100}
+                        size={180}
                         displayName={display_name}
                     />
                 ))}
