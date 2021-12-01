@@ -21,7 +21,7 @@ const ButtonUser: FC = () => {
             {data?.images?.map((img) => (
                 <S.UserImg
                     key={img.url}
-                    src={img.url}
+                    src={img.url || ''}
                     alt={data?.display_name}
                     width={40}
                     height={40}
