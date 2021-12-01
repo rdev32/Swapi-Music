@@ -30,3 +30,8 @@ export const SongDescription = styled.div`
 export const SongMinutesBox = styled.div`
     width: 100px;
 `
+export const SongButton = styled.button`
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+`

@@ -4,45 +4,59 @@ import * as S from '../../../styles/components/NavBar/components/ListS'
 import AtomIcon from '../../SvgDynamic/SvgDynamic'
 
 interface IProps {
-    Section: string[]
+    Section: {
+        id: string
+        name: string
+        path: string
+    }[]
     Title: string
+    icon?: string
 }
-const List: FC<IProps> = ({ Section, Title }) => {
+const List: FC<IProps> = ({ Section, Title, icon }) => {
     const { active, setActive } = useContext(useActiveOptContext)
+    console.log(active)
 
     return (
-        <S.ItemDiv>
-            <S.ItemTitle>{Title}</S.ItemTitle>
-            {Section.map((opt) => (
-                <S.ItemLink
-                    key={opt}
-                    href={`/${opt.replace(/\s+/g, '')}`}
-                    passHref
-                >
-                    <S.ItemList
-                        active={
-                            active.replace(/\s+/g, '') ===
-                            opt.replace(/\s+/g, '')
-                                ? true
-                                : false
-                        }
-                        onClick={() => setActive(opt)}
-                    >
-                        <AtomIcon
-                            active={
-                                active.replace(/\s+/g, '') ===
-                                opt.replace(/\s+/g, '')
-                                    ? true
-                                    : false
-                            }
-                            name={opt}
+        <>
+            {Section?.length > 0 && (
+                <S.ItemDiv>
+                    <S.ItemTitle>{Title}</S.ItemTitle>
+                    {Section.map((options) => (
+                        <S.ItemLink
+                            key={options.id}
+                            href={`/${options.path.replace(/\s+/g, '')}`}
+                            passHref
                         >
-                            <S.ItemPhrase>{opt}</S.ItemPhrase>
-                        </AtomIcon>
-                    </S.ItemList>
-                </S.ItemLink>
-            ))}
-        </S.ItemDiv>
+                            <S.ItemList
+                                active={
+                                    active.replace(/\s+/g, '') ===
+                                    options.path.replace(/\s+/g, '')
+                                        ? true
+                                        : false
+                                }
+                                onClick={() => setActive(options.path)}
+                            >
+                                <AtomIcon
+                                    active={
+                                        active.replace(/\s+/g, '') ===
+                                        options.path.replace(/\s+/g, '')
+                                            ? true
+                                            : false
+                                    }
+                                    name={icon || options.name}
+                                >
+                                    <S.ItemPhrase>
+                                        {options.name.length > 12
+                                            ? options.name.slice(0, 11) + '...'
+                                            : options.name}
+                                    </S.ItemPhrase>
+                                </AtomIcon>
+                            </S.ItemList>
+                        </S.ItemLink>
+                    ))}
+                </S.ItemDiv>
+            )}
+        </>
     )
 }
 
