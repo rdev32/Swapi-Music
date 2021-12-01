@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import dynamic from 'next/dynamic'
-import { FC, useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
+import { FC, useMemo, useState } from 'react'
 import Buttons from '../components/Buttons/Buttons'
 import * as S from '../styles/pages/auth/login.style'
-import Image from 'next/image'
-import axios from 'axios'
-import { clientId, clientSecret } from '../assets/swagger'
 
 const Login: FC = () => {
     const DynamicIcon = useMemo(
@@ -15,29 +13,6 @@ const Login: FC = () => {
     )
     const [token, setToken] = useState('')
     const buttons = ['Login', 'Sign Up']
-
-    // useEffect(() => {
-    //     // Api call for retrieving token
-    //     axios('https://accounts.spotify.com/api/token', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //             Authorization:
-    //                 'Basic ' +
-    //                 new Buffer(clientId + ':' + clientSecret).toString(
-    //                     'base64'
-    //                 ),
-    //         },
-    //         data: 'grant_type=client_credentials',
-    //     })
-    //         .then((tokenresponse) => {
-    //             console.log(tokenresponse.data.access_token)
-    //             localStorage.setItem('token', tokenresponse.data.access_token)
-    //             setToken(tokenresponse.data.access_token)
-    //         })
-    //         .catch((error) => console.log(error))
-    // }, [])
-    console.log(token)
 
     return (
         <S.LoginBody>
