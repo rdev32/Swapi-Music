@@ -8,17 +8,25 @@ import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import '../styles/globals.css'
 import { Materialize } from '../styles/Normalize'
 
+type Tracks = {
+    position: number
+    tracks: {
+        id: string
+    }[]
+}
+
 function MyApp({ Component, pageProps, router }: AppProps) {
-    const [idTrack, setIdTrack] = useState('')
+    const [tracks, setTracks] = useState<Tracks>({} as Tracks)
     const [active, setActive] = useState(
         router.pathname.replace(/\s+/g, '').substring(1, 999999)
     )
+    console.log(tracks)
 
     return (
         <useActiveOptContext.Provider value={{ active, setActive }}>
             <AppHead title="SwapiMusic" />
             <Global styles={Materialize} />
-            <UserTrackContext.Provider value={{ idTrack, setIdTrack }}>
+            <UserTrackContext.Provider value={{ tracks, setTracks }}>
                 <Layout router={router}>
                     <Component {...pageProps} />
                 </Layout>

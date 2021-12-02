@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic'
 import {
     ChangeEvent,
     FC,
-    InputHTMLAttributes,
     useContext,
     useEffect,
     useMemo,
@@ -19,11 +18,32 @@ import {
 import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import UserImage from '../Spotify/UserImage/UserImage'
 
+interface GetIcon {
+    name: string
+}
+
+const GetIcon: FC<GetIcon> = ({ name }) => {
+    const Icon = useMemo(
+        () => dynamic(() => import(`../../../public/icons/Player/${name}.svg`)),
+        [name]
+    )
+    if (Icon) {
+        return <Icon />
+    }
+    return null
+}
 const NavBarPlayer: FC = () => {
     const [playing, setPlaying] = useState(false)
     const [volumen, setVolumen] = useState(5)
-    const { idTrack } = useContext(UserTrackContext)
-    const url = idTrack ? `https://api.spotify.com/v1/tracks/${idTrack}` : ''
+    const { tracks } = useContext(UserTrackContext)
+    const [position, setPosition] = useState(tracks?.position)
+    const url =
+        tracks?.tracks?.length > 0 &&
+        position <= tracks?.tracks?.length &&
+        tracks?.tracks[position]?.id
+            ? `https://api.spotify.com/v1/tracks/${tracks.tracks[position]?.id}`
+            : ''
+
     const track = GetData<GetTrack>(url)
     const audio = useRef<HTMLAudioElement>(null)
 
@@ -45,6 +65,10 @@ const NavBarPlayer: FC = () => {
         audio.current?.pause()
         setPlaying(false)
     }
+
+    useEffect(() => {
+        tracks && setPosition(tracks.position)
+    }, [tracks])
     useEffect(() => {
         if (audio.current) {
             setPlaying(false)
@@ -57,6 +81,7 @@ const NavBarPlayer: FC = () => {
             audio.current.volume = volumen / 100
         }
     }, [volumen])
+    console.log(position)
 
     return (
         <>
@@ -78,13 +103,21 @@ const NavBarPlayer: FC = () => {
                             </SSong.SongArtist>
                         </SSong.SongDescription>
                     </PlayerInfoSong>
-                    <div>
-                        <audio ref={audio} preload="auto">
-                            <source
-                                src={track?.preview_url}
-                                type="audio/mpeg"
-                            />
-                        </audio>
+                    <audio ref={audio} preload="auto">
+                        <source src={track?.preview_url} type="audio/mpeg" />
+                    </audio>
+                    <SSong.SongPlayerIcons>
+                        <SSong.SongButton
+                            onClick={() =>
+                                setPosition(
+                                    position <= 0
+                                        ? tracks.tracks.length - 1
+                                        : position - 1
+                                )
+                            }
+                        >
+                            {<GetIcon name="back" />}
+                        </SSong.SongButton>
                         <SSong.SongButton
                             onClick={() => {
                                 playing ? handlePause() : handlePlay()
@@ -92,8 +125,19 @@ const NavBarPlayer: FC = () => {
                         >
                             {playing ? <PauseIcon /> : <PlayIcon />}
                         </SSong.SongButton>
-                    </div>
-                    <div>
+                        <SSong.SongButton
+                            onClick={() => {
+                                setPosition(
+                                    position >= tracks.tracks.length - 1
+                                        ? 0
+                                        : position + 1
+                                )
+                            }}
+                        >
+                            {<GetIcon name="next" />}
+                        </SSong.SongButton>
+                    </SSong.SongPlayerIcons>
+                    <SSong.SongPlayerVolumen>
                         <input
                             type="range"
                             min="5"
@@ -104,7 +148,7 @@ const NavBarPlayer: FC = () => {
                             }
                             step="any"
                         />
-                    </div>
+                    </SSong.SongPlayerVolumen>
                 </NavPlayer>
             )}
         </>

@@ -35,3 +35,16 @@ export const SongButton = styled.button`
     background-color: transparent;
     cursor: pointer;
 `
+export const SongPlayerIcons = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+export const SongPlayerVolumen = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 0;
+    margin: 0 50px 0 0;
+`
