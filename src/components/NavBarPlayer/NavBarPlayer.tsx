@@ -42,7 +42,7 @@ const GetIcon: FC<GetIcon> = ({ name }) => {
 }
 const NavBarPlayer: FC = () => {
     const [playing, setPlaying] = useState(false)
-    const [volumen, setVolumen] = useState(10)
+    const [volumen, setVolumen] = useState(5)
     const { tracks } = useContext(UserTrackContext)
     const [saveTracks, setSaveTracks] = useState<Tracks>({} as Tracks)
     const [position, setPosition] = useState(tracks?.position)
