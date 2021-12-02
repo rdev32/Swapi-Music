@@ -24,7 +24,7 @@ export const ItemList = styled.a<IItemList>`
             : false}
 `
 
-export const ItemTitle = styled.h2`
+export const ItemTitle = styled.h4`
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
 `

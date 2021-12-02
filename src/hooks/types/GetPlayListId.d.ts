@@ -1,3 +1,5 @@
+import { LikedSongs } from './GetLikedSongs'
+
 export type images = {
     height: number
     url: string
@@ -114,7 +116,9 @@ export type GetPlaylistId = {
     owner: IOwner
     public: boolean
     snapshot_id: string
-    tracks: tracks
+    tracks: {
+        items: LikedSongs[]
+    }
     type: string
     uri: string
 }

@@ -4,6 +4,7 @@ import {
     FC,
     useContext,
     useEffect,
+    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -21,6 +22,13 @@ import UserImage from '../Spotify/UserImage/UserImage'
 interface GetIcon {
     name: string
 }
+type TrackId = {
+    id: string
+}
+type Tracks = {
+    position: number
+    tracks: TrackId[]
+}
 
 const GetIcon: FC<GetIcon> = ({ name }) => {
     const Icon = useMemo(
@@ -34,17 +42,21 @@ const GetIcon: FC<GetIcon> = ({ name }) => {
 }
 const NavBarPlayer: FC = () => {
     const [playing, setPlaying] = useState(false)
-    const [volumen, setVolumen] = useState(5)
+    const [volumen, setVolumen] = useState(10)
     const { tracks } = useContext(UserTrackContext)
+    const [saveTracks, setSaveTracks] = useState<Tracks>({} as Tracks)
     const [position, setPosition] = useState(tracks?.position)
     const url =
-        tracks?.tracks?.length > 0 &&
-        position <= tracks?.tracks?.length &&
-        tracks?.tracks[position]?.id
+        tracks?.tracks && tracks.tracks[position]?.id
             ? `https://api.spotify.com/v1/tracks/${tracks.tracks[position]?.id}`
             : ''
-
-    const track = GetData<GetTrack>(url)
+    const localData =
+        saveTracks?.tracks && saveTracks.tracks[saveTracks.position]?.id
+            ? `https://api.spotify.com/v1/tracks/${
+                  saveTracks.tracks[saveTracks.position]?.id
+              }`
+            : ''
+    const track = GetData<GetTrack>(url || localData)
     const audio = useRef<HTMLAudioElement>(null)
 
     const PauseIcon = useMemo(
@@ -56,9 +68,30 @@ const NavBarPlayer: FC = () => {
         []
     )
 
+    useEffect(() => {
+        if (localStorage.getItem('tracks')) {
+            setSaveTracks(JSON.parse(localStorage.getItem('tracks') || ''))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (tracks.position) {
+            console.log(tracks.position, 'tracks')
+
+            localStorage.setItem('tracks', JSON.stringify(tracks))
+        } else {
+            console.log(saveTracks.position, 'saveTracks')
+
+            localStorage.setItem('tracks', JSON.stringify(saveTracks))
+        }
+    }, [tracks.position, saveTracks.position])
+
     const handlePlay = () => {
         audio.current?.play()
         setPlaying(true)
+        if (audio.current) {
+            audio.current.volume = volumen / 100
+        }
     }
 
     const handlePause = () => {
@@ -80,8 +113,9 @@ const NavBarPlayer: FC = () => {
         if (audio.current) {
             audio.current.volume = volumen / 100
         }
-    }, [volumen])
-    console.log(position)
+    }, [audio.current, volumen])
+    console.log(saveTracks)
+    console.log(tracks)
 
     return (
         <>
@@ -108,13 +142,22 @@ const NavBarPlayer: FC = () => {
                     </audio>
                     <SSong.SongPlayerIcons>
                         <SSong.SongButton
-                            onClick={() =>
-                                setPosition(
-                                    position <= 0
-                                        ? tracks.tracks.length - 1
-                                        : position - 1
-                                )
-                            }
+                            onClick={() => {
+                                position &&
+                                    setPosition(
+                                        position <= 0
+                                            ? tracks.tracks.length - 1
+                                            : position - 1
+                                    )
+                                saveTracks.position &&
+                                    setSaveTracks({
+                                        ...saveTracks,
+                                        position:
+                                            saveTracks.position <= 0
+                                                ? saveTracks.tracks.length - 1
+                                                : saveTracks.position - 1,
+                                    })
+                            }}
                         >
                             {<GetIcon name="back" />}
                         </SSong.SongButton>
@@ -127,11 +170,37 @@ const NavBarPlayer: FC = () => {
                         </SSong.SongButton>
                         <SSong.SongButton
                             onClick={() => {
-                                setPosition(
-                                    position >= tracks.tracks.length - 1
-                                        ? 0
-                                        : position + 1
-                                )
+                                if (position) {
+                                    setPosition(
+                                        position >= tracks.tracks.length - 1
+                                            ? 0
+                                            : position + 1
+                                    )
+                                } else {
+                                    setSaveTracks({
+                                        ...saveTracks,
+                                        position:
+                                            saveTracks.position >=
+                                            saveTracks.tracks.length - 1
+                                                ? 0
+                                                : saveTracks.position + 1,
+                                    })
+                                }
+                                // position &&
+                                //     setPosition(
+                                //         position >= tracks.tracks.length - 1
+                                //             ? 0
+                                //             : position + 1
+                                //     )
+                                // saveTracks.position &&
+                                //     setSaveTracks({
+                                //         ...saveTracks,
+                                //         position:
+                                //             saveTracks.position >=
+                                //             saveTracks.tracks.length - 1
+                                //                 ? 0
+                                //                 : saveTracks.position + 1,
+                                //     })
                             }}
                         >
                             {<GetIcon name="next" />}

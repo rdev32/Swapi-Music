@@ -1,0 +1,26 @@
+{
+    "menu": [
+        {
+            "id": "Home",
+            "name": "Home",
+            "path": "/Home"
+        },
+        {
+            "id": "Search",
+            "name": "Search",
+            "path": "/Search"
+        }
+    ],
+    "library": [
+        {
+            "id": "Library",
+            "name": "Library",
+            "path": "/Library"
+        },
+        {
+            "id": "LikedSongs",
+            "name": "Liked Songs",
+            "path": "/Liked Songs"
+        }
+    ]
+}

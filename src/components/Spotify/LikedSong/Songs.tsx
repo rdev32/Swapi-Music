@@ -17,7 +17,11 @@ const Songs: FC = () => {
         items &&
             setTracks({
                 ...tracks,
-                tracks: items.map((item: any) => item.track),
+                tracks: items.map(({ track }) => {
+                    return {
+                        id: track.id,
+                    }
+                }),
             })
     }, [items])
     return (
