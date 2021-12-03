@@ -1,5 +1,5 @@
 export interface IProps {
-  router: {
-    pathname: string;
-  };
+    router: {
+        pathname: string
+    }
 }

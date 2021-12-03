@@ -1,36 +1,29 @@
-import { FC, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import {
-    GetPlaylistId,
-    GetTrackPlaylistId,
-} from '../../hooks/types/GetPlayListId'
-import GetData from '../../hooks/GetData/GetData'
-import * as S from '../../styles/components/Spotify/MainSongs/Main.style'
-// import Song from '../../components/playlist/components/Songs/Song'
-import Song from '../../components/Spotify/LikedSong/components/Song'
-import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
-import { LikedSongs } from '../../hooks/types/GetLikedSongs'
+import { FC, useContext } from 'react'
 import { spotify } from '../../assets/spotify'
+import Song from '../../components/Spotify/LikedSong/components/Song'
+import GetData from '../../hooks/GetData/GetData'
+import { LikedSongs } from '../../hooks/types/GetLikedSongs'
+import { GetPlaylistId } from '../../hooks/types/GetPlayListId'
+import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
+import * as S from '../../styles/components/Spotify/MainSongs/Main.style'
 
 const Playlists: FC = () => {
     const router = useRouter()
     const { pid } = router.query
     const url = pid ? `${spotify}v1/playlists/${pid}` : ''
-    const { tracks: useTracks, setTracks } = useContext(UserTrackContext)
-
-    const handlePlayId = (id: number) => {
-        setTracks({ ...useTracks, position: id })
-    }
+    const { setTracks } = useContext(UserTrackContext)
 
     const { tracks } = GetData<GetPlaylistId>(url)
+    const newTracks = tracks?.items?.map((track) => {
+        return {
+            id: track.track.id,
+        }
+    })
 
-    useEffect(() => {
-        tracks?.items &&
-            setTracks({
-                ...useTracks,
-                tracks: tracks.items.map(({ track }) => track),
-            })
-    }, [tracks])
+    const handlePlayId = (id: number) => {
+        setTracks({ tracks: newTracks, position: id })
+    }
     return (
         <div>
             {tracks?.items?.map((track: LikedSongs, index: number) => (

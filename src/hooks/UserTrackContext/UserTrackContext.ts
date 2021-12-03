@@ -1,12 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from 'react'
+import { Tracks } from './types'
 
-type TrackId = {
-    id: string
-}
-type Tracks = {
-    position: number
-    tracks: TrackId[]
-}
 interface IProps {
     tracks: Tracks
     setTracks: Dispatch<SetStateAction<Tracks>>

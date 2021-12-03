@@ -12,7 +12,11 @@ const Header: FC = () => {
     const { pid } = router.query
     const url = pid ? `https://api.spotify.com/v1/playlists/${pid}` : ''
     const { tracks, name, images, owner } = GetData<GetPlaylistId>(url)
-    const [hour, minutes, seconds] = GetTimeSongs({ tracks })
+    const ms = tracks?.items.reduce(
+        (acc, curr) => (acc = acc + curr.track.duration_ms),
+        0
+    )
+    const [hour, minutes, seconds] = GetTimeSongs({ ms })
 
     return (
         <header>

@@ -117,6 +117,7 @@ export type GetPlaylistId = {
     public: boolean
     snapshot_id: string
     tracks: {
+        total: number
         items: LikedSongs[]
     }
     type: string

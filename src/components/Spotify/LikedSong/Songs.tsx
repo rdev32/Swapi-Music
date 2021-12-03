@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext } from 'react'
 import Song from '../../../components/Spotify/LikedSong/components/Song'
 import GetData from '../../../hooks/GetData/GetData'
 import { GetLikedSongs } from '../../../hooks/types/GetLikedSongs'
@@ -8,22 +8,16 @@ import * as S from '../../../styles/components/Spotify/MainSongs/Main.style'
 const Songs: FC = () => {
     const url = 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0'
     const { items } = GetData<GetLikedSongs>(url)
-    const { tracks, setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserTrackContext)
 
+    const newTracks = items?.map((track) => {
+        return {
+            id: track.track.id,
+        }
+    })
     const handlePlayId = (id: number) => {
-        setTracks({ ...tracks, position: id })
+        setTracks({ tracks: newTracks, position: id })
     }
-    useEffect(() => {
-        items &&
-            setTracks({
-                ...tracks,
-                tracks: items.map(({ track }) => {
-                    return {
-                        id: track.id,
-                    }
-                }),
-            })
-    }, [items])
     return (
         <div>
             {items?.map((song, index) => (
