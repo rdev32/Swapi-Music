@@ -13,7 +13,7 @@ interface IProps {
 }
 const Buttons: FC<IProps> = ({ button }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getMode(
-        true
+        false
     )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
     return (
         <Link
