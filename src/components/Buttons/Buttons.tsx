@@ -1,14 +1,12 @@
-import { FC } from 'react'
 import Link from 'next/link'
-import * as S from '../../styles/pages/auth/login.style'
-
+import { FC } from 'react'
 import {
     baseUrl,
     clientId,
     getMode,
-    redirect,
     ScopesUrlParams,
 } from '../../assets/swagger'
+import * as S from '../../styles/pages/auth/login.style'
 
 interface IProps {
     button: string

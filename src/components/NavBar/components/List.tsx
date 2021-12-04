@@ -14,6 +14,7 @@ interface IProps {
 }
 const List: FC<IProps> = ({ Section, Title, icon }) => {
     const { active, setActive } = useContext(useActiveOptContext)
+    console.log(active)
 
     return (
         <>

@@ -18,7 +18,7 @@ type Tracks = {
 function MyApp({ Component, pageProps, router }: AppProps) {
     const [tracks, setTracks] = useState<Tracks>({} as Tracks)
     const [active, setActive] = useState(
-        router.pathname.replace(/\s+/g, '').substring(1, 999999)
+        router.pathname.replace(/\s+/g, '').substring(0, 999999)
     )
 
     return (
