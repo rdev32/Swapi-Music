@@ -10,7 +10,9 @@ import * as S from '../../styles/pages/auth/login.style'
 
 interface IProps {
     button: string
-}
+} //GETMODE
+//FALSE === DEPLOY
+//TRUE === DEV
 const Buttons: FC<IProps> = ({ button }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getMode(
         false
