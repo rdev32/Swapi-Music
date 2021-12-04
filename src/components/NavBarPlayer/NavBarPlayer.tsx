@@ -82,8 +82,6 @@ const NavBarPlayer: FC = () => {
     }, [tracks])
     useEffect(() => {
         if (Object.keys(saveTracks).length > 0) {
-            handlePlay()
-
             localStorage.setItem(
                 'tracks',
                 JSON.stringify({ ...saveTracks, position: saveTracks.position })
