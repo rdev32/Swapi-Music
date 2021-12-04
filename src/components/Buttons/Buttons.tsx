@@ -3,7 +3,7 @@ import { FC } from 'react'
 import {
     baseUrl,
     clientId,
-    getMode,
+    getLocalMode,
     ScopesUrlParams,
 } from '../../assets/swagger'
 import * as S from '../../styles/pages/auth/login.style'
@@ -14,7 +14,7 @@ interface IProps {
 //FALSE === DEPLOY
 //TRUE === DEV
 const Buttons: FC<IProps> = ({ button }) => {
-    const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getMode(
+    const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getLocalMode(
         false
     )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
     return (

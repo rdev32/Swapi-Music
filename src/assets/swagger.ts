@@ -5,7 +5,7 @@ export const baseUrl = 'https://accounts.spotify.com/authorize'
 export const redirect = 'http://localhost:3000/Home'
 export const redirectDeploy = 'https://swapimusic.herokuapp.com/Home'
 
-export const getMode = (local: boolean) => {
+export const getLocalMode = (local: boolean) => {
     return local ? redirect : redirectDeploy
 }
 export const Scopes = [
