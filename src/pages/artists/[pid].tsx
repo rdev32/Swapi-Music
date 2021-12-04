@@ -13,10 +13,12 @@ const Artist: NextPage = () => {
     const url = pid ? `https://api.spotify.com/v1/artists/${pid}` : ''
 
     const { name, images, followers } = GetData<Artist>(url)
+    const data = GetData<Artist>(url)
+    console.log(data)
 
     //Crea una funcion que separe un numero en millares
-    const formatNumber = (num: number) => {
-        return `${num
+    const formatNumber = (numbers: number) => {
+        return `${numbers
             ?.toString()
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} Followers`
     }
@@ -26,7 +28,7 @@ const Artist: NextPage = () => {
     // }
     return (
         <S.UserBody>
-            <S.UserStyle>
+            <S.UserStyle width="370px">
                 <div>
                     {images && (
                         <UserImage

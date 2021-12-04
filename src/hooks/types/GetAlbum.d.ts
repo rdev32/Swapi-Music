@@ -1,6 +1,6 @@
 import { IArtist } from './GetTopSongs'
 
-interface IImages {
+export type IImages = {
     url: string
     width: number
     height: number
@@ -11,7 +11,7 @@ interface ICopyright {
     type: string
 }
 
-interface Artist {
+export type Artist = {
     external_urls: {
         spotify: string
     }

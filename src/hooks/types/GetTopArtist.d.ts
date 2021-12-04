@@ -4,7 +4,7 @@ interface ArtistImages {
     width: number
 }
 
-export interface Artist {
+export type Artist = {
     external_urls: {
         spotify: string
     }

@@ -9,27 +9,33 @@ interface IProps {
 
 const Song: FC<IProps> = ({ song }) => {
     const [hour, minutes, seconds] = GetTimeSongs({ ms: song?.duration_ms })
+
+    console.log(song)
+
     return (
         <S.Song key={song?.id}>
             <S.SongMain>
                 <S.SongDescription>
                     <S.SontTitle>{song?.name}</S.SontTitle>
-                    <Link
-                        href={{
-                            pathname: '/artists/[pid]',
-                            query: {
-                                pid: song?.artists[0].id,
-                            },
-                        }}
-                        passHref
-                    >
+                    <>
                         <S.SongArtist>
-                            {song.artists
-                                .map((name) => name.name)
-                                .join(', ')
-                                .slice(0, 25)}
+                            {song?.artists?.map((artist, index) => (
+                                <Link
+                                    key={artist?.id}
+                                    href={{
+                                        pathname: '/artists/[pid]',
+                                        query: {
+                                            pid: artist?.id,
+                                        },
+                                    }}
+                                >
+                                    <a>
+                                        {index === 0 ? '' : `,`} {artist?.name}
+                                    </a>
+                                </Link>
+                            ))}
                         </S.SongArtist>
-                    </Link>
+                    </>
                 </S.SongDescription>
             </S.SongMain>
             <S.SongMinutesBox>
@@ -50,3 +56,23 @@ const Song: FC<IProps> = ({ song }) => {
 }
 
 export default Song
+
+/*                    <Link
+                    key={artist?.id}
+                        href={{
+                            pathname: '/artists/[pid]',
+                            query: {
+                                pid: artist.id},
+                            },
+                        }}
+                        passHref
+                    >
+                        <S.SongArtist>
+                            {song.artists
+                                .map((name) => name.name)
+                                .join(', ')
+                                .slice(0, 25)}
+                        </S.SongArtist>
+                    </Link>
+
+                    */
