@@ -31,6 +31,15 @@ const Home = () => {
     return (
         <S.HomeContainer>
             <GetSalute />
+            <div>
+                <h2>Hi, Welcome to Swapi Music</h2>
+                <p>
+                    {' '}
+                    This is a app to search, play, and save favorites songs,
+                    albums,playlists. from the Spotify API
+                </p>
+                <p>Thank you for test my app 💕💕💕</p>
+            </div>
         </S.HomeContainer>
     )
 }
