@@ -32,7 +32,6 @@ const NavBarPlayer: FC = () => {
                       getTrack?.tracks[getTrack.position]?.id
                   }`
                 : ''
-        console.log(url)
 
         return url
     }
@@ -61,14 +60,12 @@ const NavBarPlayer: FC = () => {
             setSaveTracks(local)
         }
     }, [])
-
     useEffect(() => {
         if (audio.current) {
             setPlaying(false)
             audio.current.src = track?.preview_url
         }
     }, [track])
-
     useEffect(() => {
         if (audio.current) {
             audio.current.volume = volumen / 100
@@ -85,6 +82,8 @@ const NavBarPlayer: FC = () => {
     }, [tracks])
     useEffect(() => {
         if (Object.keys(saveTracks).length > 0) {
+            handlePlay()
+
             localStorage.setItem(
                 'tracks',
                 JSON.stringify({ ...saveTracks, position: saveTracks.position })
