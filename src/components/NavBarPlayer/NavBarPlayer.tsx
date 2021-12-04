@@ -179,7 +179,7 @@ const NavBarPlayer: FC = () => {
                     <SSong.SongPlayerVolumen>
                         <input
                             type="range"
-                            min="5"
+                            min="0"
                             max="50"
                             value={volumen}
                             onChange={(event: ChangeEvent<HTMLInputElement>) =>

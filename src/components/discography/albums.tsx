@@ -13,7 +13,7 @@ const Albums: FC<IProps> = ({ album }) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     return (
-        <S.AlbumAside margin="0 0 100px 0">
+        <S.AlbumAside margin="0 0 50px 0">
             <S.AlbumHeader>
                 <div>
                     {album.images.length > 0 && (

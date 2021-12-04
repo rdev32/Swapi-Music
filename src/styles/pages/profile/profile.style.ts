@@ -9,5 +9,5 @@ export const UserStyle = styled.div`
 `
 
 export const UserBody = styled.main`
-    margin: 65px 0 110px 250px;
+    margin: 65px 0 110px 270px;
 `

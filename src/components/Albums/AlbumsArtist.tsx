@@ -4,6 +4,7 @@ import GetData from '../../hooks/GetData/GetData'
 import { Artist } from '../../hooks/types/GetAlbum'
 import * as SFollow from '../../styles/components/Spotify/Following/Following.style'
 import * as SPlaylist from '../../styles/pages/library/library.style'
+import * as S from '../../styles/components/albums/albums.style'
 import UserImage from '../Spotify/UserImage/UserImage'
 import Link from 'next/link'
 import { colors } from '../../styles/colors'
@@ -43,18 +44,24 @@ const AlbumArtist: FC<IProps> = ({ artists }) => {
     return (
         <>
             {items && (
-                <>
-                    <h3>More by {items[0].artists[0].name} </h3>
-                    <Link
-                        href={{
-                            pathname: '/discography/[pid]',
-                            query: {
-                                pid: items[0].artists[0].id,
-                            },
-                        }}
-                    >
-                        <a>See Discography</a>
-                    </Link>
+                <footer>
+                    {' '}
+                    <S.AlbumsFooterHeader>
+                        <h3>More by {items[0].artists[0].name} </h3>
+                        <Link
+                            href={{
+                                pathname: '/discography/[pid]',
+                                query: {
+                                    pid: items[0].artists[0].id,
+                                },
+                            }}
+                            passHref
+                        >
+                            <S.AlbumsFooterButton>
+                                See Discography
+                            </S.AlbumsFooterButton>
+                        </Link>
+                    </S.AlbumsFooterHeader>
                     <SFollow.ArtistCards height="248px">
                         {items.map((item) => (
                             <Link
@@ -88,7 +95,7 @@ const AlbumArtist: FC<IProps> = ({ artists }) => {
                             </Link>
                         ))}
                     </SFollow.ArtistCards>
-                </>
+                </footer>
             )}
         </>
     )

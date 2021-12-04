@@ -5,15 +5,18 @@ import UserImage from '../../components/Spotify/UserImage/UserImage'
 import GetData from '../../hooks/GetData/GetData'
 import GetTimeSongs from '../../hooks/GetTimeSongs/GetTimeSongs'
 import { Album } from '../../hooks/types/GetAlbum'
-import * as SSong from '../../styles/components/Spotify/MainSongs/Main.style'
+import * as SMSong from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../../styles/pages/album/album.style'
 import * as SPlaylist from '../../styles/components/playlist/header.style'
 import Link from 'next/link'
 import AlbumArtist from '../../components/Albums/AlbumsArtist'
+import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
+import { useContext } from 'react'
 
 const Album: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
+    const { tracks: tracksContext, setTracks } = useContext(UserTrackContext)
     const urlAlbumsTracks = pid
         ? `https://api.spotify.com/v1/albums/${pid}`
         : ''
@@ -26,6 +29,15 @@ const Album: NextPage = () => {
     )
 
     const [hour, minutes, seconds] = GetTimeSongs({ ms: ms })
+
+    const newTracks = tracks?.items?.map((track) => {
+        return {
+            id: track.id,
+        }
+    })
+    const handlePlayId = (id: number) => {
+        setTracks({ tracks: newTracks, position: id })
+    }
 
     return (
         <S.AlbumStyle>
@@ -75,10 +87,15 @@ const Album: NextPage = () => {
             </S.AlbumHeader>
             <S.AlbumAside>
                 {tracks?.items?.map((song, index) => (
-                    <SSong.SongCard key={song.id}>
-                        <SSong.SongNumber>{index + 1}</SSong.SongNumber>
+                    <SMSong.SongCard key={song.id}>
+                        <div style={{ width: '1%' }}>
+                            <SMSong.SongNumber>{index + 1}</SMSong.SongNumber>
+                        </div>
+                        <button onClick={() => handlePlayId(index)}>
+                            Play
+                        </button>
                         <Song song={song} />
-                    </SSong.SongCard>
+                    </SMSong.SongCard>
                 ))}
             </S.AlbumAside>
             <AlbumArtist artists={artists} />
