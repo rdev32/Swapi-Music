@@ -23,22 +23,30 @@ const Song: FC<IProps> = ({ item }) => {
                 />
                 <S.SongDescription>
                     <S.SontTitle>{item.name.slice(0, 25)}</S.SontTitle>
-                    <Link
-                        href={{
-                            pathname: '/artists/[pid]',
-                            query: {
-                                pid: item.artists[0].id,
-                            },
-                        }}
-                        passHref
-                    >
-                        <S.SongArtist>
-                            {item.artists
-                                .map((name) => name.name)
-                                .join(', ')
-                                .slice(0, 27)}
-                        </S.SongArtist>
-                    </Link>
+                    <div>
+                        {item.artists.map((artist, index) => (
+                            // eslint-disable-next-line react/jsx-key
+                            <>
+                                {index <= 1 && (
+                                    <Link
+                                        key={artist?.id}
+                                        href={{
+                                            pathname: '/artists/[pid]',
+                                            query: {
+                                                pid: artist?.id,
+                                            },
+                                        }}
+                                        passHref
+                                    >
+                                        <S.SongArtist>
+                                            {index === 0 ? '' : `,`}{' '}
+                                            {artist?.name}
+                                        </S.SongArtist>
+                                    </Link>
+                                )}
+                            </>
+                        ))}
+                    </div>
                 </S.SongDescription>
             </S.SongMain>
             <S.SongTitleAlbum>

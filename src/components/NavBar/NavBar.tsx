@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useLayoutEffect, useState } from 'react'
 import GetData from '../../hooks/GetData/GetData'
 import { GetCurrentPlaylist } from '../../hooks/types/GetCurrentUserPlaylist'
 import * as S from '../../styles/components/NavBar/NavBarStyle'
@@ -15,9 +15,11 @@ type PlaylistProps = {
 const NavBar: FC = () => {
     const url = 'https://api.spotify.com/v1/me/playlists'
     const { items } = GetData<GetCurrentPlaylist>(url)
-    const [playlists, setPlaylists] = useState<PlaylistProps[]>([])
+    const [playlists, setPlaylists] = useState<PlaylistProps[]>(
+        [] as PlaylistProps[]
+    )
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const playlist = items?.map((item) => {
             return {
                 id: item.id,
@@ -26,7 +28,7 @@ const NavBar: FC = () => {
             }
         })
 
-        items && setPlaylists(playlist)
+        playlist && setPlaylists(playlist)
     }, [items])
 
     return (

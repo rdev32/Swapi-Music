@@ -24,8 +24,6 @@ const UserImage: FC<IDataImgUser> = ({
     height,
     name,
 }) => {
-    // const DynamicIcon = dynamic(() => import(`/icons/${name}.svg`))
-
     return (
         <>
             {url && (
@@ -46,12 +44,6 @@ const UserImage: FC<IDataImgUser> = ({
                     height={size || height || 180}
                 />
             )}
-            {/* {!url && (
-                <DynamicUserImage>
-                    <DynamicIcon />
-                </DynamicUserImage>
-            )} */}
-            {/* {!url && DynamicIcon && <DynamicIcon />} */}
         </>
     )
 }

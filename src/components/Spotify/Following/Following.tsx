@@ -4,6 +4,8 @@ import UserImage from '../../../components/Spotify/UserImage/UserImage'
 import GetData from '../../../hooks/GetData/GetData'
 import { IFollowedArtist } from '../../../hooks/types/GetFollowedArts'
 import * as S from '../../../styles/components/Spotify/Following/Following.style'
+
+import ArtistCard from '../../Artist/Artist'
 interface IProps {}
 
 const Following: FC<IProps> = () => {
@@ -15,17 +17,7 @@ const Following: FC<IProps> = () => {
             <h2>Following</h2>
             <S.ArtistCards>
                 {artists?.items.map((artist) => (
-                    <S.ArtistCard key={artist.id}>
-                        <UserImage
-                            key={artist.images[0].url}
-                            url={artist.images[0].url}
-                            bradius={100}
-                            displayName={artist.name}
-                            size={160}
-                        />
-                        <S.ArtistName>{artist.name}</S.ArtistName>
-                        <S.ArtistTag>Artist</S.ArtistTag>
-                    </S.ArtistCard>
+                    <ArtistCard key={artist.id} item={artist} />
                 ))}
             </S.ArtistCards>
         </S.BoxStyle>

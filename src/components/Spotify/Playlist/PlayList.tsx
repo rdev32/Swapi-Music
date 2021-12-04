@@ -19,12 +19,21 @@ const PlayList: FC<IProps> = ({ playlist }) => {
 
     return (
         <S.PlaylistCard onClick={handlePlaylist}>
-            {playlist.images.length > 0 && (
+            {playlist.images.length > 0 ? (
                 <UserImage
                     url={playlist.images[0].url}
                     displayName={playlist.name}
                     size={166}
                     bradius={10}
+                    name="artistout"
+                />
+            ) : (
+                <UserImage
+                    url=""
+                    displayName={playlist.name}
+                    size={166}
+                    bradius={10}
+                    name="artistout"
                 />
             )}
             <S.PlaylistTitle>

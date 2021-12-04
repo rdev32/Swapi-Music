@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { colors } from '../../../colors'
 
 export const ArtistCard = styled.div`
+    cursor: pointer;
     padding: 10px;
     margin: 10px;
     border-radius: 10px;

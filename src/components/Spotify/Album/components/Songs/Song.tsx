@@ -17,25 +17,21 @@ const Song: FC<IProps> = ({ song }) => {
             <S.SongMain>
                 <S.SongDescription>
                     <S.SontTitle>{song?.name}</S.SontTitle>
-                    <>
-                        <S.SongArtist>
-                            {song?.artists?.map((artist, index) => (
-                                <Link
-                                    key={artist?.id}
-                                    href={{
-                                        pathname: '/artists/[pid]',
-                                        query: {
-                                            pid: artist?.id,
-                                        },
-                                    }}
-                                >
-                                    <a>
-                                        {index === 0 ? '' : `,`} {artist?.name}
-                                    </a>
-                                </Link>
-                            ))}
-                        </S.SongArtist>
-                    </>
+                    {song?.artists?.map((artist, index) => (
+                        <Link
+                            key={artist?.id}
+                            href={{
+                                pathname: '/artists/[pid]',
+                                query: {
+                                    pid: artist?.id,
+                                },
+                            }}
+                        >
+                            <a>
+                                {index === 0 ? '' : `,`} {artist?.name}
+                            </a>
+                        </Link>
+                    ))}
                 </S.SongDescription>
             </S.SongMain>
             <S.SongMinutesBox>
@@ -56,23 +52,3 @@ const Song: FC<IProps> = ({ song }) => {
 }
 
 export default Song
-
-/*                    <Link
-                    key={artist?.id}
-                        href={{
-                            pathname: '/artists/[pid]',
-                            query: {
-                                pid: artist.id},
-                            },
-                        }}
-                        passHref
-                    >
-                        <S.SongArtist>
-                            {song.artists
-                                .map((name) => name.name)
-                                .join(', ')
-                                .slice(0, 25)}
-                        </S.SongArtist>
-                    </Link>
-
-                    */

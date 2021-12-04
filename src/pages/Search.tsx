@@ -15,6 +15,7 @@ import * as SFollow from '../styles/components/Spotify/Following/Following.style
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../styles/pages/profile/profile.style'
 import {
+    SearchArstitMainDesc,
     SearchArtist,
     SearchArtistMain,
     SearchImageContainer,
@@ -31,14 +32,19 @@ const Search: FC = () => {
         data: { albums, artists, playlists, episodes, tracks, shows },
         setCount,
     } = GetSearch<IGetSearch>(search, setMount)
-    const { setIdTrack } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserTrackContext)
 
     const url = `https://api.spotify.com/v1/browse/categories?limit=50`
 
     const { categories } = GetData<GetCategories>(url)
 
-    const handlePlay = (id: string) => {
-        setIdTrack(id)
+    const newTracks = tracks?.items?.map((track) => {
+        return {
+            id: track.id,
+        }
+    })
+    const handlePlayId = (id: number) => {
+        setTracks({ tracks: newTracks, position: id })
     }
 
     return (
@@ -64,28 +70,38 @@ const Search: FC = () => {
                                     <SearchTitleCategory>
                                         Result
                                     </SearchTitleCategory>
-                                    <SearchArtistMain>
-                                        <SearchImageContainer>
-                                            <UserImage
-                                                url={
-                                                    artists?.items[0]?.images &&
-                                                    artists?.items[0]?.images[0]
-                                                        ?.url
-                                                }
-                                                displayName={
-                                                    artists?.items[0].name
-                                                }
-                                                bradius={500}
-                                                height={250}
-                                                width={250}
-                                            />
-                                        </SearchImageContainer>
-                                        <SearchType>
-                                            {artists?.items[0]?.type?.toUpperCase()}
-                                        </SearchType>
-                                        <SearchArtist>
-                                            {artists?.items[0]?.name}
-                                        </SearchArtist>
+                                    <SearchArtistMain
+                                        href={{
+                                            pathname: '/artists/[pid]/',
+                                            query: {
+                                                pid: artists?.items[0].id,
+                                            },
+                                        }}
+                                    >
+                                        <SearchArstitMainDesc>
+                                            <SearchImageContainer>
+                                                <UserImage
+                                                    url={
+                                                        artists?.items[0]
+                                                            ?.images &&
+                                                        artists?.items[0]
+                                                            ?.images[0]?.url
+                                                    }
+                                                    displayName={
+                                                        artists?.items[0].name
+                                                    }
+                                                    bradius={500}
+                                                    height={250}
+                                                    width={250}
+                                                />
+                                            </SearchImageContainer>
+                                            <SearchType>
+                                                {artists?.items[0]?.type?.toUpperCase()}
+                                            </SearchType>
+                                            <SearchArtist>
+                                                {artists?.items[0]?.name}
+                                            </SearchArtist>
+                                        </SearchArstitMainDesc>
                                     </SearchArtistMain>
                                 </SearchProfileContainer>
                             </>
@@ -106,7 +122,7 @@ const Search: FC = () => {
                                         <div>
                                             <button
                                                 onClick={() =>
-                                                    handlePlay(track.id)
+                                                    handlePlayId(index)
                                                 }
                                             >
                                                 Play

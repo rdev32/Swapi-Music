@@ -3,7 +3,7 @@ export type Artist = {
         spotify: string
     }
     followers: {
-        href: string | undefined
+        href: string | null
         total: number
     }
     genres: string[]

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { colors } from '../../colors'
+import Link from 'next/link'
 
 export const SearchSection1 = styled.div`
     display: flex;
@@ -11,12 +12,14 @@ export const SearchTitleCategory = styled.h3`
     font-size: 1.5rem;
 `
 
-export const SearchArtistMain = styled.div`
+export const SearchArtistMain = styled(Link)``
+export const SearchArstitMainDesc = styled.a`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    cursor: pointer;
 `
 export const SearchProfileContainer = styled.div`
     width: 345px;
@@ -32,7 +35,7 @@ export const SearchProfileContainer = styled.div`
 `
 
 export const SearchTracksContainer = styled.div`
-    height: 395px;
+    height: 400px;
     /* margin: 0 0 0 20px; */
     width: 70%;
     overflow: hidden;

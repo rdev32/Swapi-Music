@@ -6,7 +6,6 @@ export const AlbumStyle = styled.main`
 export const AlbumHeader = styled.header`
     display: flex;
     justify-content: start;
-    /* align-items: center; */
     margin: 0 0 25px 0;
 `
 export const AlbumAside = styled.aside`

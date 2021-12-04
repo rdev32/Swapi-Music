@@ -5,6 +5,7 @@ import * as S from '../../styles/pages/auth/login.style'
 import {
     baseUrl,
     clientId,
+    getMode,
     redirect,
     ScopesUrlParams,
 } from '../../assets/swagger'
@@ -12,9 +13,10 @@ import {
 interface IProps {
     button: string
 }
-
 const Buttons: FC<IProps> = ({ button }) => {
-    const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${redirect}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
+    const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getMode(
+        false
+    )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
     return (
         <Link
             href={

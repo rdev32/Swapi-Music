@@ -17,32 +17,40 @@ const Song: FC<IProps> = ({ song }) => {
     return (
         <SSong.Song key={song?.track?.id}>
             <SSong.SongMain>
-                <UserImage
-                    url={song?.track?.album?.images[0]?.url}
-                    displayName={song.track.album.name}
-                    size={50}
-                    bradius={10}
-                    name="songout"
-                />
+                {song?.track?.album?.images?.length > 0 ? (
+                    <UserImage
+                        url={song?.track?.album?.images[0]?.url}
+                        displayName={song.track.album.name}
+                        size={50}
+                        bradius={10}
+                        name="songout"
+                    />
+                ) : (
+                    <UserImage
+                        url=""
+                        displayName={song.track.album.name}
+                        size={50}
+                        bradius={10}
+                        name="songout"
+                    />
+                )}
                 <SSong.SongDescription>
                     <SSong.SontTitle>{song.track?.name}</SSong.SontTitle>
-                    <SSong.SongArtist>
-                        {song?.track?.artists.map((artist, index) => (
-                            <Link
-                                key={artist?.id}
-                                href={{
-                                    pathname: '/artists/[pid]',
-                                    query: {
-                                        pid: artist?.id,
-                                    },
-                                }}
-                            >
-                                <a>
-                                    {index === 0 ? '' : `,`} {artist?.name}
-                                </a>
-                            </Link>
-                        ))}
-                    </SSong.SongArtist>
+                    {song?.track?.artists.map((artist, index) => (
+                        <Link
+                            key={artist?.id}
+                            href={{
+                                pathname: '/artists/[pid]',
+                                query: {
+                                    pid: artist?.id,
+                                },
+                            }}
+                        >
+                            <a>
+                                {index === 0 ? '' : `,`} {artist?.name}
+                            </a>
+                        </Link>
+                    ))}
                 </SSong.SongDescription>
             </SSong.SongMain>
             <SSong.SongTitleAlbum>

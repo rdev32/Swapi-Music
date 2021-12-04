@@ -22,10 +22,6 @@ const Artist: NextPage = () => {
             ?.toString()
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} Followers`
     }
-
-    // const divideNumbers = (num: string) => {
-    //     return num.toLocaleString('en-US')
-    // }
     return (
         <S.UserBody>
             <S.UserStyle width="370px">
