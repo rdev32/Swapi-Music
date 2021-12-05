@@ -8,14 +8,12 @@ import {
 } from '../../assets/swagger'
 import * as S from '../../styles/pages/auth/login.style'
 
-interface IProps {
-    button: string
-} //GETMODE
+//getLocalMode
 //FALSE === DEPLOY
 //TRUE === DEV
-const Buttons: FC<IProps> = ({ button }) => {
+const Buttons: FC<{ button: string }> = ({ button }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getLocalMode(
-        false
+        true
     )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
     return (
         <Link

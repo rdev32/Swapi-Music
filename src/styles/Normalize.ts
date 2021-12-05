@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { colors } from './colors'
 
 export const Materialize = css`
 
@@ -11,7 +12,7 @@ export const Materialize = css`
     font-family: 'Inter', sans-serif;
     margin: 0;
     transition: 0.4s;
-    
+    color:${colors.black}
   }
 
 

@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { ReactChild, useMemo } from 'react'
 import { colors } from '../../styles/colors'
 interface SvgDynamicProps {
-    active: boolean
+    active: boolean | undefined
 }
 
 const SvgBox = styled.div<SvgDynamicProps>`
@@ -25,8 +25,8 @@ const SvgBox = styled.div<SvgDynamicProps>`
 
 export type IconProps = {
     name: string
-    active: boolean
-    children: any
+    active?: boolean
+    children?: any
 }
 const AtomIcon = ({ children, name, active }: IconProps) => {
     const DynamicIcon = useMemo(

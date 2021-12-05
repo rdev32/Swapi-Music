@@ -1,44 +1,36 @@
-import { FC, useEffect, useLayoutEffect, useState } from 'react'
+import { FC } from 'react'
+import sections from '../../assets/sections.json'
 import GetData from '../../hooks/GetData/GetData'
 import { GetCurrentPlaylist } from '../../hooks/types/GetCurrentUserPlaylist'
 import * as S from '../../styles/components/NavBar/NavBarStyle'
-import List from './components/List'
-import Title from './components/Title/Title'
-import sections from '../../assets/sections.json'
-
-type PlaylistProps = {
-    id: string
-    name: string
-    path: string
-}
+import NavBarSections from './components/NavBarSections'
+import NavBarHeader from './components/NavBarHeader/NavBarHeader'
 
 const NavBar: FC = () => {
     const url = 'https://api.spotify.com/v1/me/playlists'
     const { items } = GetData<GetCurrentPlaylist>(url)
-    const [playlists, setPlaylists] = useState<PlaylistProps[]>(
-        [] as PlaylistProps[]
-    )
 
-    useLayoutEffect(() => {
-        const playlist = items?.map((item) => {
-            return {
-                id: item.id,
-                name: item.name,
-                path: `/playlist/${item.id}`,
-            }
-        })
-
-        playlist && setPlaylists(playlist)
-    }, [items])
-
+    const playlist = items?.map((item) => {
+        return {
+            id: item.id,
+            name: item.name,
+            path: `/playlist/${item.id}`,
+        }
+    })
     return (
         <S.NavBar>
-            <Title />
-            <List Title="Menu" Section={sections.menu} />
-            <List Title="Library" Section={sections.library} />
-            {playlists && (
-                <List Title="Playlist" Section={playlists} icon="Library" />
-            )}
+            <NavBarHeader />
+            <NavBarSections Type="Menu" Section={sections.menu} />
+            <NavBarSections Type="Library" Section={sections.library} />
+            <NavBarSections
+                Type="Playlist"
+                Section={playlist}
+                icon="Library"
+                styles={{
+                    margin: '10px 0',
+                    height: 'auto',
+                }}
+            />
         </S.NavBar>
     )
 }

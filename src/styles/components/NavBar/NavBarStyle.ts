@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
+import { colors } from '../../colors'
 
 export const NavBar = styled.nav`
-    width: 220px;
+    width: 230px;
     height: 100vh;
-    background: #f5f5f5;
-    border-radius: 0px 10px 10px 0px;
+    background: ${colors.gray};
+    border-radius: 0px 20px 20px 0px;
     padding: 30px;
     display: flex;
     flex-direction: column;

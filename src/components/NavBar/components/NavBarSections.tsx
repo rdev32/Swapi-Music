@@ -1,33 +1,25 @@
 import { FC, useContext } from 'react'
 import useActiveOptContext from '../../../hooks/useActiveOptContext/useActiveOptContext'
-import * as S from '../../../styles/components/NavBar/components/ListS'
+import * as S from '../../../styles/components/NavBar/components/Section.style'
 import AtomIcon from '../../SvgDynamic/SvgDynamic'
+import { IProps } from './types'
 
-interface IProps {
-    Section: {
-        id: string
-        name: string
-        path: string
-    }[]
-    Title: string
-    icon?: string
-}
-const List: FC<IProps> = ({ Section, Title, icon }) => {
+const NavBarSections: FC<IProps> = ({ Section, Type: Title, icon, styles }) => {
     const { active, setActive } = useContext(useActiveOptContext)
-    console.log(active)
 
     return (
         <>
             {Section?.length > 0 && (
-                <S.ItemDiv>
-                    <S.ItemTitle>{Title}</S.ItemTitle>
+                <S.Section height={styles?.height} margin={styles?.margin}>
+                    <S.SectionTitle>{Title}</S.SectionTitle>
                     {Section.map((options) => (
-                        <S.ItemLink
+                        <S.SectionLinks
                             key={options.id}
                             href={`${options.path.replace(/\s+/g, '')}`}
                             passHref
                         >
-                            <S.ItemList
+                            <S.SectionLink
+                                margin={styles?.margin}
                                 active={
                                     active.replace(/\s+/g, '') ===
                                     options.path.replace(/\s+/g, '')
@@ -45,19 +37,19 @@ const List: FC<IProps> = ({ Section, Title, icon }) => {
                                     }
                                     name={icon || options.name}
                                 >
-                                    <S.ItemPhrase>
-                                        {options.name.length > 12
+                                    <S.SectionName>
+                                        {options.name.length > 14
                                             ? options.name.slice(0, 11) + '...'
                                             : options.name}
-                                    </S.ItemPhrase>
+                                    </S.SectionName>
                                 </AtomIcon>
-                            </S.ItemList>
-                        </S.ItemLink>
+                            </S.SectionLink>
+                        </S.SectionLinks>
                     ))}
-                </S.ItemDiv>
+                </S.Section>
             )}
         </>
     )
 }
 
-export default List
+export default NavBarSections
