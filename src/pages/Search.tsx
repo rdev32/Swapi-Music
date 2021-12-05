@@ -1,3 +1,4 @@
+import { NextPage } from 'next'
 import { FC, useContext, useState } from 'react'
 import ArtistCard from '../components/Artist/Artist'
 import Categories from '../components/Search/Categories/Categories'
@@ -13,7 +14,11 @@ import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as SFollow from '../styles/components/Spotify/Following/Following.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
-import * as S from '../styles/pages/profile/profile.style'
+import * as S from '../styles/general/styles'
+import * as SAlbums from '../styles/components/albums/albums.style'
+import * as SPlaylist from '../styles/pages/library/library.style'
+
+import Link from 'next/link'
 import {
     SearchArstitMainDesc,
     SearchArtist,
@@ -25,7 +30,7 @@ import {
     SearchTracksContainer,
     SearchType,
 } from '../styles/pages/Search/Search.style'
-const Search: FC = () => {
+const Search: NextPage = () => {
     const [search, setSearch] = useState('')
     const [mount, setMount] = useState(false)
     const {
@@ -47,8 +52,10 @@ const Search: FC = () => {
         setTracks({ tracks: newTracks, position: id })
     }
 
+    console.log(albums)
+
     return (
-        <S.UserBody>
+        <S.StyledContainer>
             <FormContainer>
                 <SearchBar
                     onChange={(event) => {
@@ -152,7 +159,7 @@ const Search: FC = () => {
                         )}
                     </div>
                     <div>
-                        {artists?.items?.length !== 0 ? (
+                        {artists?.items?.length !== 0 && (
                             <>
                                 <SearchTitleCategory>
                                     Artist
@@ -166,13 +173,61 @@ const Search: FC = () => {
                                     ))}
                                 </SFollow.ArtistCards>
                             </>
-                        ) : (
-                            false
+                        )}
+                    </div>
+                    <div>
+                        {albums && albums?.items?.length !== 0 && (
+                            <>
+                                <SearchTitleCategory>
+                                    Albums
+                                </SearchTitleCategory>
+                                <SFollow.ArtistCards height="248px">
+                                    {albums.items.map((album) => (
+                                        <Link
+                                            href={{
+                                                pathname: '/album/[pid]',
+                                                query: { pid: album?.id },
+                                            }}
+                                            passHref
+                                            key={album.id}
+                                        >
+                                            <SAlbums.AlbumRedirect>
+                                                {album.images.length > 0 && (
+                                                    <UserImage
+                                                        url={
+                                                            album.images[0].url
+                                                        }
+                                                        displayName={album.name}
+                                                        size={166}
+                                                        bradius={10}
+                                                    />
+                                                )}
+                                                <SPlaylist.PlaylistTitle>
+                                                    {album.name.length > 16
+                                                        ? `${album.name
+                                                              .slice(0, 16)
+                                                              .trim()}...`
+                                                        : album.name.slice(
+                                                              0,
+                                                              16
+                                                          )}
+                                                </SPlaylist.PlaylistTitle>
+                                                <SPlaylist.PlaylistAuthor>
+                                                    {album.release_date.slice(
+                                                        0,
+                                                        4
+                                                    )}
+                                                </SPlaylist.PlaylistAuthor>
+                                            </SAlbums.AlbumRedirect>
+                                        </Link>
+                                    ))}
+                                </SFollow.ArtistCards>
+                            </>
                         )}
                     </div>
                 </>
             )}
-        </S.UserBody>
+        </S.StyledContainer>
     )
 }
 

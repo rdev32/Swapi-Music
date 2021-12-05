@@ -1,8 +1,6 @@
 import { FC } from 'react'
 
-interface IProps {}
-
-const GetSalute: FC<IProps> = (props) => {
+const GetSalute: FC = () => {
     const hour = new Date().getHours()
     if (hour >= 6 && hour < 12) {
         return <h1>Good Morning</h1>

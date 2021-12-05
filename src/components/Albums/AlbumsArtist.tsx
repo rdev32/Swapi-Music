@@ -1,34 +1,12 @@
+import Link from 'next/link'
 import { FC } from 'react'
-import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
 import GetData from '../../hooks/GetData/GetData'
 import { Artist } from '../../hooks/types/GetAlbum'
+import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
+import * as S from '../../styles/components/albums/albums.style'
 import * as SFollow from '../../styles/components/Spotify/Following/Following.style'
 import * as SPlaylist from '../../styles/pages/library/library.style'
-import * as S from '../../styles/components/albums/albums.style'
 import UserImage from '../Spotify/UserImage/UserImage'
-import Link from 'next/link'
-import { colors } from '../../styles/colors'
-import styled from '@emotion/styled'
-
-export const AlbumRedirect = styled.a`
-    margin: 10px;
-    background-color: transparent;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    transition: 0.3s;
-    cursor: pointer;
-    font-family: Inter;
-
-    &:hover {
-        padding: 10px;
-        transition: 0.3s;
-        background-color: ${colors.gray};
-    }
-`
 
 interface IProps {
     artists: Artist[]
@@ -47,12 +25,12 @@ const AlbumArtist: FC<IProps> = ({ artists }) => {
                 <footer>
                     {' '}
                     <S.AlbumsFooterHeader>
-                        <h3>More by {items[0].artists[0].name} </h3>
+                        <h3>More by {items[0]?.artists[0].name} </h3>
                         <Link
                             href={{
                                 pathname: '/discography/[pid]',
                                 query: {
-                                    pid: items[0].artists[0].id,
+                                    pid: items[0]?.artists[0].id,
                                 },
                             }}
                             passHref
@@ -72,7 +50,7 @@ const AlbumArtist: FC<IProps> = ({ artists }) => {
                                 passHref
                                 key={item.id}
                             >
-                                <AlbumRedirect>
+                                <S.AlbumRedirect>
                                     {item.images.length > 0 && (
                                         <UserImage
                                             url={item.images[0].url}
@@ -91,7 +69,7 @@ const AlbumArtist: FC<IProps> = ({ artists }) => {
                                     <SPlaylist.PlaylistAuthor>
                                         {item.release_date.slice(0, 4)}
                                     </SPlaylist.PlaylistAuthor>
-                                </AlbumRedirect>
+                                </S.AlbumRedirect>
                             </Link>
                         ))}
                     </SFollow.ArtistCards>

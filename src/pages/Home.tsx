@@ -1,10 +1,9 @@
-/* eslint-disable react/display-name */
-/* eslint-disable react-hooks/rules-of-hooks */
+import { NextPage } from 'next'
 import { useEffect } from 'react'
 import GetSalute from '../components/GetSalute/GetSalute'
-import * as S from '../styles/pages/Home.style'
+import * as S from '../styles/general/styles'
 
-const Home = () => {
+const Home: NextPage = () => {
     const getTokenParams = (hash: string) => {
         const strHashTag = hash.substring(1)
         const paramsUrl = strHashTag.split('&')
@@ -18,18 +17,13 @@ const Home = () => {
 
     useEffect(() => {
         if (window.location.hash) {
-            const { access_token, token_type, expires_in } = getTokenParams(
-                window.location.hash
-            )
-
+            const { access_token } = getTokenParams(window.location.hash)
             localStorage.setItem('token', access_token)
-            localStorage.setItem('tokenType', token_type)
-            localStorage.setItem('expiresIn', expires_in)
         }
     }, [])
 
     return (
-        <S.HomeContainer>
+        <S.StyledContainer>
             <GetSalute />
             <div>
                 <h2>Hi, Welcome to Swapi Music</h2>
@@ -40,7 +34,7 @@ const Home = () => {
                 </p>
                 <p>Thank you for test my app 💕💕💕</p>
             </div>
-        </S.HomeContainer>
+        </S.StyledContainer>
     )
 }
 
