@@ -15,7 +15,7 @@ import * as S from '../../styles/pages/auth/login.style'
 
 const Buttons: FC<{ button: string }> = ({ button }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getLocalMode(
-        true
+        false
     )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
     return (
         <Link
