@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import { FC } from 'react'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
 import { Artist as ArtistCard } from '../../hooks/types/GetTopArtist'
 import * as S from '../../styles/components/User/Following.style'
-import Link from 'next/link'
 interface IProps {
     item: ArtistCard
 }
