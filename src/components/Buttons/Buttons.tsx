@@ -7,6 +7,7 @@ import {
     ScopesUrlParams,
 } from '../../assets/swagger'
 import * as S from '../../styles/pages/auth/login.style'
+
 //getLocalMode
 //FALSE === DEPLOY
 //TRUE === DEV
