@@ -11,6 +11,7 @@ import * as S from '../../styles/pages/auth/login.style'
 //getLocalMode
 //FALSE === DEPLOY
 //TRUE === DEV
+
 const Buttons: FC<{ button: string }> = ({ button }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getLocalMode(
         true
