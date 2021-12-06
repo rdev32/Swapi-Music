@@ -22,7 +22,7 @@ import UserImage from '../Spotify/UserImage/UserImage'
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
     const [saveTracks, setSaveTracks] = useState<Tracks>({} as Tracks)
-    const [playing, setPlaying] = useState(false)
+    const [play, setPlay] = useState(false)
     const [volumen, setVolumen] = useState(5)
 
     const getUrl = (getTrack: Tracks) => {
@@ -35,16 +35,15 @@ const NavBarPlayer: FC = () => {
 
         return url
     }
+    const audio = useRef<HTMLAudioElement>(null)
 
     const track = GetData<GetTrack>(
         getUrl(tracks) === '' ? getUrl(saveTracks) : getUrl(tracks)
     )
 
-    const audio = useRef<HTMLAudioElement>(null)
-
     const handlePlay = () => {
         audio.current?.play()
-        setPlaying(true)
+        setPlay(true)
         if (audio.current) {
             audio.current.volume = volumen / 100
         }
@@ -52,7 +51,7 @@ const NavBarPlayer: FC = () => {
 
     const handlePause = () => {
         audio.current?.pause()
-        setPlaying(false)
+        setPlay(false)
     }
     useLayoutEffect(() => {
         if (localStorage.getItem('tracks')) {
@@ -62,7 +61,7 @@ const NavBarPlayer: FC = () => {
     }, [])
     useEffect(() => {
         if (audio.current) {
-            setPlaying(false)
+            setPlay(false)
             audio.current.src = track?.preview_url
         }
     }, [track])
@@ -95,7 +94,7 @@ const NavBarPlayer: FC = () => {
                 <NavPlayer>
                     <PlayerInfoSong>
                         <UserImage
-                            url={track?.album?.images[0].url}
+                            url={track?.album?.images[2].url}
                             displayName={track.album.name}
                             size={60}
                             bradius={10}
@@ -112,7 +111,7 @@ const NavBarPlayer: FC = () => {
                     <audio
                         ref={audio}
                         preload="auto"
-                        onEnded={() => setPlaying(false)}
+                        onEnded={() => setPlay(false)}
                     >
                         <source src={track?.preview_url} type="audio/mpeg" />
                     </audio>
@@ -142,10 +141,10 @@ const NavBarPlayer: FC = () => {
                         </SSong.SongButton>
                         <SSong.SongButton
                             onClick={() => {
-                                playing ? handlePause() : handlePlay()
+                                play ? handlePause() : handlePlay()
                             }}
                         >
-                            <GetPlayerIcons name={playing ? 'pause' : 'play'} />
+                            <GetPlayerIcons name={play ? 'pause' : 'play'} />
                         </SSong.SongButton>
                         <SSong.SongButton
                             onClick={() => {

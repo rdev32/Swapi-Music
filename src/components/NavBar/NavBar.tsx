@@ -22,8 +22,22 @@ const NavBar: FC<{ data: GetPlaylist[] }> = ({ data }) => {
     return (
         <S.NavBar>
             <NavBarHeader />
-            <NavBarSection Type="Menu" Section={sections.menu} />
-            <NavBarSection Type="Library" Section={sections.library} />
+            <NavBarSection
+                Type="Menu"
+                Section={sections.menu}
+                styles={{
+                    margin: '10px 0',
+                    height: 'auto',
+                }}
+            />
+            <NavBarSection
+                Type="Library"
+                Section={sections.library}
+                styles={{
+                    margin: '10px 0',
+                    height: 'auto',
+                }}
+            />
             <NavBarSection
                 Type="Playlist"
                 Section={playlist}
