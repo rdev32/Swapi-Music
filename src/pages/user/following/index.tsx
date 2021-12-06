@@ -5,8 +5,6 @@ import { Artist } from '../../../hooks/types/GetTopArtist'
 import * as SFollowing from '../../../styles/components/User/Following.style'
 import ArtistCard from '../../../components/Artist/Artist'
 
-import Link from 'next/link'
-
 const Following: FC = () => {
     const { artists } = GetData<{
         artists: { items: Artist[]; total: number }
@@ -15,7 +13,6 @@ const Following: FC = () => {
     return (
         <S.StyledContainer>
             <h1>Following</h1>
-
             <SFollowing.ArtistCards height="auto">
                 {artists?.items?.map((artist) => (
                     <ArtistCard item={artist} key={artist.id} />
