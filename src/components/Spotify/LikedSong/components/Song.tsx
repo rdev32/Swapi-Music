@@ -40,7 +40,7 @@ const Song: FC<IProps> = ({ song }) => {
                         <Link
                             key={artist?.id}
                             href={{
-                                pathname: '/artists/[pid]',
+                                pathname: '/artist/[pid]',
                                 query: {
                                     pid: artist?.id,
                                 },

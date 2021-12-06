@@ -1,10 +1,9 @@
-import { FC } from 'react'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import UserImage from '../../components/Spotify/UserImage/UserImage'
 import GetData from '../../hooks/GetData/GetData'
 import { Artist } from '../../hooks/types/GetFollowedArts'
-import UserImage from '../../components/Spotify/UserImage/UserImage'
-import * as S from '../../styles/pages/profile/profile.style'
-import { NextPage } from 'next'
+import * as S from '../../styles/pages/User/UserHeader.style'
 
 const Artist: NextPage = () => {
     const router = useRouter()
@@ -13,10 +12,7 @@ const Artist: NextPage = () => {
     const url = pid ? `https://api.spotify.com/v1/artists/${pid}` : ''
 
     const { name, images, followers } = GetData<Artist>(url)
-    const data = GetData<Artist>(url)
-    console.log(data)
 
-    //Crea una funcion que separe un numero en millares
     const formatNumber = (numbers: number) => {
         return `${numbers
             ?.toString()
@@ -24,7 +20,7 @@ const Artist: NextPage = () => {
     }
     return (
         <S.UserBody>
-            <S.UserStyle width="370px">
+            <S.UserHeaderStyle width="370px">
                 <div>
                     {images && (
                         <UserImage
@@ -32,6 +28,7 @@ const Artist: NextPage = () => {
                             url={images[0].url}
                             bradius={100}
                             displayName={name}
+                            size={200}
                         />
                     )}
                 </div>
@@ -40,7 +37,7 @@ const Artist: NextPage = () => {
                     <h1>{name}</h1>
                     <p>{formatNumber(followers?.total)}</p>
                 </div>
-            </S.UserStyle>
+            </S.UserHeaderStyle>
         </S.UserBody>
     )
 }

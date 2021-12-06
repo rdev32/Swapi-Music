@@ -8,7 +8,7 @@ export interface IDataImgUser {
     name?: string
 }
 
-export interface IDataUser {
+export type User = {
     display_name: string
     external_urls: {
         spotify: string

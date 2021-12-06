@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
 import { Artist as ArtistCard } from '../../hooks/types/GetTopArtist'
-import * as S from '../../styles/components/Spotify/Following/Following.style'
+import * as S from '../../styles/components/User/Following.style'
 import Link from 'next/link'
 interface IProps {
     item: ArtistCard
@@ -11,7 +11,7 @@ const ArtistCard: FC<IProps> = ({ item }) => {
     return (
         <Link
             href={{
-                pathname: '/artists/[pid]',
+                pathname: '/artist/[pid]',
                 query: {
                     pid: item.id,
                 },

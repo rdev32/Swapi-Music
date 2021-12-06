@@ -1,12 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import { FC } from 'react'
-import { domain } from '../../../assets/spotify'
-import GetData from '../../../hooks/GetData/GetData'
-import { Artist, Artists } from '../../../hooks/types/GetTopArtist'
-import * as S from '../../../styles/components/Spotify/Following/Following.style'
-import ArtistCard from '../../Artist/Artist'
+import { domain } from '../../assets/spotify'
+import GetData from '../../hooks/GetData/GetData'
+import { Artist, Artists } from '../../hooks/types/GetTopArtist'
+import * as S from '../../styles/components/User/Following.style'
+import ArtistCard from '../Artist/Artist'
 
-const TopArtist: FC = () => {
+const UserArtists: FC = () => {
     const { items } = GetData<Artists>(
         `${domain}/top/artists?limit=10&offset=0`
     )
@@ -23,4 +22,4 @@ const TopArtist: FC = () => {
     )
 }
 
-export default TopArtist
+export default UserArtists

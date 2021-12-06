@@ -4,7 +4,7 @@ import GetData from '../../hooks/GetData/GetData'
 import { Artist } from '../../hooks/types/GetAlbum'
 import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
 import * as S from '../../styles/components/albums/albums.style'
-import * as SFollow from '../../styles/components/Spotify/Following/Following.style'
+import * as SFollow from '../../styles/components/User/Following.style'
 import * as SPlaylist from '../../styles/pages/library/library.style'
 import UserImage from '../Spotify/UserImage/UserImage'
 

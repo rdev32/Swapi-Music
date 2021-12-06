@@ -25,7 +25,7 @@ const Song: FC<IProps> = ({ track }) => {
                     <S.SontTitle>{track?.name}</S.SontTitle>
                     <Link
                         href={{
-                            pathname: '/artists/[pid]',
+                            pathname: '/artist/[pid]',
                             query: {
                                 pid: track.artists[0].id,
                             },

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { colors } from '../../../colors'
+import { colors } from '../../colors'
 
 export const ArtistCard = styled.div`
     cursor: pointer;
@@ -33,4 +33,10 @@ export const ArtistCards = styled.div`
 `
 export const BoxStyle = styled.div`
     margin: 50px 0;
+`
+export const UserFollowingHeader = styled.header`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 30px 0 0;
 `

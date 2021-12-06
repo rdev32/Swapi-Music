@@ -22,6 +22,6 @@ export type Artist = {
     uri: string
 }
 
-export interface Artists {
+export type Artists = {
     items: Artist[]
 }

@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useContext, useEffect } from 'react'
 import Header from '../../components/playlist/components/header'
 import Playlists from '../../components/playlist/Playlists'
-import * as S from '../../styles/pages/profile/profile.style'
+import * as S from '../../styles/general/styles'
 import { useRouter } from 'next/router'
 import useActiveOptContext from '../../hooks/useActiveOptContext/useActiveOptContext'
 
@@ -15,10 +15,10 @@ const Playlist: NextPage = () => {
     }, [asPath])
 
     return (
-        <S.UserBody>
+        <S.StyledContainer>
             <Header />
             <Playlists />
-        </S.UserBody>
+        </S.StyledContainer>
     )
 }
 

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import * as S from '../../styles/pages/profile/profile.style'
+import * as S from '../../styles/pages/User/UserHeader.style'
 import { NextPage } from 'next'
 import { Artist } from '../../hooks/types/GetAlbum'
 import GetData from '../../hooks/GetData/GetData'

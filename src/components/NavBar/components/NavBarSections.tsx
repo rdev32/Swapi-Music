@@ -4,14 +4,14 @@ import * as S from '../../../styles/components/NavBar/components/Section.style'
 import AtomIcon from '../../SvgDynamic/SvgDynamic'
 import { IProps } from './types'
 
-const NavBarSections: FC<IProps> = ({ Section, Type: Title, icon, styles }) => {
+const NavBarSection: FC<IProps> = ({ Section, Type, icon, styles }) => {
     const { active, setActive } = useContext(useActiveOptContext)
 
     return (
         <>
             {Section?.length > 0 && (
                 <S.Section height={styles?.height} margin={styles?.margin}>
-                    <S.SectionTitle>{Title}</S.SectionTitle>
+                    <S.SectionTitle>{Type}</S.SectionTitle>
                     {Section.map((options) => (
                         <S.SectionLinks
                             key={options.id}
@@ -52,4 +52,4 @@ const NavBarSections: FC<IProps> = ({ Section, Type: Title, icon, styles }) => {
     )
 }
 
-export default NavBarSections
+export default NavBarSection
