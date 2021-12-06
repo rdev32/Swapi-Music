@@ -18,11 +18,15 @@ export const ArtistCard = styled.div`
 export const ArtistName = styled.h5`
     margin: 10px 0;
     padding: 0;
+    font-weight: 600;
+    font-size: 14px;
 `
 export const ArtistTag = styled.p`
     margin: 0;
     padding: 0;
-    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.75;
+    font-size: 14px;
 `
 export const ArtistCards = styled.div`
     display: flex;

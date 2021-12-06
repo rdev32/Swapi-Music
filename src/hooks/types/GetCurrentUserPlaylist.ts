@@ -4,7 +4,7 @@ type GetPlaylistImg = {
     width: number
 }
 
-type GetPlaylist = {
+export type GetPlaylist = {
     collaborative: boolean
     description: string
     external_urls: {

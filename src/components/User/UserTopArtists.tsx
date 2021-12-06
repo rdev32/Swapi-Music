@@ -11,14 +11,16 @@ const UserArtists: FC = () => {
     )
 
     return (
-        <S.BoxStyle>
-            <h2>Top artists this month</h2>
-            <S.ArtistCards>
-                {items?.map((item: Artist) => (
-                    <ArtistCard item={item} key={item.id} />
-                ))}
-            </S.ArtistCards>
-        </S.BoxStyle>
+        { items } && (
+            <S.BoxStyle>
+                <h2>Top artists this month</h2>
+                <S.ArtistCards>
+                    {items?.map((item: Artist) => (
+                        <ArtistCard item={item} key={item.id} />
+                    ))}
+                </S.ArtistCards>
+            </S.BoxStyle>
+        )
     )
 }
 

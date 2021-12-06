@@ -14,6 +14,7 @@ export const UserBody = styled.main`
 
 export const UserProfile = styled.p`
     font-weight: bold;
+    font-size: 14px;
     margin: 0%;
 `
 
@@ -26,8 +27,14 @@ export const UserFooter = styled.footer`
     align-items: center;
     justify-content: space-around;
     width: 200px;
+    p {
+        font-weight: 600;
+    }
 `
 export const UserFooterButton = styled.a`
     margin: 0%;
     font-weight: 600;
+    &:hover {
+        text-decoration: underline;
+    }
 `

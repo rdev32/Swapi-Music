@@ -16,12 +16,24 @@ export const SongMain = styled.div`
 
 export const SongTitleAlbum = styled.div`
     width: 100%;
+    a {
+        font-weight: 500;
+        opacity: 0.5;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
 `
 export const SontTitle = styled.h4`
     margin: 10px 0;
 `
 export const SongArtist = styled.a`
     margin: 0;
+    opacity: 0.75;
+    font-weight: 500;
+    &:hover {
+        text-decoration: underline;
+    }
 `
 
 export const SongDescription = styled.div`
@@ -29,6 +41,10 @@ export const SongDescription = styled.div`
 `
 export const SongMinutesBox = styled.div`
     width: 100px;
+    p {
+        font-weight: 500;
+        opacity: 0.5;
+    }
 `
 export const SongButton = styled.button`
     border: none;

@@ -8,6 +8,10 @@ interface IProps {
 }
 
 const ArtistCard: FC<IProps> = ({ item }) => {
+    const firstLetter = (name: string) => {
+        return name.charAt(0).toUpperCase() + name.slice(1)
+    }
+
     return (
         <Link
             href={{
@@ -25,13 +29,13 @@ const ArtistCard: FC<IProps> = ({ item }) => {
                         url={item?.images[0]?.url}
                         bradius={100}
                         displayName={item.name}
-                        size={160}
+                        size={180}
                         name="artistout"
                     />
                 )}
 
                 <S.ArtistName>{item.name}</S.ArtistName>
-                <S.ArtistTag>Artist</S.ArtistTag>
+                <S.ArtistTag>{firstLetter(item.type)}</S.ArtistTag>
             </S.ArtistCard>
         </Link>
     )

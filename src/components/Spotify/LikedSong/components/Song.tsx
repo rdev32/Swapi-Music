@@ -17,17 +17,9 @@ const Song: FC<IProps> = ({ song }) => {
     return (
         <SSong.Song key={song?.track?.id}>
             <SSong.SongMain>
-                {song?.track?.album?.images?.length > 0 ? (
+                {song?.track?.album?.images?.length > 0 && (
                     <UserImage
                         url={song?.track?.album?.images[0]?.url}
-                        displayName={song.track.album.name}
-                        size={50}
-                        bradius={10}
-                        name="songout"
-                    />
-                ) : (
-                    <UserImage
-                        url=""
                         displayName={song.track.album.name}
                         size={50}
                         bradius={10}
@@ -45,10 +37,11 @@ const Song: FC<IProps> = ({ song }) => {
                                     pid: artist?.id,
                                 },
                             }}
+                            passHref
                         >
-                            <a>
+                            <SSong.SongArtist>
                                 {index === 0 ? '' : `,`} {artist?.name}
-                            </a>
+                            </SSong.SongArtist>
                         </Link>
                     ))}
                 </SSong.SongDescription>

@@ -9,22 +9,24 @@ const UserTopSongs: FC = () => {
     const { items } = GetData<ISong>(`${domain}/top/tracks?limit=5`)
 
     return (
-        <S.BoxStyle>
-            <header>
-                <h2>Top tracks this month</h2>
-            </header>
-            <article>
-                {items?.map((item: SongItem, index: number) => (
-                    <S.SongCard key={item.id}>
-                        <div style={{ width: '1%' }}>
-                            <S.SongNumber>{index + 1}</S.SongNumber>
-                        </div>
+        { items } && (
+            <S.BoxStyle>
+                <header>
+                    <h2>Top tracks this month</h2>
+                </header>
+                <article>
+                    {items?.map((item: SongItem, index: number) => (
+                        <S.SongCard key={item.id}>
+                            <div style={{ width: '1%' }}>
+                                <S.SongNumber>{index + 1}</S.SongNumber>
+                            </div>
 
-                        <Song item={item} />
-                    </S.SongCard>
-                ))}
-            </article>
-        </S.BoxStyle>
+                            <Song item={item} />
+                        </S.SongCard>
+                    ))}
+                </article>
+            </S.BoxStyle>
+        )
     )
 }
 

@@ -22,7 +22,6 @@ const Album: NextPage = () => {
         : ''
     const { images, name, artists, tracks, type } =
         GetData<Album>(urlAlbumsTracks)
-    const data = GetData<Album>(urlAlbumsTracks)
     const ms = tracks?.items?.reduce(
         (acc, curr) => (acc = acc + curr.duration_ms),
         0
@@ -38,7 +37,6 @@ const Album: NextPage = () => {
     const handlePlayId = (id: number) => {
         setTracks({ tracks: newTracks, position: id })
     }
-
     return (
         <S.AlbumStyle>
             <S.AlbumHeader>

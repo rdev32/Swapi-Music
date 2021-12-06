@@ -9,12 +9,8 @@ import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import * as S from '../../styles/components/Spotify/MainSongs/Main.style'
 
 const Playlists: FC = () => {
-    const router = useRouter()
-    const { pid } = router.query
-    const url = pid ? `${spotify}v1/playlists/${pid}` : ''
     const { setTracks } = useContext(UserTrackContext)
 
-    const { tracks } = GetData<GetPlaylistId>(url)
     const newTracks = tracks?.items?.map((track) => {
         return {
             id: track.track.id,

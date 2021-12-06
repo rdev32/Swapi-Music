@@ -1,17 +1,16 @@
 import { NextPage } from 'next'
+import { useContext } from 'react'
 import Playlists from '../components/Spotify/Playlist/Playlists'
-import * as S from '../styles/pages/library/library.style'
-import { GetPlayList, IPlaylist } from '../hooks/types/GetPlayList'
-import GetData from '../hooks/GetData/GetData'
+import UserContext from '../hooks/UserContext/UserContext'
+import * as S from '../styles/general/styles'
 
 const Library: NextPage = () => {
-    const url = 'https://api.spotify.com/v1/me/playlists'
-    const { items } = GetData<GetPlayList>(url)
+    const { playlists } = useContext(UserContext)
     return (
-        <S.LibraryStyleWrapper>
+        <S.StyledContainer>
             <h1>Library</h1>
-            <Playlists items={items} />
-        </S.LibraryStyleWrapper>
+            <Playlists items={playlists} />
+        </S.StyledContainer>
     )
 }
 

@@ -1,13 +1,10 @@
 import { FC, useContext } from 'react'
 import Song from '../../../components/Spotify/LikedSong/components/Song'
-import GetData from '../../../hooks/GetData/GetData'
-import { GetLikedSongs } from '../../../hooks/types/GetLikedSongs'
+import { LikedSongs } from '../../../hooks/types/GetLikedSongs'
 import UserTrackContext from '../../../hooks/UserTrackContext/UserTrackContext'
 import * as S from '../../../styles/components/Spotify/MainSongs/Main.style'
 
-const Songs: FC = () => {
-    const url = 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0'
-    const { items } = GetData<GetLikedSongs>(url)
+const Songs: FC<{ data: LikedSongs[] }> = ({ data: items }) => {
     const { setTracks } = useContext(UserTrackContext)
 
     const newTracks = items?.map((track) => {
