@@ -1,27 +1,46 @@
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import GetTimeSongs from '../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { LikedSongs } from '../../../../hooks/types/GetLikedSongs'
 import * as SSong from '../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import UserImage from '../../UserImage/UserImage'
+import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
+import dynamic from 'next/dynamic'
 
 interface IProps {
     song: LikedSongs
+    index: number
+    handleId?: () => void
 }
 
-const Song: FC<IProps> = ({ song }) => {
+const Song: FC<IProps> = ({ song, handleId, index }) => {
     const [hour, minutes, seconds] = GetTimeSongs({
         ms: song?.track?.duration_ms,
     })
 
+    const PlayCenter = useMemo(
+        () =>
+            dynamic(
+                () =>
+                    import(`../../../../../public/icons/Player/playcenter.svg`)
+            ),
+        []
+    )
+
     return (
         <SSong.Song key={song?.track?.id}>
             <SSong.SongMain>
+                <SSong.SongNumberItem>
+                    <SSMain.SongNumber>{index + 1}</SSMain.SongNumber>
+                    <SSMain.Button onClick={handleId}>
+                        <PlayCenter />
+                    </SSMain.Button>
+                </SSong.SongNumberItem>
                 {song?.track?.album?.images?.length > 0 && (
                     <UserImage
                         url={song?.track?.album?.images[0]?.url}
                         displayName={song.track.album.name}
-                        size={50}
+                        size={55}
                         bradius={10}
                         name="songout"
                     />

@@ -16,7 +16,7 @@ import { useContext } from 'react'
 const Album: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
-    const { tracks: tracksContext, setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserTrackContext)
     const urlAlbumsTracks = pid
         ? `https://api.spotify.com/v1/albums/${pid}`
         : ''

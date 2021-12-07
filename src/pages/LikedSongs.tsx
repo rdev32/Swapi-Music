@@ -8,8 +8,6 @@ const LikedSongs: NextPage = () => {
     const url = 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0'
     const { items } = GetData<GetLikedSongs>(url)
 
-    console.log(items)
-
     return (
         <S.StyledContainer>
             <h1>Liked Songs</h1>

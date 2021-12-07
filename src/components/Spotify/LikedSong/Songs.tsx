@@ -12,6 +12,7 @@ const Songs: FC<{ data: LikedSongs[] }> = ({ data: items }) => {
             id: track.track.id,
         }
     })
+
     const handlePlayId = (id: number) => {
         setTracks({ tracks: newTracks, position: id })
     }
@@ -19,11 +20,11 @@ const Songs: FC<{ data: LikedSongs[] }> = ({ data: items }) => {
         <div>
             {items?.map((song, index) => (
                 <S.SongCard key={song.track.id}>
-                    <div style={{ width: '1%' }}>
-                        <S.SongNumber>{index + 1}</S.SongNumber>
-                    </div>
-                    <button onClick={() => handlePlayId(index)}>Play</button>
-                    <Song song={song} />
+                    <Song
+                        song={song}
+                        handleId={() => handlePlayId(index)}
+                        index={index}
+                    />
                 </S.SongCard>
             ))}
         </div>

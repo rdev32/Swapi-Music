@@ -5,14 +5,16 @@ import Image from 'next/image'
 import { FC, useMemo, useState } from 'react'
 import Buttons from '../components/Buttons/Buttons'
 import * as S from '../styles/pages/auth/login.style'
+import { getProviders, signIn } from 'next-auth/react'
 
-const Login: FC = () => {
+const Login: FC<any> = ({ providers }) => {
     const DynamicIcon = useMemo(
         () => dynamic(() => import('../../public/icons/icon.svg')),
         []
     )
     const [token, setToken] = useState('')
     const buttons = ['Login', 'Sign Up']
+    console.log(providers)
 
     return (
         <S.LoginBody>
@@ -62,3 +64,12 @@ const Login: FC = () => {
 }
 
 export default Login
+
+export async function getServerSideProps() {
+    const providers = await getProviders()
+    return {
+        props: {
+            providers,
+        },
+    }
+}

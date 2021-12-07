@@ -24,7 +24,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/pages/login/WithAuth.js",
-    "src/pages/login/WithLogged.js"
+    "src/pages/login/WithLogged.js",
+    "lib/spotify.js"
   ],
   "exclude": [
     "node_modules"

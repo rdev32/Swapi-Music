@@ -21,7 +21,6 @@ import UserImage from '../Spotify/UserImage/UserImage'
 
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
-    const [saveTracks, setSaveTracks] = useState<Tracks>({} as Tracks)
     const [play, setPlay] = useState(false)
     const [volumen, setVolumen] = useState(5)
 
@@ -37,9 +36,7 @@ const NavBarPlayer: FC = () => {
     }
     const audio = useRef<HTMLAudioElement>(null)
 
-    const track = GetData<GetTrack>(
-        getUrl(tracks) === '' ? getUrl(saveTracks) : getUrl(tracks)
-    )
+    const track = GetData<GetTrack>(getUrl(tracks))
 
     const handlePlay = () => {
         audio.current?.play()
@@ -54,10 +51,8 @@ const NavBarPlayer: FC = () => {
         setPlay(false)
     }
     useLayoutEffect(() => {
-        if (localStorage.getItem('tracks')) {
-            const local = JSON.parse(localStorage.getItem('tracks') || '{}')
-            setSaveTracks(local)
-        }
+        if (localStorage.getItem('tracks'))
+            setTracks(JSON.parse(localStorage.getItem('tracks') || '{}'))
     }, [])
     useEffect(() => {
         if (audio.current) {
@@ -73,20 +68,9 @@ const NavBarPlayer: FC = () => {
 
     useEffect(() => {
         if (Object.keys(tracks).length > 0) {
-            localStorage.setItem(
-                'tracks',
-                JSON.stringify({ ...tracks, position: tracks.position })
-            )
+            localStorage.setItem('tracks', JSON.stringify(tracks))
         }
     }, [tracks])
-    useEffect(() => {
-        if (Object.keys(saveTracks).length > 0) {
-            localStorage.setItem(
-                'tracks',
-                JSON.stringify({ ...saveTracks, position: saveTracks.position })
-            )
-        }
-    }, [saveTracks])
 
     return (
         <>
@@ -118,23 +102,13 @@ const NavBarPlayer: FC = () => {
                     <SSong.SongPlayerIcons>
                         <SSong.SongButton
                             onClick={() => {
-                                if (tracks?.position) {
-                                    setTracks({
-                                        ...tracks,
-                                        position:
-                                            tracks.position <= 0
-                                                ? tracks.tracks.length - 1
-                                                : tracks.position - 1,
-                                    })
-                                } else {
-                                    setSaveTracks({
-                                        ...saveTracks,
-                                        position:
-                                            saveTracks.position <= 0
-                                                ? saveTracks.tracks.length - 1
-                                                : saveTracks.position - 1,
-                                    })
-                                }
+                                setTracks({
+                                    ...tracks,
+                                    position:
+                                        tracks.position <= 0
+                                            ? tracks.tracks.length - 1
+                                            : tracks.position - 1,
+                                })
                             }}
                         >
                             {<GetIcon name="back" />}
@@ -148,25 +122,14 @@ const NavBarPlayer: FC = () => {
                         </SSong.SongButton>
                         <SSong.SongButton
                             onClick={() => {
-                                if (tracks?.position) {
-                                    setTracks({
-                                        ...tracks,
-                                        position:
-                                            tracks.position >=
-                                            tracks.tracks.length - 1
-                                                ? 0
-                                                : tracks.position + 1,
-                                    })
-                                } else {
-                                    setSaveTracks({
-                                        ...saveTracks,
-                                        position:
-                                            saveTracks.position >=
-                                            saveTracks.tracks.length - 1
-                                                ? 0
-                                                : saveTracks.position + 1,
-                                    })
-                                }
+                                setTracks({
+                                    ...tracks,
+                                    position:
+                                        tracks.position >=
+                                        tracks.tracks.length - 1
+                                            ? 0
+                                            : tracks.position + 1,
+                                })
                             }}
                         >
                             {<GetIcon name="next" />}
