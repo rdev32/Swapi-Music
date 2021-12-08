@@ -1,14 +1,10 @@
-import dynamic from 'next/dynamic'
-import { FC, useContext, useMemo } from 'react'
+import { FC, useContext } from 'react'
 import { TrackId } from '../../../../hooks/UserTrackContext/types'
 import UserTrackContext from '../../../../hooks/UserTrackContext/UserTrackContext'
-import Track from '../Track/track'
+import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
+import Track from '../Track/Track'
 
-interface IProps {
-    tracks: TrackId[]
-}
-
-const TrackList: FC<IProps> = ({ tracks }) => {
+const TrackList: FC<{ tracks: TrackId[] }> = ({ tracks }) => {
     const { tracks: tracksContext, setTracks } = useContext(UserTrackContext)
 
     const handlePlayId = (id: number) => {
@@ -19,11 +15,13 @@ const TrackList: FC<IProps> = ({ tracks }) => {
             {tracks
                 ?.filter((track) => track.position > tracksContext.position)
                 .map((track, index) => (
-                    <Track
-                        key={track.id}
-                        {...{ track, index }}
-                        handleId={() => handlePlayId(track.position)}
-                    />
+                    <SSMain.SongCard key={track.id}>
+                        <Track
+                            key={track.id}
+                            {...{ track, index }}
+                            handleId={() => handlePlayId(track.position)}
+                        />
+                    </SSMain.SongCard>
                 ))}
         </>
     )

@@ -3,9 +3,10 @@ import { useContext } from 'react'
 import TrackList from '../../components/queue/components/TrackList/TrackList'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import * as S from '../../styles/general/styles'
+import * as SSMain from '../../styles/components/Spotify/MainSongs/Main.style'
 
 import Link from 'next/link'
-import Track from '../../components/queue/components/Track/track'
+import Track from '../../components/queue/components/Track/Track'
 
 const Queue: NextPage = () => {
     const { tracks } = useContext(UserTrackContext)
@@ -20,15 +21,15 @@ const Queue: NextPage = () => {
                     {tracks?.tracks
                         ?.filter((track) => track.position === tracks.position)
                         .map((track, index) => (
-                            <Track
-                                editPosition={1}
-                                key={track.id}
-                                track={track}
-                                index={index}
-                            />
+                            <SSMain.SongCard key={track.id}>
+                                <Track
+                                    editPosition={1}
+                                    key={track.id}
+                                    track={track}
+                                    index={index}
+                                />
+                            </SSMain.SongCard>
                         ))}
-                    {/* {tracks?.tracks &&
-                        tracks?.tracks[tracks?.position]?.trackname} */}
                 </div>
             </div>
             <aside>

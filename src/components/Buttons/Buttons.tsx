@@ -26,11 +26,10 @@ const Buttons: FC<{ button: string }> = ({ button }) => {
             key={button}
             passHref
         >
-            <S.Buttons signup={button === 'Sign Up' ? true : false}>
-                {button}
-            </S.Buttons>
+            <S.Buttons>{button}</S.Buttons>
         </Link>
     )
 }
 
 export default Buttons
+//signup={button === 'Sign Up' ? true : false}

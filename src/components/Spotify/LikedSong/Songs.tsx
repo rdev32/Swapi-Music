@@ -17,7 +17,7 @@ const Songs: FC<Props> = ({
     id: idFrom,
     type: typeFrom,
 }) => {
-    const { tracks, setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserTrackContext)
 
     const newTracks = items?.map((item, index) => {
         return {

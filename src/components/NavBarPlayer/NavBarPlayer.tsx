@@ -23,6 +23,7 @@ import Link from 'next/link'
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
     const [play, setPlay] = useState(false)
+    const [autoPlay, setAutoPlay] = useState(false)
     const [volumen, setVolumen] = useState(5)
 
     const getUrl = (getTrack: Tracks) => {
@@ -40,9 +41,10 @@ const NavBarPlayer: FC = () => {
     const track = GetData<GetTrack>(getUrl(tracks))
 
     const handlePlay = () => {
-        audio.current?.play()
-        setPlay(true)
         if (audio.current) {
+            audio.current?.play()
+            setPlay(true)
+            audio.current.autoplay = autoPlay
             audio.current.volume = volumen / 100
         }
     }
@@ -55,12 +57,18 @@ const NavBarPlayer: FC = () => {
         if (localStorage.getItem('tracks'))
             setTracks(JSON.parse(localStorage.getItem('tracks') || '{}'))
     }, [])
+
     useEffect(() => {
         if (audio.current) {
-            setPlay(false)
-            audio.current.src = track?.preview_url
+            audio.current.autoplay = autoPlay
         }
-    }, [track])
+    }, [audio.current, autoPlay])
+    useEffect(() => {
+        if (audio.current) {
+            audio.current.src = track?.preview_url
+            audio.current.autoplay = autoPlay
+        }
+    }, [track, autoPlay])
     useEffect(() => {
         if (audio.current) {
             audio.current.volume = volumen / 100
@@ -72,6 +80,9 @@ const NavBarPlayer: FC = () => {
             localStorage.setItem('tracks', JSON.stringify(tracks))
         }
     }, [tracks])
+    console.log('Audio Props', audio)
+
+    console.log('AutoPlay', autoPlay)
 
     return (
         <>
@@ -86,21 +97,38 @@ const NavBarPlayer: FC = () => {
                         />
                         <SSong.SongDescription>
                             <SSong.SontTitle>{track?.name}</SSong.SontTitle>
-                            <SSong.SongArtist>
-                                {track.artists
-                                    .map((name) => `${name.name}`)
-                                    .join(', ')}
-                            </SSong.SongArtist>
+                            <SSong.SongArtists>
+                                {track?.artists.map((artist, index) => (
+                                    <Link
+                                        key={artist?.id}
+                                        href={{
+                                            pathname: '/artist/[pid]',
+                                            query: {
+                                                pid: artist?.id,
+                                            },
+                                        }}
+                                        passHref
+                                    >
+                                        <SSong.SongArtist>
+                                            {index === 0 ? '' : `,`}{' '}
+                                            {artist?.name}
+                                        </SSong.SongArtist>
+                                    </Link>
+                                ))}
+                            </SSong.SongArtists>
                         </SSong.SongDescription>
                     </PlayerInfoSong>
                     <audio
                         ref={audio}
                         preload="auto"
                         onEnded={() => setPlay(false)}
+                        autoPlay={autoPlay}
                     >
                         <source src={track?.preview_url} type="audio/mpeg" />
                     </audio>
+
                     <SSong.SongPlayerIcons>
+                        <button>Aleatory</button>
                         <SSong.SongButton
                             onClick={() => {
                                 setTracks({
@@ -135,6 +163,9 @@ const NavBarPlayer: FC = () => {
                         >
                             {<GetIcon name="next" />}
                         </SSong.SongButton>
+                        <button onClick={() => setAutoPlay(!autoPlay)}>
+                            Repeat
+                        </button>
                     </SSong.SongPlayerIcons>
                     <SSong.SongPlayerVolumen>
                         {/* <button>queue</button> */}

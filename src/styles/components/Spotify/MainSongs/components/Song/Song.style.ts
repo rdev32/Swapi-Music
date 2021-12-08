@@ -47,7 +47,6 @@ export const SongArtist = styled.a`
 export const SongDescription = styled.div`
     margin: 0 0 0 10px;
     display: flex;
-    width: 75%;
     flex-direction: column;
     justify-content: center;
 `

@@ -20,8 +20,14 @@ const Album: NextPage = () => {
     const urlAlbumsTracks = pid
         ? `https://api.spotify.com/v1/albums/${pid}`
         : ''
-    const { images, name, artists, tracks, type } =
-        GetData<Album>(urlAlbumsTracks)
+    const {
+        images,
+        name,
+        artists,
+        tracks,
+        type,
+        id: idFrom,
+    } = GetData<Album>(urlAlbumsTracks)
     const ms = tracks?.items?.reduce(
         (acc, curr) => (acc = acc + curr.duration_ms),
         0
@@ -29,13 +35,36 @@ const Album: NextPage = () => {
 
     const [hour, minutes, seconds] = GetTimeSongs({ ms: ms })
 
-    const newTracks = tracks?.items?.map((track) => {
+    // const newTracks = tracks?.items?.map((track) => {
+    //     return {
+    //         id: track.id,
+    //     }
+    // })
+    const newTracks = tracks?.items?.map((item, index) => {
         return {
-            id: track.id,
+            id: item.id,
+            position: index,
+            trackname: item.name,
+            artist: item.artists,
+            album: {
+                id: idFrom,
+                name,
+                type,
+            },
+            duration_ms: item.duration_ms,
+            images: images[2]?.url,
         }
     })
     const handlePlayId = (id: number) => {
-        setTracks({ tracks: newTracks, position: id })
+        setTracks({
+            tracks: newTracks,
+            position: id,
+            from: {
+                name,
+                id: idFrom,
+                type,
+            },
+        })
     }
     return (
         <S.AlbumStyle>

@@ -47,22 +47,24 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
                 )}
                 <SSong.SongDescription>
                     <SSong.SontTitle>{song.track?.name}</SSong.SontTitle>
-                    {song?.track?.artists.map((artist, index) => (
-                        <Link
-                            key={artist?.id}
-                            href={{
-                                pathname: '/artist/[pid]',
-                                query: {
-                                    pid: artist?.id,
-                                },
-                            }}
-                            passHref
-                        >
-                            <SSong.SongArtist>
-                                {index === 0 ? '' : `,`} {artist?.name}
-                            </SSong.SongArtist>
-                        </Link>
-                    ))}
+                    <SSong.SongArtists>
+                        {song?.track?.artists.map((artist, index) => (
+                            <Link
+                                key={artist?.id}
+                                href={{
+                                    pathname: '/artist/[pid]',
+                                    query: {
+                                        pid: artist?.id,
+                                    },
+                                }}
+                                passHref
+                            >
+                                <SSong.SongArtist>
+                                    {index === 0 ? '' : `,`} {artist?.name}
+                                </SSong.SongArtist>
+                            </Link>
+                        ))}
+                    </SSong.SongArtists>
                 </SSong.SongDescription>
             </SSong.SongMain>
             <SSong.SongTitleAlbum>
