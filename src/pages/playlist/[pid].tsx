@@ -20,10 +20,16 @@ const Playlist: NextPage = () => {
     const { pid } = router.query
     const url = pid ? `${spotify}v1/playlists/${pid}` : ''
     const data = GetData<GetPlaylistId>(url)
+
     return (
         <S.StyledContainer>
             <Header data={data} />
-            <Songs data={data.tracks?.items} />
+            <Songs
+                data={data.tracks?.items}
+                name={data.name}
+                id={data.id}
+                type={data.type}
+            />
         </S.StyledContainer>
     )
 }

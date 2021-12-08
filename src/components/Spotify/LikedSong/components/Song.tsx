@@ -1,11 +1,11 @@
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { FC, useMemo } from 'react'
 import GetTimeSongs from '../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { LikedSongs } from '../../../../hooks/types/GetLikedSongs'
 import * as SSong from '../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
-import UserImage from '../../UserImage/UserImage'
 import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
-import dynamic from 'next/dynamic'
+import UserImage from '../../UserImage/UserImage'
 
 interface IProps {
     song: LikedSongs

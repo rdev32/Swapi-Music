@@ -4,7 +4,7 @@ type ImagesLikedSongs = {
     width: number
 }
 
-type LikedArtistSongs = {
+export type LikedArtistSongs = {
     external_urls: {
         spotify: string
     }

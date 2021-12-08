@@ -1,9 +1,12 @@
 import { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import GetSalute from '../components/GetSalute/GetSalute'
 import * as S from '../styles/general/styles'
 
-const Home: NextPage = () => {
+const Home: NextPage<any> = () => {
+    const { data: session, status } = useSession()
+
     const getTokenParams = (hash: string) => {
         const strHashTag = hash.substring(1)
         const paramsUrl = strHashTag.split('&')

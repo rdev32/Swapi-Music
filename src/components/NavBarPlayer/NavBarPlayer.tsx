@@ -18,6 +18,7 @@ import {
 import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import { GetIcon, GetPlayerIcons } from '../Icons/Icons'
 import UserImage from '../Spotify/UserImage/UserImage'
+import Link from 'next/link'
 
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
@@ -136,6 +137,10 @@ const NavBarPlayer: FC = () => {
                         </SSong.SongButton>
                     </SSong.SongPlayerIcons>
                     <SSong.SongPlayerVolumen>
+                        {/* <button>queue</button> */}
+                        <Link href="/queue">
+                            <a>Queue</a>
+                        </Link>
                         <input
                             type="range"
                             min="0"

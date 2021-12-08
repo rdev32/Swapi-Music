@@ -29,7 +29,6 @@ export const LoginFormBox = styled.div`
 `
 
 export const LoginForm = styled.form`
-    /* height: 200px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -37,7 +36,6 @@ export const LoginForm = styled.form`
 `
 export const LoginBox = styled.div`
     width: 100%;
-    /* height: 29px; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,14 +64,14 @@ export const Buttons = styled.a`
     align-items: center;
     padding: 10px;
     width: 88px;
-    background: ${({ signup }: { signup: boolean }) =>
-        signup ? colors.blue : colors.gray};
+    background-color: ${colors.green};
     border-radius: 10px;
     outline: none;
     border: none;
-    color: ${({ signup }: { signup: boolean }) => (signup ? 'white' : 'black')};
+    color: white;
     font-weight: ${fontWeight.semiBold};
     transition: 0.3s;
+    cursor: pointer;
 `
 export const LoginTitle = styled.h1`
     font-size: 24px;

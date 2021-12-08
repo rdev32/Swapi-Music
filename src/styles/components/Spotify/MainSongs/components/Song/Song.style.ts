@@ -47,6 +47,7 @@ export const SongArtist = styled.a`
 export const SongDescription = styled.div`
     margin: 0 0 0 10px;
     display: flex;
+    width: 75%;
     flex-direction: column;
     justify-content: center;
 `
@@ -89,4 +90,8 @@ export const SongNumberItem = styled.div`
         margin: 20px;
         display: none;
     }
+`
+export const SongArtists = styled.div`
+    overflow: hidden;
+    height: 20px;
 `

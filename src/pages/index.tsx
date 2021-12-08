@@ -1,20 +1,18 @@
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
+import { getCsrfToken, getProviders, getSession, signIn } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { FC, useMemo, useState } from 'react'
-import Buttons from '../components/Buttons/Buttons'
+import { FC, useMemo } from 'react'
 import * as S from '../styles/pages/auth/login.style'
-import { getProviders, signIn } from 'next-auth/react'
+import Buttons from '../components/Buttons/Buttons'
 
 const Login: FC<any> = ({ providers }) => {
     const DynamicIcon = useMemo(
         () => dynamic(() => import('../../public/icons/icon.svg')),
         []
     )
-    const [token, setToken] = useState('')
     const buttons = ['Login', 'Sign Up']
-    console.log(providers)
+    // console.log(session)
 
     return (
         <S.LoginBody>
@@ -36,9 +34,19 @@ const Login: FC<any> = ({ providers }) => {
                         with our music!
                     </S.NavBarPhrase>
                     <S.NavBarButtons signup>
-                        {buttons.map((button) => (
+                        {/* {buttons.map((button) => (
                             <Buttons key={button} {...{ button }} />
-                        ))}
+                        ))} */}
+                        <S.Buttons
+                            key={providers?.spotify?.id}
+                            onClick={() =>
+                                signIn(providers?.spotify.id, {
+                                    callbackUrl: '/Home',
+                                })
+                            }
+                        >
+                            {providers?.spotify?.name}
+                        </S.Buttons>
                     </S.NavBarButtons>
                 </div>
                 <div>
@@ -67,9 +75,14 @@ export default Login
 
 export async function getServerSideProps() {
     const providers = await getProviders()
+    const csrfToken = await getCsrfToken()
+    const session = await getSession()
+
     return {
         props: {
             providers,
+            csrfToken,
+            session,
         },
     }
 }

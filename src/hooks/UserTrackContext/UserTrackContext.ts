@@ -1,6 +1,4 @@
 import { createContext, Dispatch, SetStateAction } from 'react'
-import { LikedSongs } from '../../hooks/types/GetLikedSongs'
-import { IArtist } from '../types/GetSearch'
 import { Tracks } from './types'
 
 interface IProps {
