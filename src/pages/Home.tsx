@@ -5,8 +5,6 @@ import GetSalute from '../components/GetSalute/GetSalute'
 import * as S from '../styles/general/styles'
 
 const Home: NextPage<any> = () => {
-    const { data: session, status } = useSession()
-
     const getTokenParams = (hash: string) => {
         const strHashTag = hash.substring(1)
         const paramsUrl = strHashTag.split('&')
