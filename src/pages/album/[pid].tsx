@@ -35,11 +35,6 @@ const Album: NextPage = () => {
 
     const [hour, minutes, seconds] = GetTimeSongs({ ms: ms })
 
-    // const newTracks = tracks?.items?.map((track) => {
-    //     return {
-    //         id: track.id,
-    //     }
-    // })
     const newTracks = tracks?.items?.map((item, index) => {
         return {
             id: item.id,
@@ -115,13 +110,11 @@ const Album: NextPage = () => {
             <S.AlbumAside>
                 {tracks?.items?.map((song, index) => (
                     <SMSong.SongCard key={song.id}>
-                        <div style={{ width: '1%' }}>
-                            <SMSong.SongNumber>{index + 1}</SMSong.SongNumber>
-                        </div>
-                        <button onClick={() => handlePlayId(index)}>
-                            Play
-                        </button>
-                        <Song song={song} />
+                        <Song
+                            song={song}
+                            index={index}
+                            handleId={() => handlePlayId(index)}
+                        />
                     </SMSong.SongCard>
                 ))}
             </S.AlbumAside>

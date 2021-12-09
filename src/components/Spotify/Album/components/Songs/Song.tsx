@@ -1,20 +1,39 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import GetTimeSongs from '../../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { IArtist } from '../../../../../hooks/types/GetTopSongs'
 import * as S from '../../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import Link from 'next/link'
+import * as SSMain from '../../../../../styles/components/Spotify/MainSongs/Main.style'
+import dynamic from 'next/dynamic'
+
 interface IProps {
     song: IArtist
+    index: number
+    handleId?: () => void
 }
 
-const Song: FC<IProps> = ({ song }) => {
+const Song: FC<IProps> = ({ song, handleId, index }) => {
     const [hour, minutes, seconds] = GetTimeSongs({ ms: song?.duration_ms })
 
-    console.log(song)
-
+    const PlayCenter = useMemo(
+        () =>
+            dynamic(
+                () =>
+                    import(
+                        `../../../../../../public/icons/Player/playcenter.svg`
+                    )
+            ),
+        []
+    )
     return (
         <S.Song key={song?.id}>
             <S.SongMain>
+                <S.SongNumberItem>
+                    <SSMain.SongNumber>{index + 1}</SSMain.SongNumber>
+                    <SSMain.Button onClick={handleId}>
+                        <PlayCenter />
+                    </SSMain.Button>
+                </S.SongNumberItem>
                 <S.SongDescription>
                     <S.SontTitle>{song?.name}</S.SontTitle>
                     {song?.artists?.map((artist, index) => (

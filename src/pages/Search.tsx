@@ -5,7 +5,6 @@ import ArtistCard from '../components/Artist/Artist'
 import Categories from '../components/Search/Categories/Categories'
 import SearchBar from '../components/Search/SearchBar/SearchBar'
 import Song from '../components/Spotify/MainSongs/components/Song/Song'
-import PlayList from '../components/Spotify/Playlist/PlayList'
 import UserImage from '../components/Spotify/UserImage/UserImage'
 import UserPublicPlaylist from '../components/User/UserPublicPlaylist'
 import GetData from '../hooks/GetData/GetData'
@@ -44,13 +43,32 @@ const Search: NextPage = () => {
 
     const { categories } = GetData<GetCategories>(url)
 
-    const newTracks = tracks?.items?.map((track) => {
+    const newTracks = tracks?.items?.map((track, index) => {
         return {
             id: track.id,
+            position: index,
+            trackname: track.name,
+            artist: track.artists,
+            album: {
+                id: track.album.id,
+                name: track.album.name,
+                type: track.album.type,
+            },
+            duration_ms: track.duration_ms,
+            images: track.album.images[0]?.url,
         }
     })
+
     const handlePlayId = (id: number) => {
-        setTracks({ tracks: newTracks, position: id })
+        setTracks({
+            tracks: newTracks.filter((track) => track.position === id),
+            position: 0,
+            from: {
+                name: tracks?.items[id].album.name,
+                id: tracks?.items[id].album.id,
+                type: 'album',
+            },
+        })
     }
 
     return (

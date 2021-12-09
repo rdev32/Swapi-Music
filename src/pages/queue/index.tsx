@@ -10,7 +10,7 @@ import Track from '../../components/queue/components/Track/Track'
 
 const Queue: NextPage = () => {
     const { tracks } = useContext(UserTrackContext)
-    console.log(tracks)
+    console.log('queue tracks', tracks)
 
     return (
         <S.StyledContainer>
@@ -47,7 +47,14 @@ const Queue: NextPage = () => {
                         </Link>
                     </h4>
                 )}
-                <TrackList tracks={tracks.tracks} />
+
+                {tracks?.tracks &&
+                tracks.position ===
+                    tracks?.tracks[tracks.tracks.length - 1].position ? (
+                    <h3>Queue is empty :(</h3>
+                ) : (
+                    <TrackList tracks={tracks.tracks} />
+                )}
             </aside>
         </S.StyledContainer>
     )

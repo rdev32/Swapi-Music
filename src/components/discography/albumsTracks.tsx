@@ -40,17 +40,25 @@ const AlbumsTracks: FC<IProps> = ({ id }) => {
         }
     })
     const handlePlayId = (id: number) => {
-        setTracks({ tracks: newTracks, position: id })
+        setTracks({
+            tracks: newTracks,
+            position: id,
+            from: {
+                id: idFrom,
+                name,
+                type,
+            },
+        })
     }
     return (
         <S.AlbumAside>
             {tracks?.items.map((track, index) => (
                 <SSong.SongCard key={track.id}>
-                    <div style={{ width: '1%' }}>
-                        <SMSongs.SongNumber>{index + 1}</SMSongs.SongNumber>
-                    </div>
-                    <button onClick={() => handlePlayId(index)}>Play</button>
-                    <Song song={track} />
+                    <Song
+                        song={track}
+                        handleId={() => handlePlayId(index)}
+                        index={index}
+                    />
                 </SSong.SongCard>
             ))}
         </S.AlbumAside>

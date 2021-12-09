@@ -36,6 +36,8 @@ const NavBarPlayer: FC = () => {
 
         return url
     }
+    console.log(getUrl(tracks))
+
     const audio = useRef<HTMLAudioElement>(null)
 
     const track = GetData<GetTrack>(getUrl(tracks))
@@ -80,9 +82,12 @@ const NavBarPlayer: FC = () => {
             localStorage.setItem('tracks', JSON.stringify(tracks))
         }
     }, [tracks])
-    console.log('Audio Props', audio)
 
-    console.log('AutoPlay', autoPlay)
+    console.log('NavPlayer', tracks)
+
+    // console.log('Audio Props', audio)
+
+    // console.log('AutoPlay', autoPlay)
 
     return (
         <>
