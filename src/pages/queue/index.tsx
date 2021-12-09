@@ -10,7 +10,6 @@ import Track from '../../components/queue/components/Track/Track'
 
 const Queue: NextPage = () => {
     const { tracks } = useContext(UserTrackContext)
-    console.log('queue tracks', tracks)
 
     return (
         <S.StyledContainer>

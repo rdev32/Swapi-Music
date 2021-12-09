@@ -19,7 +19,6 @@ function MyApp({
     const [active, setActive] = useState(
         router.pathname.replace(/\s+/g, '').substring(0, 999999)
     )
-    console.log(tracks)
 
     return (
         <SessionProvider session={session}>

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { colors } from '../../colors'
 
 export const NavPlayer = styled.nav`
     background-color: white;
@@ -19,4 +20,29 @@ export const PlayerInfoSong = styled.div`
     position: fixed;
     margin: 0 0 0 50px;
     left: 0;
+`
+export const RepeatButton = styled.button`
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    svg {
+        path {
+            stroke: ${({ repeat }: { repeat: boolean }) =>
+                repeat ? colors.blue : colors.black};
+        }
+    }
+`
+
+export const AleatoryButton = styled.button`
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    svg {
+        path {
+            fill: ${({ aleatory }: { aleatory: boolean }) =>
+                aleatory ? colors.blue : colors.black};
+        }
+    }
 `

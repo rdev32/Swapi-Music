@@ -4,6 +4,7 @@ import {
     useContext,
     useEffect,
     useLayoutEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react'
@@ -12,19 +13,24 @@ import GetTrack from '../../hooks/types/GetTrack'
 import { Tracks } from '../../hooks/UserTrackContext/types'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import {
+    AleatoryButton,
     NavPlayer,
     PlayerInfoSong,
+    RepeatButton,
 } from '../../styles/components/NavBarPlayer/NavBarPlayer.style'
 import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import { GetIcon, GetPlayerIcons } from '../Icons/Icons'
 import UserImage from '../Spotify/UserImage/UserImage'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
     const [play, setPlay] = useState(false)
-    const [autoPlay, setAutoPlay] = useState(false)
+    const [repeat, setRepeat] = useState(false)
+    const [aleatory, setAleatory] = useState(false)
     const [volumen, setVolumen] = useState(5)
+    // console.log(state)
 
     const getUrl = (getTrack: Tracks) => {
         const url =
@@ -36,17 +42,27 @@ const NavBarPlayer: FC = () => {
 
         return url
     }
-    console.log(getUrl(tracks))
-
     const audio = useRef<HTMLAudioElement>(null)
-
     const track = GetData<GetTrack>(getUrl(tracks))
 
+    const QueueIcon = useMemo(
+        () => dynamic(() => import(`../../../public/icons/Player/queue.svg`)),
+        []
+    )
+    const RepeatIcon = useMemo(
+        () => dynamic(() => import(`../../../public/icons/Player/repeat.svg`)),
+        []
+    )
+    const AleatoryIcon = useMemo(
+        () =>
+            dynamic(() => import(`../../../public/icons/Player/aleatory.svg`)),
+        []
+    )
     const handlePlay = () => {
         if (audio.current) {
             audio.current?.play()
             setPlay(true)
-            audio.current.autoplay = autoPlay
+            audio.current.autoplay = repeat
             audio.current.volume = volumen / 100
         }
     }
@@ -62,15 +78,20 @@ const NavBarPlayer: FC = () => {
 
     useEffect(() => {
         if (audio.current) {
-            audio.current.autoplay = autoPlay
+            audio.current.autoplay = repeat
         }
-    }, [audio.current, autoPlay])
+    }, [repeat])
+    useEffect(() => {
+        if (audio.current) {
+            audio.current.autoplay = aleatory
+        }
+    }, [aleatory])
     useEffect(() => {
         if (audio.current) {
             audio.current.src = track?.preview_url
-            audio.current.autoplay = autoPlay
         }
-    }, [track, autoPlay])
+    }, [track])
+
     useEffect(() => {
         if (audio.current) {
             audio.current.volume = volumen / 100
@@ -82,12 +103,6 @@ const NavBarPlayer: FC = () => {
             localStorage.setItem('tracks', JSON.stringify(tracks))
         }
     }, [tracks])
-
-    console.log('NavPlayer', tracks)
-
-    // console.log('Audio Props', audio)
-
-    // console.log('AutoPlay', autoPlay)
 
     return (
         <>
@@ -126,14 +141,47 @@ const NavBarPlayer: FC = () => {
                     <audio
                         ref={audio}
                         preload="auto"
-                        onEnded={() => setPlay(false)}
-                        autoPlay={autoPlay}
+                        onEnded={() => {
+                            if (repeat) {
+                                if (aleatory) {
+                                    handlePlay()
+                                    setTracks({
+                                        ...tracks,
+                                        position:
+                                            tracks.position >=
+                                            tracks.tracks.length - 1
+                                                ? 0
+                                                : Math.floor(
+                                                      Math.random() *
+                                                          tracks?.tracks?.length
+                                                  ),
+                                    })
+                                } else {
+                                    handlePlay()
+                                    setTracks({
+                                        ...tracks,
+                                        position:
+                                            tracks.position >=
+                                            tracks.tracks.length - 1
+                                                ? 0
+                                                : tracks.position + 1,
+                                    })
+                                }
+                            } else {
+                                setPlay(false)
+                            }
+                        }}
                     >
                         <source src={track?.preview_url} type="audio/mpeg" />
                     </audio>
 
                     <SSong.SongPlayerIcons>
-                        <button>Aleatory</button>
+                        <AleatoryButton
+                            aleatory={aleatory}
+                            onClick={() => setAleatory(!aleatory)}
+                        >
+                            <AleatoryIcon />
+                        </AleatoryButton>
                         <SSong.SongButton
                             onClick={() => {
                                 setTracks({
@@ -158,24 +206,36 @@ const NavBarPlayer: FC = () => {
                             onClick={() => {
                                 setTracks({
                                     ...tracks,
-                                    position:
-                                        tracks.position >=
-                                        tracks.tracks.length - 1
+                                    position: aleatory
+                                        ? tracks.position >=
+                                          tracks.tracks.length - 1
                                             ? 0
-                                            : tracks.position + 1,
+                                            : Math.floor(
+                                                  Math.random() *
+                                                      tracks?.tracks?.length
+                                              )
+                                        : tracks.position >=
+                                          tracks.tracks.length - 1
+                                        ? 0
+                                        : tracks.position + 1,
                                 })
                             }}
                         >
                             {<GetIcon name="next" />}
                         </SSong.SongButton>
-                        <button onClick={() => setAutoPlay(!autoPlay)}>
-                            Repeat
-                        </button>
+                        <RepeatButton
+                            onClick={() => setRepeat(!repeat)}
+                            repeat={repeat}
+                        >
+                            <RepeatIcon />
+                        </RepeatButton>
                     </SSong.SongPlayerIcons>
                     <SSong.SongPlayerVolumen>
-                        {/* <button>queue</button> */}
                         <Link href="/queue">
-                            <a>Queue</a>
+                            <a>
+                                {' '}
+                                <QueueIcon />
+                            </a>
                         </Link>
                         <input
                             type="range"
