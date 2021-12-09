@@ -1,5 +1,4 @@
 import { NextPage } from 'next'
-import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import GetSalute from '../components/GetSalute/GetSalute'
 import * as S from '../styles/general/styles'
