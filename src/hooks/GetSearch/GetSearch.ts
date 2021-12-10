@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
 function GetSearch<Type>(
     search: string,
@@ -7,21 +9,26 @@ function GetSearch<Type>(
 ) {
     const [data, setData] = useState<Type>({} as Type)
     const [count, setCount] = useState<number>(0)
-
+    const router = useRouter()
     useEffect(() => {
         const handler = () => {
             const url = `https://api.spotify.com/v1/search?&include_external=audio&q=${search}&type=album,track,artist,playlist,episode,show`
             axios
                 .get(url, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'token'
-                        )}`,
+                        Authorization: `Bearer ${Cookies.get('token')}`,
                     },
                 })
-                .then((resp) => {
-                    resp.data && setMount(true)
-                    return setData(resp.data)
+                .then((resp: any | { error: { status: number } }) => {
+                    if (resp?.error?.status === 401) {
+                        router.replace('/')
+                    } else {
+                        setData(resp.data)
+                        setMount(true)
+                    }
+
+                    // resp.data && setMount(true)
+                    // return setData(resp.data)
                 })
                 .catch((err) => console.log(err))
         }

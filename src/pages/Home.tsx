@@ -1,9 +1,10 @@
 import { NextPage } from 'next'
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import GetSalute from '../components/GetSalute/GetSalute'
 import * as S from '../styles/general/styles'
+import Cookies from 'js-cookie'
 
-const Home: NextPage<any> = () => {
+const Home: NextPage = () => {
     const getTokenParams = (hash: string) => {
         const strHashTag = hash.substring(1)
         const paramsUrl = strHashTag.split('&')
@@ -15,10 +16,11 @@ const Home: NextPage<any> = () => {
         return paramsSplit
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (window.location.hash) {
             const { access_token } = getTokenParams(window.location.hash)
             localStorage.setItem('token', access_token)
+            Cookies.set('token', access_token)
         }
     }, [])
 

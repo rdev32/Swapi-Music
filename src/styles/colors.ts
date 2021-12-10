@@ -7,7 +7,7 @@ interface IColors {
 
 export const colors: IColors = {
     blue: '#316AD9',
-    gray: '#EEEEEE',
+    gray: '#F9F9F9',
     green: '#2BD985',
     black: '#262626',
 }

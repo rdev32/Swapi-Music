@@ -1,12 +1,11 @@
 import { NextPage } from 'next'
+import Link from 'next/link'
 import { useContext } from 'react'
+import Track from '../../components/queue/components/Track/Track'
 import TrackList from '../../components/queue/components/TrackList/TrackList'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
-import * as S from '../../styles/general/styles'
 import * as SSMain from '../../styles/components/Spotify/MainSongs/Main.style'
-
-import Link from 'next/link'
-import Track from '../../components/queue/components/Track/Track'
+import * as S from '../../styles/general/styles'
 
 const Queue: NextPage = () => {
     const { tracks } = useContext(UserTrackContext)
@@ -52,7 +51,7 @@ const Queue: NextPage = () => {
                     tracks?.tracks[tracks.tracks.length - 1].position ? (
                     <h3>Queue is empty :(</h3>
                 ) : (
-                    <TrackList tracks={tracks.tracks} />
+                    <TrackList />
                 )}
             </aside>
         </S.StyledContainer>

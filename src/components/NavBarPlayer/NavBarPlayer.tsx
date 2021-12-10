@@ -1,16 +1,15 @@
+import Link from 'next/link'
 import {
     ChangeEvent,
     FC,
     useContext,
     useEffect,
     useLayoutEffect,
-    useMemo,
     useRef,
     useState,
 } from 'react'
 import GetData from '../../hooks/GetData/GetData'
 import GetTrack from '../../hooks/types/GetTrack'
-import { Tracks } from '../../hooks/UserTrackContext/types'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import {
     AleatoryButton,
@@ -21,8 +20,8 @@ import {
 import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import { GetIcon, GetPlayerIcons } from '../Icons/Icons'
 import UserImage from '../Spotify/UserImage/UserImage'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import Artists from './components/Artitsts/Artists'
+import GetUrl from './helpers/GetUrl'
 
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
@@ -30,37 +29,12 @@ const NavBarPlayer: FC = () => {
     const [repeat, setRepeat] = useState(false)
     const [aleatory, setAleatory] = useState(false)
     const [volumen, setVolumen] = useState(5)
-    // console.log(state)
-
-    const getUrl = (getTrack: Tracks) => {
-        const url =
-            getTrack?.tracks && getTrack?.tracks[getTrack.position]?.id
-                ? `https://api.spotify.com/v1/tracks/${
-                      getTrack?.tracks[getTrack.position]?.id
-                  }`
-                : ''
-
-        return url
-    }
     const audio = useRef<HTMLAudioElement>(null)
-    const track = GetData<GetTrack>(getUrl(tracks))
+    const track = GetData<GetTrack>(GetUrl(tracks))
 
-    const QueueIcon = useMemo(
-        () => dynamic(() => import(`../../../public/icons/Player/queue.svg`)),
-        []
-    )
-    const RepeatIcon = useMemo(
-        () => dynamic(() => import(`../../../public/icons/Player/repeat.svg`)),
-        []
-    )
-    const AleatoryIcon = useMemo(
-        () =>
-            dynamic(() => import(`../../../public/icons/Player/aleatory.svg`)),
-        []
-    )
     const handlePlay = () => {
+        audio.current?.play()
         if (audio.current) {
-            audio.current?.play()
             setPlay(true)
             audio.current.autoplay = repeat
             audio.current.volume = volumen / 100
@@ -71,6 +45,91 @@ const NavBarPlayer: FC = () => {
         audio.current?.pause()
         setPlay(false)
     }
+    const handleNext = () => {
+        if (repeat) {
+            setPlay(true)
+            setTracks({
+                ...tracks,
+                position:
+                    tracks.position >= tracks.tracks.length - 1
+                        ? 0
+                        : tracks.position + 1,
+            })
+        } else if (aleatory) {
+            setPlay(true)
+            setTracks({
+                ...tracks,
+                position:
+                    tracks.position >= tracks.tracks.length - 1
+                        ? 0
+                        : Math.floor(Math.random() * tracks?.tracks?.length),
+            })
+        } else {
+            setPlay(false)
+            setTracks({
+                ...tracks,
+                position:
+                    tracks.position >= tracks.tracks.length - 1
+                        ? 0
+                        : tracks.position + 1,
+            })
+        }
+    }
+    const handleBack = () => {
+        if (repeat) {
+            setPlay(true)
+            setTracks({
+                ...tracks,
+                position:
+                    tracks.position <= 0
+                        ? tracks.tracks.length - 1
+                        : tracks.position - 1,
+            })
+        } else {
+            setPlay(false)
+            setTracks({
+                ...tracks,
+                position:
+                    tracks.position <= 0
+                        ? tracks.tracks.length - 1
+                        : tracks.position - 1,
+            })
+        }
+    }
+
+    const handleOnEnded = () => {
+        if (repeat) {
+            if (aleatory) {
+                setTracks({
+                    ...tracks,
+                    position:
+                        tracks.position >= tracks.tracks.length - 1
+                            ? 0
+                            : Math.floor(
+                                  Math.random() * tracks?.tracks?.length
+                              ),
+                })
+            } else {
+                setTracks({
+                    ...tracks,
+                    position:
+                        tracks.position >= tracks.tracks.length - 1
+                            ? 0
+                            : tracks.position + 1,
+                })
+            }
+        } else {
+            setPlay(false)
+        }
+    }
+
+    const handleAleatory = () => {
+        setAleatory(!aleatory)
+        setTracks({
+            ...tracks,
+            aleatory: Math.random(),
+        })
+    }
     useLayoutEffect(() => {
         if (localStorage.getItem('tracks'))
             setTracks(JSON.parse(localStorage.getItem('tracks') || '{}'))
@@ -78,14 +137,9 @@ const NavBarPlayer: FC = () => {
 
     useEffect(() => {
         if (audio.current) {
-            audio.current.autoplay = repeat
+            audio.current.autoplay = aleatory || repeat
         }
-    }, [repeat])
-    useEffect(() => {
-        if (audio.current) {
-            audio.current.autoplay = aleatory
-        }
-    }, [aleatory])
+    }, [aleatory, repeat])
     useEffect(() => {
         if (audio.current) {
             audio.current.src = track?.preview_url
@@ -96,7 +150,7 @@ const NavBarPlayer: FC = () => {
         if (audio.current) {
             audio.current.volume = volumen / 100
         }
-    }, [audio.current, volumen])
+    }, [volumen])
 
     useEffect(() => {
         if (Object.keys(tracks).length > 0) {
@@ -118,81 +172,22 @@ const NavBarPlayer: FC = () => {
                         <SSong.SongDescription>
                             <SSong.SontTitle>{track?.name}</SSong.SontTitle>
                             <SSong.SongArtists>
-                                {track?.artists.map((artist, index) => (
-                                    <Link
-                                        key={artist?.id}
-                                        href={{
-                                            pathname: '/artist/[pid]',
-                                            query: {
-                                                pid: artist?.id,
-                                            },
-                                        }}
-                                        passHref
-                                    >
-                                        <SSong.SongArtist>
-                                            {index === 0 ? '' : `,`}{' '}
-                                            {artist?.name}
-                                        </SSong.SongArtist>
-                                    </Link>
-                                ))}
+                                <Artists {...{ track }} />
                             </SSong.SongArtists>
                         </SSong.SongDescription>
                     </PlayerInfoSong>
-                    <audio
-                        ref={audio}
-                        preload="auto"
-                        onEnded={() => {
-                            if (repeat) {
-                                if (aleatory) {
-                                    handlePlay()
-                                    setTracks({
-                                        ...tracks,
-                                        position:
-                                            tracks.position >=
-                                            tracks.tracks.length - 1
-                                                ? 0
-                                                : Math.floor(
-                                                      Math.random() *
-                                                          tracks?.tracks?.length
-                                                  ),
-                                    })
-                                } else {
-                                    handlePlay()
-                                    setTracks({
-                                        ...tracks,
-                                        position:
-                                            tracks.position >=
-                                            tracks.tracks.length - 1
-                                                ? 0
-                                                : tracks.position + 1,
-                                    })
-                                }
-                            } else {
-                                setPlay(false)
-                            }
-                        }}
-                    >
+                    <audio ref={audio} preload="auto" onEnded={handleOnEnded}>
                         <source src={track?.preview_url} type="audio/mpeg" />
                     </audio>
 
                     <SSong.SongPlayerIcons>
                         <AleatoryButton
                             aleatory={aleatory}
-                            onClick={() => setAleatory(!aleatory)}
+                            onClick={handleAleatory}
                         >
-                            <AleatoryIcon />
+                            <GetPlayerIcons name="aleatory" />
                         </AleatoryButton>
-                        <SSong.SongButton
-                            onClick={() => {
-                                setTracks({
-                                    ...tracks,
-                                    position:
-                                        tracks.position <= 0
-                                            ? tracks.tracks.length - 1
-                                            : tracks.position - 1,
-                                })
-                            }}
-                        >
+                        <SSong.SongButton onClick={handleBack}>
                             {<GetIcon name="back" />}
                         </SSong.SongButton>
                         <SSong.SongButton
@@ -202,39 +197,21 @@ const NavBarPlayer: FC = () => {
                         >
                             <GetPlayerIcons name={play ? 'pause' : 'play'} />
                         </SSong.SongButton>
-                        <SSong.SongButton
-                            onClick={() => {
-                                setTracks({
-                                    ...tracks,
-                                    position: aleatory
-                                        ? tracks.position >=
-                                          tracks.tracks.length - 1
-                                            ? 0
-                                            : Math.floor(
-                                                  Math.random() *
-                                                      tracks?.tracks?.length
-                                              )
-                                        : tracks.position >=
-                                          tracks.tracks.length - 1
-                                        ? 0
-                                        : tracks.position + 1,
-                                })
-                            }}
-                        >
+                        <SSong.SongButton onClick={handleNext}>
                             {<GetIcon name="next" />}
                         </SSong.SongButton>
                         <RepeatButton
                             onClick={() => setRepeat(!repeat)}
                             repeat={repeat}
                         >
-                            <RepeatIcon />
+                            <GetPlayerIcons name="repeat" />
                         </RepeatButton>
                     </SSong.SongPlayerIcons>
                     <SSong.SongPlayerVolumen>
                         <Link href="/queue">
                             <a>
                                 {' '}
-                                <QueueIcon />
+                                <GetPlayerIcons name="queue" />
                             </a>
                         </Link>
                         <input

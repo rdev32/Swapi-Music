@@ -36,6 +36,7 @@ export const SontTitle = styled.p`
 `
 export const SongArtist = styled.a`
     margin: 0;
+
     opacity: 0.75;
     font-weight: 500;
     padding: 0;
@@ -93,4 +94,5 @@ export const SongNumberItem = styled.div`
 export const SongArtists = styled.div`
     overflow: hidden;
     height: 20px;
+    width: 250px;
 `
