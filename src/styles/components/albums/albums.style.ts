@@ -16,6 +16,7 @@ export const AlbumsFooterButton = styled.a`
 
 export const AlbumRedirect = styled.a`
     margin: 10px;
+    width: 186px;
     background-color: transparent;
     border: none;
     border-radius: 10px;

@@ -46,7 +46,7 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
                     />
                 )}
                 <SSong.SongDescription>
-                    <SSong.SontTitle>{song.track?.name}</SSong.SontTitle>
+                    <SSong.SontTitle>{song?.track?.name}</SSong.SontTitle>
                     <SSong.SongArtists>
                         {song?.track?.artists.map((artist, index) => (
                             <Link

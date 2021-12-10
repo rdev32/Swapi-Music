@@ -136,25 +136,27 @@ const Search: NextPage = () => {
                                 <SearchTitleCategory>
                                     Tracks
                                 </SearchTitleCategory>
-                                {tracks?.items?.map((track, index) => (
-                                    <STracks.SongCard key={track.id}>
-                                        <div style={{ width: '1%' }}>
-                                            <STracks.SongNumber>
-                                                {index + 1}
-                                            </STracks.SongNumber>
-                                        </div>
-                                        <div>
-                                            <button
-                                                onClick={() =>
-                                                    handlePlayId(index)
-                                                }
-                                            >
-                                                Play
-                                            </button>
-                                        </div>
-                                        <Song item={track} />
-                                    </STracks.SongCard>
-                                ))}
+                                {tracks?.items
+                                    ?.filter((track, index) => index < 5)
+                                    .map((track, index) => (
+                                        <STracks.SongCard key={track.id}>
+                                            <div style={{ width: '1%' }}>
+                                                <STracks.SongNumber>
+                                                    {index + 1}
+                                                </STracks.SongNumber>
+                                            </div>
+                                            <div>
+                                                <button
+                                                    onClick={() =>
+                                                        handlePlayId(index)
+                                                    }
+                                                >
+                                                    Play
+                                                </button>
+                                            </div>
+                                            <Song item={track} />
+                                        </STracks.SongCard>
+                                    ))}
                             </SearchTracksContainer>
                         )}
                     </SearchSection1>

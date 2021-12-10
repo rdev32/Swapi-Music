@@ -36,21 +36,23 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
                 </S.SongNumberItem>
                 <S.SongDescription>
                     <S.SontTitle>{song?.name}</S.SontTitle>
-                    {song?.artists?.map((artist, index) => (
-                        <Link
-                            key={artist?.id}
-                            href={{
-                                pathname: '/artist/[pid]',
-                                query: {
-                                    pid: artist?.id,
-                                },
-                            }}
-                        >
-                            <a>
-                                {index === 0 ? '' : `,`} {artist?.name}
-                            </a>
-                        </Link>
-                    ))}
+                    <S.SongArtists>
+                        {song?.artists?.map((artist, index) => (
+                            <Link
+                                key={artist?.id}
+                                href={{
+                                    pathname: '/artist/[pid]',
+                                    query: {
+                                        pid: artist?.id,
+                                    },
+                                }}
+                            >
+                                <a>
+                                    {index === 0 ? '' : `,`} {artist?.name}
+                                </a>
+                            </Link>
+                        ))}
+                    </S.SongArtists>
                 </S.SongDescription>
             </S.SongMain>
             <S.SongMinutesBox>

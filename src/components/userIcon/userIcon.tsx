@@ -15,8 +15,8 @@ const UserIcon: FC<{ user: User }> = ({ user }) => {
                         key={img.url}
                         src={img.url || ''}
                         alt={user?.display_name}
-                        width={40}
-                        height={40}
+                        width={50}
+                        height={50}
                     />
                 ))}
             </S.UserIconStyle>

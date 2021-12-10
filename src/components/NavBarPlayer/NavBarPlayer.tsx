@@ -140,6 +140,7 @@ const NavBarPlayer: FC = () => {
             audio.current.autoplay = aleatory || repeat
         }
     }, [aleatory, repeat])
+
     useEffect(() => {
         if (audio.current) {
             audio.current.src = track?.preview_url
@@ -178,6 +179,12 @@ const NavBarPlayer: FC = () => {
                     </PlayerInfoSong>
                     <audio ref={audio} preload="auto" onEnded={handleOnEnded}>
                         <source src={track?.preview_url} type="audio/mpeg" />
+                        <picture>
+                            <source
+                                srcSet={track?.album?.images[2].url}
+                                type="image/jpeg"
+                            />
+                        </picture>
                     </audio>
 
                     <SSong.SongPlayerIcons>

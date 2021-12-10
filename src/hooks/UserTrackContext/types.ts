@@ -20,5 +20,5 @@ export type Tracks = {
         type?: string
     }
     tracks: TrackId[]
-    aleatory: number
+    aleatory?: number
 }

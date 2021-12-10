@@ -8,7 +8,6 @@ import GetData from '../hooks/GetData/GetData'
 import { GetCurrentPlaylist } from '../hooks/types/GetCurrentUserPlaylist'
 import { User } from '../hooks/types/GetUserProfile'
 import UserContext from '../hooks/UserContext/UserContext'
-import UseSpotify from '../hooks/UseSpotify/UseSpotify'
 import * as S from '../styles/components/layout/layout.style'
 import { IProps } from './types'
 
@@ -18,21 +17,6 @@ const Layout: FC<IProps> = ({ children, router }) => {
     const { items } = GetData<GetCurrentPlaylist>(
         'https://api.spotify.com/v1/me/playlists'
     )
-    // console.log(session)
-
-    // const spotifyApi = UseSpotify()
-    // const { data: session, status } = useSession()
-    // const [playlists, setPlaylists] = useState([])
-
-    // useEffect(() => {
-    //     if (spotifyApi.getAccessToken()) {
-    //         spotifyApi.getUserPlaylists().then((data: any) => {
-    //             console.log('xd')
-
-    //             setPlaylists(data.body.items)
-    //         })
-    //     }
-    // }, [session, spotifyApi])
 
     return (
         <UserContext.Provider value={{ user, playlists: items }}>

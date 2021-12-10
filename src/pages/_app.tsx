@@ -10,6 +10,8 @@ import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import Layout from '../Layout/Layout'
 import '../styles/globals.css'
 import { Materialize } from '../styles/Normalize'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 const MyApp = ({ Component, pageProps, router }: AppProps) => {
     const [tracks, setTracks] = useState<Tracks>({} as Tracks)

@@ -11,10 +11,6 @@ const UImage = styled(Image)`
     z-index: 0;
 `
 
-const DynamicUserImage = styled.div`
-    height: 180px;
-    width: 180px;
-`
 const UserImage: FC<IDataImgUser> = ({
     url,
     displayName,
