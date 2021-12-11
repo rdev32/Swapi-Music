@@ -12,7 +12,6 @@ export const ItemBox = styled.div`
 
 export const ItemT = styled.a`
     h1 {
-        margin: 0.75em;
         font-size: 22px;
         color: ${colors.blue};
         font-weight: ${fontWeight.semiBold};

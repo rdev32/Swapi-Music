@@ -1,30 +1,35 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { getCsrfToken, getProviders, getSession, signIn } from 'next-auth/react'
+import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { FC, useMemo } from 'react'
-import * as S from '../styles/pages/auth/login.style'
+import { useMemo } from 'react'
+import Login from '../assets/Login.json'
 import Buttons from '../components/Buttons/Buttons'
+import * as S from '../styles/pages/auth/login.style'
 
-const Login: FC<any> = ({ providers }) => {
-    const DynamicIcon = useMemo(
-        () => dynamic(() => import('../../public/icons/icon.svg')),
-        []
-    )
-    const buttons = ['Login', 'Sign Up']
-    // console.log(session)
+const Index: NextPage = () => {
+    const GetIcons = () => {
+        const Icon = useMemo(
+            () => dynamic(() => import('../../public/landing/swapi.svg')),
+            []
+        )
+        if (Icon) {
+            return <Icon />
+        }
+        return null
+    }
 
     return (
         <S.LoginBody>
             <S.NavBar>
-                <S.LoginTitle>{<DynamicIcon />}Swapy</S.LoginTitle>
+                <S.LoginTitle>{<GetIcons />}Swapy</S.LoginTitle>
                 <S.NavBarButtons signup={false}>
-                    {buttons.map((button) => (
-                        <Buttons key={button} {...{ button }} />
+                    {Login.filter((_, index) => index === 0).map((button) => (
+                        <Buttons key={button} button={button} />
                     ))}
                 </S.NavBarButtons>
             </S.NavBar>
-            <S.Home>
+            <S.Aside>
                 <div>
                     <S.LoginQuestion>
                         Listen to your <span>Dreams</span>
@@ -34,19 +39,11 @@ const Login: FC<any> = ({ providers }) => {
                         with our music!
                     </S.NavBarPhrase>
                     <S.NavBarButtons signup>
-                        {/* {buttons.map((button) => (
-                            <Buttons key={button} {...{ button }} />
-                        ))} */}
-                        <S.Buttons
-                            key={providers?.spotify?.id}
-                            onClick={() =>
-                                signIn(providers?.spotify.id, {
-                                    callbackUrl: '/Home',
-                                })
-                            }
-                        >
-                            {providers?.spotify?.name}
-                        </S.Buttons>
+                        {Login.filter((_, index) => index === 1).map(
+                            (button) => (
+                                <Buttons key={button} button={button} />
+                            )
+                        )}
                     </S.NavBarButtons>
                 </div>
                 <div>
@@ -54,35 +51,20 @@ const Login: FC<any> = ({ providers }) => {
                         src={'/landing/headset.png'}
                         width={330}
                         height={326}
-                        priority
                     />
                 </div>
-            </S.Home>
-            <S.Foot>
-                <Image
-                    src={'/landing/me.png'}
-                    width={100}
-                    height={100}
-                    priority
-                />
-                <p>Whil Inc.</p>
-            </S.Foot>
+            </S.Aside>
+            <S.Footer>
+                <a
+                    href="https://github.com/Whil117"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <Image src={'/landing/me.png'} width={100} height={100} />
+                </a>
+            </S.Footer>
         </S.LoginBody>
     )
 }
 
-export default Login
-
-export async function getServerSideProps() {
-    const providers = await getProviders()
-    const csrfToken = await getCsrfToken()
-    const session = await getSession()
-
-    return {
-        props: {
-            providers,
-            csrfToken,
-            session,
-        },
-    }
-}
+export default Index

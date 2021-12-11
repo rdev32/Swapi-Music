@@ -116,3 +116,13 @@ export const GetPlayerIcons: FC<{ name: string }> = ({ name }) => {
     }
     return null
 }
+
+export const GetIcons = () => {
+    const Icon = useMemo(
+        () => dynamic(() => import('../../../public/landing/swapi.svg')),
+        []
+    )
+    if (Icon) {
+        return <Icon />
+    }
+}

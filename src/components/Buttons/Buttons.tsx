@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { FC } from 'react'
 import {
     baseUrl,
     clientId,
@@ -7,13 +6,9 @@ import {
     ScopesUrlParams,
 } from '../../assets/swagger'
 import * as S from '../../styles/pages/auth/login.style'
-
-//getLocalMode
-//FALSE === DEPLOY
-//TRUE === DEV
-
-//
-const Buttons: FC<{ button: string }> = ({ button }) => {
+//FALSE DEPLOY
+//TRUE DEV
+const Buttons = ({ button }: { button: string }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getLocalMode(
         false
     )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
@@ -33,4 +28,3 @@ const Buttons: FC<{ button: string }> = ({ button }) => {
 }
 
 export default Buttons
-//signup={button === 'Sign Up' ? true : false}

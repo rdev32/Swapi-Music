@@ -63,15 +63,23 @@ export const Buttons = styled.a`
     justify-content: center;
     align-items: center;
     padding: 10px;
-    width: 88px;
-    background-color: ${colors.green};
+    background-color: ${colors.blue};
     border-radius: 10px;
     outline: none;
     border: none;
     color: white;
     font-weight: ${fontWeight.semiBold};
     transition: 0.3s;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
     cursor: pointer;
+    &:hover {
+        background-color: transparent;
+        color: ${colors.blue};
+        outline: 1px solid ${colors.blue};
+        outline-offset: -1px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 `
 export const LoginTitle = styled.h1`
     font-size: 24px;
@@ -80,8 +88,8 @@ export const LoginTitle = styled.h1`
     color: ${colors.blue};
 `
 export const LoginQuestion = styled.h1`
-    width: 346px;
-    font-size: 48px;
+    width: 376px;
+    font-size: 52px;
     span {
         color: ${colors.blue};
     }
@@ -99,12 +107,12 @@ export const NavBar = styled.nav`
     align-items: center;
     width: 100%;
     height: 80px;
-    padding: 20px;
+    padding: 50px 50px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `
 export const NavBarButtons = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 200px;
     flex-direction: ${({ signup }: { signup: boolean }) =>
         signup ? 'row-reverse' : 'row'};
 `
@@ -115,7 +123,7 @@ export const NavBarPhrase = styled.p`
     opacity: 0.5;
 `
 
-export const Home = styled.div`
+export const Aside = styled.aside`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -124,12 +132,11 @@ export const Home = styled.div`
         margin: 20px;
     }
 `
-export const Foot = styled.footer`
+export const Footer = styled.footer`
     background-color: black;
-    color: white;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    border-radius: 15px 15px 0 0;
 `
