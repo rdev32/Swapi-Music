@@ -9,6 +9,7 @@ import * as S from '../../styles/general/styles'
 
 const Queue: NextPage = () => {
     const { tracks } = useContext(UserTrackContext)
+    console.log(tracks)
 
     return (
         <S.StyledContainer>

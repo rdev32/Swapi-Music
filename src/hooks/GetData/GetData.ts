@@ -15,14 +15,19 @@ function GetData<Type>(url: string) {
                     },
                 })
                 .then((resp: any | { error: { status: number } }) => {
-                    if (resp?.error?.status === 401) {
-                        router.replace('/')
-                    } else {
-                        setData(resp.data)
-                    }
+                    // if (resp?.error?.status === 401) {
+                    //     router.replace('/')
+                    // } else {
+                    // }
+                    resp && setData(resp.data)
                     // setData(resp.data)
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    if (err?.response?.status === 401) {
+                        router.replace('/')
+                    }
+                })
+        return () => {}
     }, [url])
     return data
 }

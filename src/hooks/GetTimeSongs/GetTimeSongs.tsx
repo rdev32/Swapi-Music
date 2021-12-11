@@ -21,6 +21,9 @@ const GetTimeSongs = ({ tracks, ms }: { tracks?: Itracks; ms?: number }) => {
             const seconds = (ms % 60000) / 1000
             setDuration([hour, minutes, seconds])
         }
+        return () => {
+            setDuration([])
+        }
     }, [tracks, ms])
 
     return [hour, minutes, seconds]

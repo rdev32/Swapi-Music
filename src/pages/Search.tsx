@@ -62,10 +62,10 @@ const Search: NextPage = () => {
     const handlePlayId = (id: number) => {
         setTracks({
             tracks: newTracks.filter((track) => track.position === id),
-            position: 0,
+            position: id,
             from: {
-                name: tracks?.items[id].album.name,
-                id: tracks?.items[id].album.id,
+                name: tracks?.items[0].album.name,
+                id: tracks?.items[0].album.id,
                 type: 'album',
             },
         })

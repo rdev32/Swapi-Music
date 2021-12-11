@@ -21,6 +21,7 @@ import * as SSong from '../../styles/components/Spotify/MainSongs/components/Son
 import { GetIcon, GetPlayerIcons } from '../Icons/Icons'
 import UserImage from '../Spotify/UserImage/UserImage'
 import Artists from './components/Artitsts/Artists'
+import GetSoloUrl from './helpers/GetSoloUrl'
 import GetUrl from './helpers/GetUrl'
 
 const NavBarPlayer: FC = () => {
@@ -30,7 +31,7 @@ const NavBarPlayer: FC = () => {
     const [aleatory, setAleatory] = useState(false)
     const [volumen, setVolumen] = useState(5)
     const audio = useRef<HTMLAudioElement>(null)
-    const track = GetData<GetTrack>(GetUrl(tracks))
+    const track = GetData<GetTrack>(GetUrl(tracks) || GetSoloUrl(tracks))
 
     const handlePlay = () => {
         audio.current?.play()

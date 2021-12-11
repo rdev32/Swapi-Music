@@ -109,11 +109,11 @@ const Artist: NextPage = () => {
 
     const handlePlayId = (id: number) => {
         setTracks({
-            tracks: newTracks,
+            tracks: newTracks.filter((track) => track.position === id),
             position: id,
             from: {
-                name: tracks?.[id]?.album.name,
-                id: tracks?.[id]?.album.id,
+                name: tracks[0].album.name,
+                id: tracks[0].album.id,
                 type: 'album',
             },
         })

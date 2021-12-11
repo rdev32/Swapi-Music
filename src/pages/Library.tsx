@@ -7,10 +7,10 @@ import * as S from '../styles/general/styles'
 const Library: NextPage = () => {
     const { playlists } = useContext(UserContext)
     return (
-        <S.StyledContainer>
-            <h1>Library</h1>
+        <S.StyledLibraryContainer>
+            <h1>Playlists</h1>
             <Playlists items={playlists} />
-        </S.StyledContainer>
+        </S.StyledLibraryContainer>
     )
 }
 
