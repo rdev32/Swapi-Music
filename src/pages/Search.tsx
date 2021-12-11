@@ -64,8 +64,8 @@ const Search: NextPage = () => {
             tracks: newTracks.filter((track) => track.position === id),
             position: id,
             from: {
-                name: tracks?.items[0].album.name,
-                id: tracks?.items[0].album.id,
+                name: tracks?.items[id].album.name,
+                id: tracks?.items[id].album.id,
                 type: 'album',
             },
         })
