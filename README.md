@@ -3,7 +3,7 @@
  <img src="https://i.imgur.com/yVEkgvM.png" alt="swapimusic">
  <h1 style="text-underline:none; font-size:36px;">Swapi Music </h1>
 </a>
-<hr>
+
 <p>This is app basaded in Spotify API, you can listen and interactue with your favorite music.</p>
 </header>
 <aside>
