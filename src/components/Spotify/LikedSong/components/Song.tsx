@@ -1,10 +1,10 @@
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import GetTimeSongs from '../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { LikedSongs } from '../../../../hooks/types/GetLikedSongs'
 import * as SSong from '../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
+import { GetPlayerIcons } from '../../../Icons/Icons'
 import UserImage from '../../UserImage/UserImage'
 
 interface IProps {
@@ -18,22 +18,13 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
         ms: song?.track?.duration_ms,
     })
 
-    const PlayCenter = useMemo(
-        () =>
-            dynamic(
-                () =>
-                    import(`../../../../../public/icons/Player/playcenter.svg`)
-            ),
-        []
-    )
-
     return (
         <SSong.Song key={song?.track?.id}>
             <SSong.SongMain>
                 <SSong.SongNumberItem>
                     <SSMain.SongNumber>{index + 1}</SSMain.SongNumber>
                     <SSMain.Button onClick={handleId}>
-                        <PlayCenter />
+                        <GetPlayerIcons name="playcenter" />
                     </SSMain.Button>
                 </SSong.SongNumberItem>
                 {song?.track?.album?.images?.length > 0 && (

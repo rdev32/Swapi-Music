@@ -1,68 +1,26 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Navigation } from 'swiper'
 import { SwiperSlide } from 'swiper/react'
 import typeSizeCreen from '../../components/Albums/helpers/typeSizeCreen'
-import Song from '../../components/Spotify/LikedSong/components/Song'
+import { GetPlayerIcons } from '../../components/Icons/Icons'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
+import formatNumber from '../../helpers/pages/artist/FormatNumbers'
 import GetData from '../../hooks/GetData/GetData'
-import { IImages } from '../../hooks/types/GetAlbum'
 import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
 import { Artist } from '../../hooks/types/GetFollowedArts'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize'
 import * as SSAlbum from '../../styles/components/albums/albums.style'
 import * as SSwiper from '../../styles/components/albums/Swiper/SwiperContainer.style'
-import * as SPlaylist from '../../styles/pages/library/library.style'
-import * as S from '../../styles/pages/User/UserHeader.style'
+import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import * as SSMain from '../../styles/components/Spotify/MainSongs/Main.style'
 import { StyledContainer } from '../../styles/general/styles'
-import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
-import dynamic from 'next/dynamic'
-
-type Tracks = {
-    tracks: {
-        album: {
-            album_type: string
-            artists: Artist[]
-            external_urls: {
-                spotify: string
-            }
-            href: string
-            id: string
-            images: IImages[]
-            name: string
-            release_date: string
-            release_date_precision: string
-            total_tracks: number
-            type: string
-            uri: string
-        }
-        artists: Artist[]
-        available_markets: string[]
-        disc_number: number
-        duration_ms: number
-        explicit: boolean
-        external_ids: {
-            isrc: string
-        }
-        external_urls: {
-            spotify: string
-        }
-        href: string
-        id: string
-        is_local: boolean
-        is_playable: boolean
-        name: string
-        popularity: number
-        preview_url: string
-        track_number: number
-        type: string
-        uri: string
-    }[]
-}
+import * as SPlaylist from '../../styles/pages/library/library.style'
+import * as S from '../../styles/pages/User/UserHeader.style'
+import { Tracks } from '../../types/pages/artist/Tracks'
 
 const Artist: NextPage = () => {
     const router = useRouter()
@@ -82,14 +40,7 @@ const Artist: NextPage = () => {
     const sizeScreen = useWindowSize()
     const { setTracks } = useContext(UserTrackContext)
 
-    useEffect(() => {
-        return setScreenItems(typeSizeCreen(sizeScreen))
-    }, [sizeScreen])
-    const formatNumber = (numbers: number) => {
-        return `${numbers
-            ?.toString()
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} Followers`
-    }
+    useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
 
     const newTracks = tracks?.map((item, index) => {
         return {
@@ -118,36 +69,30 @@ const Artist: NextPage = () => {
             },
         })
     }
-    const PlayCenter = useMemo(
-        () =>
-            dynamic(
-                () => import(`../../../public/icons/Player/playcenter.svg`)
-            ),
-        []
-    )
-    console.log(tracks)
 
     return (
         <StyledContainer>
-            <S.UserHeaderStyle width="370px">
-                <div>
-                    {images && (
-                        <UserImage
-                            key={images[0].url}
-                            url={images[0].url || ''}
-                            bradius={100}
-                            displayName={name}
-                            size={200}
-                            name="artistout"
-                        />
-                    )}
-                </div>
-                <div>
-                    <p>Artist</p>
-                    <h1>{name}</h1>
-                    <p>{formatNumber(followers?.total)}</p>
-                </div>
-            </S.UserHeaderStyle>
+            {name && (
+                <S.UserHeaderStyle width="370px">
+                    <div>
+                        {images && (
+                            <UserImage
+                                key={images[0].url}
+                                url={images[0].url || ''}
+                                bradius={100}
+                                displayName={name}
+                                size={200}
+                                name="artistout"
+                            />
+                        )}
+                    </div>
+                    <div>
+                        <p>Artist</p>
+                        <h1>{name}</h1>
+                        <p>{formatNumber(followers?.total)}</p>
+                    </div>
+                </S.UserHeaderStyle>
+            )}
             {tracks && (
                 <>
                     <h2>Top tracks</h2>
@@ -167,7 +112,7 @@ const Artist: NextPage = () => {
                                                         handlePlayId(index)
                                                     }
                                                 >
-                                                    <PlayCenter />
+                                                    <GetPlayerIcons name="playcenter" />
                                                 </SSMain.Button>
                                             </SSong.SongNumberItem>
                                             {song?.album?.images?.length >

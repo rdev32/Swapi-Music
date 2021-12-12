@@ -106,8 +106,8 @@ export const NavBar = styled.nav`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 80px;
-    padding: 50px 50px;
+    height: 70px;
+    padding: 40px 40px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `
 export const NavBarButtons = styled.div`
