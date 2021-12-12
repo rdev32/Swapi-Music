@@ -10,13 +10,13 @@ export default function typeSizeCreen(size: number) {
             return 4
             break
         case 1440:
-            return 6
-            break
-        case 1990:
             return 7
             break
-        case 2560:
+        case 1990:
             return 8
+            break
+        case 2560:
+            return 9
             break
         default:
             return 2

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
 import { Navigation } from 'swiper'
 import { SwiperSlide } from 'swiper/react'
+import validPid from '../../helpers/pages/artist/ValidPid'
 import GetData from '../../hooks/GetData/GetData'
 import { Artist } from '../../hooks/types/GetAlbum'
 import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
@@ -13,18 +14,17 @@ import UserImage from '../Spotify/UserImage/UserImage'
 import typeSizeCreen from './helpers/typeSizeCreen'
 
 const AlbumArtist: FC<{ artists: Artist[] }> = ({ artists }) => {
-    const urlArtistAlbums =
-        artists && artists[0]?.id
-            ? `https://api.spotify.com/v1/artists/${artists[0].id}/albums`
-            : ''
-    const { items } = GetData<AlbumArtist>(urlArtistAlbums)
+    const urlArtistAlbums = `https://api.spotify.com/v1/artists/${
+        artists && artists[0].id
+    }/albums`
+
+    const { items } = GetData<AlbumArtist>(
+        validPid(urlArtistAlbums, artists && artists[0]?.id)
+    )
     const [screenItems, setScreenItems] = useState(7)
     const sizeScreen = useWindowSize()
 
-    useEffect(() => {
-        return setScreenItems(typeSizeCreen(sizeScreen))
-    }, [sizeScreen])
-    console.log(sizeScreen)
+    useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
 
     return (
         <>

@@ -32,9 +32,8 @@ const Queue: NextPage = () => {
                 </div>
             </div>
             <aside>
-                {!tracks.from?.name ? (
-                    <h4>Next Up</h4>
-                ) : (
+                {!tracks?.from?.id && !tracks?.from?.name && <h4>Next Up</h4>}
+                {tracks.from?.id && (
                     <h4>
                         Next From:{' '}
                         <Link

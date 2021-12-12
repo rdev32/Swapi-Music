@@ -12,14 +12,14 @@ import Link from 'next/link'
 import AlbumArtist from '../../components/Albums/AlbumsArtist'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import { useContext } from 'react'
+import validPid from '../../helpers/pages/artist/ValidPid'
 
 const Album: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
     const { setTracks } = useContext(UserTrackContext)
-    const urlAlbumsTracks = pid
-        ? `https://api.spotify.com/v1/albums/${pid}`
-        : ''
+    const urlAlbumsTracks = `https://api.spotify.com/v1/albums/${pid}`
+
     const {
         images,
         name,
@@ -27,7 +27,7 @@ const Album: NextPage = () => {
         tracks,
         type,
         id: idFrom,
-    } = GetData<Album>(urlAlbumsTracks)
+    } = GetData<Album>(validPid(urlAlbumsTracks, pid))
     const ms = tracks?.items?.reduce(
         (acc, curr) => (acc = acc + curr.duration_ms),
         0

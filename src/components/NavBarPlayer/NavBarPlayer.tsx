@@ -143,6 +143,13 @@ const NavBarPlayer: FC = () => {
     }, [aleatory, repeat])
 
     useEffect(() => {
+        if (repeat || aleatory) {
+            setPlay(true)
+        } else if (!repeat || !aleatory) {
+            setPlay(false)
+        }
+    }, [track, aleatory, repeat])
+    useEffect(() => {
         if (audio.current) {
             audio.current.src = track?.preview_url
         }
