@@ -5,8 +5,8 @@ import {
     useContext,
     useEffect,
     useLayoutEffect,
+    useReducer,
     useRef,
-    useState,
 } from 'react'
 import GetData from '../../hooks/GetData/GetData'
 import GetTrack from '../../hooks/types/GetTrack'
@@ -23,32 +23,52 @@ import UserImage from '../Spotify/UserImage/UserImage'
 import Artists from './components/Artitsts/Artists'
 import GetSoloUrl from './helpers/GetSoloUrl'
 import GetUrl from './helpers/GetUrl'
+import reducer from './helpers/reducer'
+import { IActions } from './types/types'
+import initState from './assets/initState.json'
 
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserTrackContext)
-    const [play, setPlay] = useState(false)
-    const [repeat, setRepeat] = useState(false)
-    const [aleatory, setAleatory] = useState(false)
-    const [volumen, setVolumen] = useState(5)
+    const [controls, dispatch] = useReducer(reducer, initState)
     const audio = useRef<HTMLAudioElement>(null)
     const track = GetData<GetTrack>(GetUrl(tracks) || GetSoloUrl(tracks))
 
     const handlePlay = () => {
         audio.current?.play()
         if (audio.current) {
-            setPlay(true)
-            audio.current.autoplay = repeat
-            audio.current.volume = volumen / 100
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: true },
+            })
+            audio.current.autoplay = controls.repeat
+            audio.current.volume = controls.volumen / 100
         }
     }
-
     const handlePause = () => {
         audio.current?.pause()
-        setPlay(false)
+        dispatch({
+            type: IActions.ON_Play,
+            payload: { ...controls, play: false },
+        })
     }
     const handleNext = () => {
-        if (repeat) {
-            setPlay(true)
+        if (controls.repeat && controls.aleatory) {
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: true },
+            })
+            setTracks({
+                ...tracks,
+                position:
+                    tracks.position >= tracks.tracks.length - 1
+                        ? 0
+                        : Math.floor(Math.random() * tracks?.tracks?.length),
+            })
+        } else if (controls.repeat) {
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: true },
+            })
             setTracks({
                 ...tracks,
                 position:
@@ -56,8 +76,11 @@ const NavBarPlayer: FC = () => {
                         ? 0
                         : tracks.position + 1,
             })
-        } else if (aleatory) {
-            setPlay(true)
+        } else if (controls.aleatory) {
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: true },
+            })
             setTracks({
                 ...tracks,
                 position:
@@ -66,7 +89,10 @@ const NavBarPlayer: FC = () => {
                         : Math.floor(Math.random() * tracks?.tracks?.length),
             })
         } else {
-            setPlay(false)
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: false },
+            })
             setTracks({
                 ...tracks,
                 position:
@@ -77,8 +103,11 @@ const NavBarPlayer: FC = () => {
         }
     }
     const handleBack = () => {
-        if (repeat) {
-            setPlay(true)
+        if (controls.repeat) {
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: true },
+            })
             setTracks({
                 ...tracks,
                 position:
@@ -87,7 +116,10 @@ const NavBarPlayer: FC = () => {
                         : tracks.position - 1,
             })
         } else {
-            setPlay(false)
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: false },
+            })
             setTracks({
                 ...tracks,
                 position:
@@ -99,8 +131,8 @@ const NavBarPlayer: FC = () => {
     }
 
     const handleOnEnded = () => {
-        if (repeat) {
-            if (aleatory) {
+        if (controls.repeat) {
+            if (controls.aleatory) {
                 setTracks({
                     ...tracks,
                     position:
@@ -120,12 +152,18 @@ const NavBarPlayer: FC = () => {
                 })
             }
         } else {
-            setPlay(false)
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: false },
+            })
         }
     }
 
     const handleAleatory = () => {
-        setAleatory(!aleatory)
+        dispatch({
+            type: IActions.ON_Aleatory,
+            payload: { ...controls, aleatory: !controls.aleatory },
+        })
         setTracks({
             ...tracks,
             aleatory: Math.random(),
@@ -138,17 +176,23 @@ const NavBarPlayer: FC = () => {
 
     useEffect(() => {
         if (audio.current) {
-            audio.current.autoplay = aleatory || repeat
+            audio.current.autoplay = controls.aleatory || controls.repeat
         }
-    }, [aleatory, repeat])
+    }, [controls.aleatory, controls.repeat])
 
     useEffect(() => {
-        if (repeat || aleatory) {
-            setPlay(true)
-        } else if (!repeat || !aleatory) {
-            setPlay(false)
+        if (controls.repeat || controls.aleatory) {
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: true },
+            })
+        } else {
+            dispatch({
+                type: IActions.ON_Play,
+                payload: { ...controls, play: false },
+            })
         }
-    }, [track, aleatory, repeat])
+    }, [track])
     useEffect(() => {
         if (audio.current) {
             audio.current.src = track?.preview_url
@@ -157,15 +201,17 @@ const NavBarPlayer: FC = () => {
 
     useEffect(() => {
         if (audio.current) {
-            audio.current.volume = volumen / 100
+            audio.current.volume = controls.volumen / 100
         }
-    }, [volumen])
+    }, [controls.volumen])
 
     useEffect(() => {
         if (Object.keys(tracks).length > 0) {
             localStorage.setItem('tracks', JSON.stringify(tracks))
         }
     }, [tracks])
+
+    console.log(controls)
 
     return (
         <>
@@ -197,7 +243,7 @@ const NavBarPlayer: FC = () => {
 
                     <SSong.SongPlayerIcons>
                         <AleatoryButton
-                            aleatory={aleatory}
+                            aleatory={controls.aleatory}
                             onClick={handleAleatory}
                         >
                             <GetPlayerIcons name="aleatory" />
@@ -207,17 +253,27 @@ const NavBarPlayer: FC = () => {
                         </SSong.SongButton>
                         <SSong.SongButton
                             onClick={() => {
-                                play ? handlePause() : handlePlay()
+                                controls.play ? handlePause() : handlePlay()
                             }}
                         >
-                            <GetPlayerIcons name={play ? 'pause' : 'play'} />
+                            <GetPlayerIcons
+                                name={controls.play ? 'pause' : 'play'}
+                            />
                         </SSong.SongButton>
                         <SSong.SongButton onClick={handleNext}>
                             {<GetIcon name="next" />}
                         </SSong.SongButton>
                         <RepeatButton
-                            onClick={() => setRepeat(!repeat)}
-                            repeat={repeat}
+                            onClick={() =>
+                                dispatch({
+                                    type: IActions.ON_Repeat,
+                                    payload: {
+                                        ...controls,
+                                        repeat: !controls.repeat,
+                                    },
+                                })
+                            }
+                            repeat={controls.repeat}
                         >
                             <GetPlayerIcons name="repeat" />
                         </RepeatButton>
@@ -233,9 +289,15 @@ const NavBarPlayer: FC = () => {
                             type="range"
                             min="0"
                             max="50"
-                            value={volumen}
+                            value={controls.volumen}
                             onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                                setVolumen(parseInt(event.target.value))
+                                dispatch({
+                                    type: IActions.ON_Volumen,
+                                    payload: {
+                                        ...controls,
+                                        volumen: parseInt(event.target.value),
+                                    },
+                                })
                             }
                             step="any"
                         />
