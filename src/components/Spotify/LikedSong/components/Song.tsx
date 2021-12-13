@@ -27,7 +27,15 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
                         <GetPlayerIcons name="playcenter" />
                     </SSMain.Button>
                 </SSong.SongNumberItem>
-                {song?.track?.album?.images?.length > 0 && (
+                {song?.track?.album?.images?.length > 0 ? (
+                    <UserImage
+                        url={song?.track?.album?.images[0]?.url}
+                        displayName={song.track.album.name}
+                        size={55}
+                        bradius={10}
+                        name="songout"
+                    />
+                ) : (
                     <UserImage
                         url={song?.track?.album?.images[0]?.url}
                         displayName={song.track.album.name}

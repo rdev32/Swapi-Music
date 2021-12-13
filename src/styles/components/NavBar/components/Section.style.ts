@@ -11,7 +11,7 @@ interface IItemList {
 export const SectionLink = styled.a<IItemList>`
     display: flex;
     align-items: center;
-    width: 150px;
+    /* width: 150px; */
     height: 20px;
     margin: ${({ margin }) => margin || '0'};
 
@@ -42,11 +42,12 @@ export const SectionLinks = styled(Link)`
 export const Section = styled.div<ItemDiv>`
     padding: 0;
     height: ${({ height }) => height || '160px'};
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 `
 export const SectionName = styled.p`
     margin: 10px;
-    font-weight: ${fontWeight.medium};
+    /* font-weight: ${fontWeight.medium}; */
 `

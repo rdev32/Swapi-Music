@@ -20,7 +20,7 @@ const Header: FC<{ data: GetPlaylistId }> = ({ data }) => {
                     url={(data.images && data?.images[0]?.url) || ''}
                     bradius={10}
                     size={220}
-                    name="songout"
+                    name="playlistout"
                 />
             </div>
             <SAlbum.AlbumContent>

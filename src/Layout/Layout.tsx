@@ -1,5 +1,5 @@
-import { useSession } from 'next-auth/react'
-import { FC, useEffect, useState } from 'react'
+import Link from 'next/link'
+import { FC, useState } from 'react'
 import { domain } from '../assets/spotify'
 import NavBar from '../components/NavBar/NavBar'
 import NavBarPlayer from '../components/NavBarPlayer/NavBarPlayer'
@@ -14,10 +14,8 @@ import {
     NavLibraryItem,
 } from '../styles/components/layout/NavLibrary.style'
 import { IProps } from './types'
-import Link from 'next/link'
 
 const Layout: FC<IProps> = ({ children, router }) => {
-    const [libraryCheck, setLibraryCheck] = useState(router.pathname)
     const invalidPages = ['/', '/login/login']
     const Sections = ['Playlists', 'Artists', 'Albums']
     const LibrarySections = ['/Library', '/Library/Artists', '/Library/Albums']
@@ -57,13 +55,6 @@ const Layout: FC<IProps> = ({ children, router }) => {
                                                 : false ||
                                                   router?.pathname ===
                                                       `/Library/${section}`
-                                        }
-                                        onClick={() =>
-                                            setLibraryCheck(
-                                                section === 'Playlists'
-                                                    ? '/Library'
-                                                    : `/Library/${section}`
-                                            )
                                         }
                                     >
                                         {section}

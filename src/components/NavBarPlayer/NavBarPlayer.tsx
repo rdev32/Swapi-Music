@@ -211,8 +211,6 @@ const NavBarPlayer: FC = () => {
         }
     }, [tracks])
 
-    console.log(controls)
-
     return (
         <>
             {Object.keys(track).length !== 0 && (

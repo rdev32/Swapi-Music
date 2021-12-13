@@ -9,7 +9,7 @@ export const NavLibrary = styled.nav`
 export const NavLibraryItem = styled.a`
     margin: 5px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     padding: 10px;
     border-radius: 5px;
     font-size: 16px;

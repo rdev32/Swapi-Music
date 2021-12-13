@@ -1,14 +1,21 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import Track from '../../components/queue/components/Track/Track'
 import TrackList from '../../components/queue/components/TrackList/TrackList'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import * as SSMain from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../../styles/general/styles'
-
+import { useRouter } from 'next/router'
 const Queue: NextPage = () => {
+    const router = useRouter()
     const { tracks } = useContext(UserTrackContext)
+
+    useEffect(() => {
+        if (Object.keys(tracks).length === 0) {
+            router.push('/Home')
+        }
+    }, [])
     console.log(tracks)
 
     return (

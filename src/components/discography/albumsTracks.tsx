@@ -3,7 +3,6 @@ import Song from '../../components/Spotify/Album/components/Songs/Song'
 import GetData from '../../hooks/GetData/GetData'
 import { Album } from '../../hooks/types/GetAlbum'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
-import * as SMSongs from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as SSong from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../../styles/pages/album/album.style'
 

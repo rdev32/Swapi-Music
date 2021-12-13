@@ -3,15 +3,9 @@ import { Albums } from '../../hooks/types/GetArtistAlbum'
 import UserImage from '../Spotify/UserImage/UserImage'
 import AlbumsTracks from './albumsTracks'
 import * as S from '../../styles/pages/album/album.style'
+import Characters from '../../helpers/pages/discography/Characters'
 
-interface IProps {
-    album: Albums
-}
-
-const Albums: FC<IProps> = ({ album }) => {
-    const firstCharacterUppercase = (str: string) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
+const Albums: FC<{ album: Albums }> = ({ album }) => {
     return (
         <S.AlbumAside margin="0 0 50px 0">
             <S.AlbumHeader>
@@ -28,13 +22,13 @@ const Albums: FC<IProps> = ({ album }) => {
                 <S.AlbumContent>
                     <h2>{album.name}</h2>
                     <p>
-                        {firstCharacterUppercase(album.type)} •{' '}
+                        {Characters(album.type)} •{' '}
                         {album.release_date.slice(0, 4)} • {album.total_tracks}{' '}
                         tracks
                     </p>
                 </S.AlbumContent>
             </S.AlbumHeader>
-            <AlbumsTracks id={album.id} />
+            {album.id && <AlbumsTracks id={album.id} />}
         </S.AlbumAside>
     )
 }

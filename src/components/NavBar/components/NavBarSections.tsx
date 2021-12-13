@@ -39,7 +39,7 @@ const NavBarSection: FC<IProps> = ({ Section, Type, icon, styles }) => {
                                 >
                                     <S.SectionName>
                                         {options.name.length > 14
-                                            ? options.name.slice(0, 11) + '...'
+                                            ? options.name.slice(0, 13) + '...'
                                             : options.name}
                                     </S.SectionName>
                                 </AtomIcon>

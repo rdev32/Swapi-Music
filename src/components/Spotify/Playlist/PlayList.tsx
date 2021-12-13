@@ -25,7 +25,7 @@ const PlayList: FC<IProps> = ({ playlist }) => {
                     displayName={playlist.name}
                     size={166}
                     bradius={10}
-                    name="songout"
+                    name="playlistout"
                 />
             ) : (
                 <UserImage
@@ -33,7 +33,7 @@ const PlayList: FC<IProps> = ({ playlist }) => {
                     displayName={playlist.name}
                     size={166}
                     bradius={10}
-                    name="songout"
+                    name="playlistout"
                 />
             )}
             <S.PlaylistTitle>
