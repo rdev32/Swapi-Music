@@ -17,7 +17,7 @@ const Artists: FC<IProps> = (props) => {
             <h1>Artists</h1>
             <SFollowing.ArtistCards height="auto">
                 {artists?.items?.map((artist, index) => (
-                    <ArtistCard item={artist} key={artist.id} index={index} />
+                    <ArtistCard item={artist} key={artist.id} />
                 ))}
             </SFollowing.ArtistCards>
         </S.StyledLibraryContainer>
