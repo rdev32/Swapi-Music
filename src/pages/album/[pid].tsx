@@ -13,11 +13,12 @@ import AlbumArtist from '../../components/Albums/AlbumsArtist'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import { useContext } from 'react'
 import validPid from '../../helpers/pages/artist/ValidPid'
+import UserContext from '../../hooks/UserContext/UserContext'
 
 const Album: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
-    const { setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserContext)
     const urlAlbumsTracks = `https://api.spotify.com/v1/albums/${pid}`
 
     const {

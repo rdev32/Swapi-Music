@@ -11,6 +11,7 @@ import GetData from '../hooks/GetData/GetData'
 import GetSearch from '../hooks/GetSearch/GetSearch'
 import { GetCategories } from '../hooks/types/GetCategories'
 import { IGetSearch } from '../hooks/types/GetSearch'
+import UserContext from '../hooks/UserContext/UserContext'
 import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import * as SAlbums from '../styles/components/albums/albums.style'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
@@ -37,7 +38,7 @@ const Search: NextPage = () => {
         data: { albums, artists, playlists, tracks },
         setCount,
     } = GetSearch<IGetSearch>(search, setMount)
-    const { setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserContext)
 
     const url = `https://api.spotify.com/v1/browse/categories?limit=50`
 

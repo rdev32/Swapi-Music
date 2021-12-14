@@ -1,4 +1,7 @@
 {
-    "username": "",
-    "password": ""
+    "pages": {
+        "home": {
+            "recent": []
+        }
+    }
 }

@@ -3,7 +3,7 @@ export interface IDataImgUser {
     height?: number
     width?: number
     displayName?: string
-    bradius?: number
+    bradius?: number | undefined | string
     size?: number
     name?: string
 }

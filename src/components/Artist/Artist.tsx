@@ -1,8 +1,10 @@
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
 import { Artist as ArtistCard } from '../../hooks/types/GetTopArtist'
 import * as S from '../../styles/components/User/Following.style'
+import UserContext from '../../hooks/UserContext/UserContext'
+
 interface IProps {
     item: ArtistCard
 }
@@ -10,6 +12,27 @@ interface IProps {
 const ArtistCard: FC<IProps> = ({ item }) => {
     const firstLetter = (name: string) => {
         return name.charAt(0).toUpperCase() + name.slice(1)
+    }
+
+    const { recent, setRecent } = useContext(UserContext)
+    const handleMiddleClick = (payload: any) => {
+        if (recent.find((item) => item.id === payload.id)) {
+            return
+        } else if (recent.length < 6) {
+            setRecent([payload, ...recent])
+        } else {
+            setRecent([payload, ...recent.slice(0, 6)])
+        }
+    }
+
+    const payload = () => {
+        return {
+            id: item.id,
+            tag: item.name,
+            type: 'artist',
+            image: item.images[0].url,
+            url: `/artist/${item.id}`,
+        }
     }
 
     return (
@@ -22,7 +45,10 @@ const ArtistCard: FC<IProps> = ({ item }) => {
             }}
             passHref
         >
-            <S.ArtistCard key={item.id}>
+            <S.ArtistCard
+                key={item.id}
+                onClick={() => handleMiddleClick(payload())}
+            >
                 {item?.images && (
                     <UserImage
                         key={item?.images[0]?.url}

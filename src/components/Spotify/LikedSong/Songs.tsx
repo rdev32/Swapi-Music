@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react'
 import Song from '../../../components/Spotify/LikedSong/components/Song'
 import { LikedSongs } from '../../../hooks/types/GetLikedSongs'
+import UserContext from '../../../hooks/UserContext/UserContext'
 import UserTrackContext from '../../../hooks/UserTrackContext/UserTrackContext'
 import * as S from '../../../styles/components/Spotify/MainSongs/Main.style'
 
@@ -17,7 +18,7 @@ const Songs: FC<Props> = ({
     id: idFrom,
     type: typeFrom,
 }) => {
-    const { setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserContext)
 
     const newTracks = items?.map((item, index) => {
         return {

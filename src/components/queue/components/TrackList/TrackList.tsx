@@ -1,10 +1,11 @@
 import { FC, useContext } from 'react'
+import UserContext from '../../../../hooks/UserContext/UserContext'
 import UserTrackContext from '../../../../hooks/UserTrackContext/UserTrackContext'
 import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
 import Track from '../Track/Track'
 
 const TrackList: FC = () => {
-    const { tracks: tracksContext, setTracks } = useContext(UserTrackContext)
+    const { tracks: tracksContext, setTracks } = useContext(UserContext)
 
     const handlePlayId = (id: number) => {
         setTracks({ ...tracksContext, position: id })

@@ -13,6 +13,7 @@ import validPid from '../../helpers/pages/artist/ValidPid'
 import GetData from '../../hooks/GetData/GetData'
 import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
 import { Artist } from '../../hooks/types/GetFollowedArts'
+import UserContext from '../../hooks/UserContext/UserContext'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize'
 import * as SSAlbum from '../../styles/components/albums/albums.style'
@@ -36,7 +37,7 @@ const Artist: NextPage = () => {
     const { tracks } = GetData<Tracks>(validPid(urlTopTracks, pid))
     const [screenItems, setScreenItems] = useState(7)
     const sizeScreen = useWindowSize()
-    const { setTracks } = useContext(UserTrackContext)
+    const { recent, setRecent, setTracks } = useContext(UserContext)
 
     useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
 
@@ -47,6 +48,26 @@ const Artist: NextPage = () => {
             tracks: updatedTracks.filter((track) => track.position === id),
             position: id,
         })
+    }
+
+    const handleMiddleClick = (payload: any) => {
+        if (recent.find((item) => item.id === payload.id)) {
+            return
+        } else if (recent.length < 6) {
+            setRecent([payload, ...recent])
+        } else {
+            setRecent([payload, ...recent.slice(0, 6)])
+        }
+    }
+
+    const payloadAlbum = (id: number) => {
+        return {
+            id: items && items[id].id,
+            tag: items && items[id].name,
+            type: 'album',
+            image: items && items[id].images[0].url,
+            url: `/album/${items && items[id].id}`,
+        }
     }
 
     return (
@@ -100,7 +121,7 @@ const Artist: NextPage = () => {
                             spaceBetween={1}
                             slidesPerView={screenItems}
                         >
-                            {items?.map((album) => (
+                            {items?.map((album, index) => (
                                 <SwiperSlide key={album.id}>
                                     <Link
                                         href={{
@@ -110,7 +131,13 @@ const Artist: NextPage = () => {
                                         passHref
                                         key={album.id}
                                     >
-                                        <SSAlbum.AlbumRedirect>
+                                        <SSAlbum.AlbumRedirect
+                                            onClick={() =>
+                                                handleMiddleClick(
+                                                    payloadAlbum(index)
+                                                )
+                                            }
+                                        >
                                             {album.images.length > 0 && (
                                                 <UserImage
                                                     url={album.images[0].url}

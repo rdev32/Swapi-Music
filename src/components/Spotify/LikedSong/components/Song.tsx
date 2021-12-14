@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import GetTimeSongs from '../../../../hooks/GetTimeSongs/GetTimeSongs'
 import { LikedSongs } from '../../../../hooks/types/GetLikedSongs'
+import UserContext from '../../../../hooks/UserContext/UserContext'
 import * as SSong from '../../../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
 import { GetPlayerIcons } from '../../../Icons/Icons'
@@ -14,10 +15,30 @@ interface IProps {
 }
 
 const Song: FC<IProps> = ({ song, handleId, index }) => {
+    const { recent, setRecent } = useContext(UserContext)
     const [hour, minutes, seconds] = GetTimeSongs({
         ms: song?.track?.duration_ms,
     })
 
+    const handleMiddleClick = (payload: any) => {
+        if (recent.find((item) => item.id === payload.id)) {
+            return
+        } else if (recent.length < 6) {
+            setRecent([payload, ...recent])
+        } else {
+            setRecent([payload, ...recent.slice(0, 6)])
+        }
+    }
+
+    // const payload = (id: number) => {
+    //     return {
+    //         id: song?.track.artists[id].id,
+    //         tag: song?.track?.artists[id]?.name,
+    //         type: 'artist',
+    //         image: song?.track?.artists?[id]?.images[id]?.url,
+    //         url: `/artist/${song?.track?.artists[id]?.id}`,
+    //     }
+    // }
     return (
         <SSong.Song key={song?.track?.id}>
             <SSong.SongMain>
@@ -58,7 +79,11 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
                                 }}
                                 passHref
                             >
-                                <SSong.SongArtist>
+                                <SSong.SongArtist
+                                // onClick={() =>
+                                //     handleMiddleClick(payload(index))
+                                // }
+                                >
                                     {index === 0 ? '' : `,`} {artist?.name}
                                 </SSong.SongArtist>
                             </Link>

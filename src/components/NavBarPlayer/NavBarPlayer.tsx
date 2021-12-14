@@ -26,9 +26,10 @@ import GetUrl from './helpers/GetUrl'
 import reducer from './helpers/reducer'
 import { IActions } from './types/types'
 import initState from './assets/initState.json'
+import UserContext from '../../hooks/UserContext/UserContext'
 
 const NavBarPlayer: FC = () => {
-    const { tracks, setTracks } = useContext(UserTrackContext)
+    const { tracks, setTracks } = useContext(UserContext)
     const [controls, dispatch] = useReducer(reducer, initState)
     const audio = useRef<HTMLAudioElement>(null)
     const track = GetData<GetTrack>(GetUrl(tracks) || GetSoloUrl(tracks))

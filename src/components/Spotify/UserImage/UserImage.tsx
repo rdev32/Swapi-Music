@@ -5,8 +5,8 @@ import { FC, useMemo } from 'react'
 import { IDataImgUser } from '../../../hooks/types/GetUserProfile'
 
 const UImage = styled(Image)`
-    border-radius: ${({ bradius }: { bradius: number | undefined }) =>
-        `${bradius}px`};
+    border-radius: ${({ bradius }: { bradius: number | undefined | string }) =>
+        typeof bradius === 'string' ? bradius : `${bradius}px`};
     object-fit: cover;
     z-index: 0;
 `

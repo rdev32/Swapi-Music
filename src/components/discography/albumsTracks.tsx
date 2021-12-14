@@ -2,6 +2,7 @@ import { FC, useContext } from 'react'
 import Song from '../../components/Spotify/Album/components/Songs/Song'
 import GetData from '../../hooks/GetData/GetData'
 import { Album } from '../../hooks/types/GetAlbum'
+import UserContext from '../../hooks/UserContext/UserContext'
 import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import * as SSong from '../../styles/components/Spotify/MainSongs/Main.style'
 import * as S from '../../styles/pages/album/album.style'
@@ -11,7 +12,7 @@ interface IProps {
 }
 
 const AlbumsTracks: FC<IProps> = ({ id }) => {
-    const { setTracks } = useContext(UserTrackContext)
+    const { setTracks } = useContext(UserContext)
 
     const urlAlbumsTracks = id ? `https://api.spotify.com/v1/albums/${id}` : ''
     const {
