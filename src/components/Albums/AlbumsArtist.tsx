@@ -13,6 +13,13 @@ import * as SSwiper from '../../styles/components/albums/Swiper/SwiperContainer.
 import * as SPlaylist from '../../styles/pages/library/library.style'
 import UserImage from '../Spotify/UserImage/UserImage'
 import typeSizeCreen from './helpers/typeSizeCreen'
+type Payload = {
+    id: string
+    tag: string
+    type: string
+    image: string
+    url: string
+}
 
 const AlbumArtist: FC<{ artists: Artist[] }> = ({ artists }) => {
     const urlArtistAlbums = `https://api.spotify.com/v1/artists/${
@@ -24,11 +31,15 @@ const AlbumArtist: FC<{ artists: Artist[] }> = ({ artists }) => {
     )
     const [screenItems, setScreenItems] = useState(7)
     const sizeScreen = useWindowSize()
-    const { recent, setRecent, setTracks } = useContext(UserContext)
+    const { recent, setRecent } = useContext(UserContext)
     useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
-
-    const handleMiddleClick = (payload: any) => {
-        if (recent.find((item) => item.id === payload.id)) {
+    const handleMiddleClick = (payload: Payload) => {
+        if (
+            recent?.find(
+                (item: Payload) =>
+                    item.id === payload.id || item.tag === payload.tag
+            )
+        ) {
             return
         } else if (recent.length < 6) {
             setRecent([payload, ...recent])
@@ -36,7 +47,6 @@ const AlbumArtist: FC<{ artists: Artist[] }> = ({ artists }) => {
             setRecent([payload, ...recent.slice(0, 6)])
         }
     }
-
     const payloadAlbum = (id: number) => {
         return {
             id: items && items[id].id,

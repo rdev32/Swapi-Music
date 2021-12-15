@@ -3,7 +3,7 @@ import { Tracks } from '../../hooks/UserTrackContext/types'
 import { GetPlaylist } from '../types/GetCurrentUserPlaylist'
 import { User } from '../types/GetUserProfile'
 
-export type HomeRecent = {
+type Payload = {
     id: string
     tag: string
     type: string
@@ -11,13 +11,18 @@ export type HomeRecent = {
     url: string
 }
 
+export type StateActions = {
+    type: string
+    payload: Payload
+}
+
 interface IProps {
     tracks: Tracks
     user: User
     playlists?: GetPlaylist[]
     setTracks: Dispatch<SetStateAction<Tracks>>
-    recent: HomeRecent[]
-    setRecent: Dispatch<HomeRecent[]>
+    recent: Payload[]
+    setRecent: Dispatch<SetStateAction<Payload[]>>
 }
 
 const UserContext = createContext<IProps>({} as IProps)

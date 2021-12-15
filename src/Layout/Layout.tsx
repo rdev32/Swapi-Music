@@ -3,11 +3,12 @@ import { FC, useEffect, useLayoutEffect, useState } from 'react'
 import { domain } from '../assets/spotify'
 import NavBar from '../components/NavBar/NavBar'
 import NavBarPlayer from '../components/NavBarPlayer/NavBarPlayer'
+import { HomeRecent } from '../components/Spotify/LikedSong/helpers/handleMiddleClick'
 import UserIcon from '../components/userIcon/userIcon'
 import GetData from '../hooks/GetData/GetData'
 import { GetCurrentPlaylist } from '../hooks/types/GetCurrentUserPlaylist'
 import { User } from '../hooks/types/GetUserProfile'
-import UserContext, { HomeRecent } from '../hooks/UserContext/UserContext'
+import UserContext from '../hooks/UserContext/UserContext'
 import { Tracks } from '../hooks/UserTrackContext/types'
 import * as S from '../styles/components/layout/layout.style'
 import {
@@ -18,6 +19,7 @@ import { IProps } from './types'
 
 const Layout: FC<IProps> = ({ children, router }) => {
     const [recent, setRecent] = useState<HomeRecent[]>([])
+    // const [recent, setRecent] = useReducer(reducer, { recent: [] })
     const [tracks, setTracks] = useState<Tracks>({} as Tracks)
 
     const invalidPages = ['/', '/login/login']
@@ -34,7 +36,7 @@ const Layout: FC<IProps> = ({ children, router }) => {
         }
     }, [])
     useEffect(() => {
-        if (recent.length !== 0) {
+        if (recent?.length !== 0) {
             localStorage.setItem('recent', JSON.stringify(recent))
         }
     }, [recent])

@@ -2,11 +2,19 @@ import Link from 'next/link'
 import { FC, useContext } from 'react'
 import UserImage from '../../components/Spotify/UserImage/UserImage'
 import { Artist as ArtistCard } from '../../hooks/types/GetTopArtist'
-import * as S from '../../styles/components/User/Following.style'
 import UserContext from '../../hooks/UserContext/UserContext'
+import * as S from '../../styles/components/User/Following.style'
 
 interface IProps {
     item: ArtistCard
+}
+
+type Payload = {
+    id: string
+    tag: string
+    type: string
+    image: string
+    url: string
 }
 
 const ArtistCard: FC<IProps> = ({ item }) => {
@@ -15,8 +23,13 @@ const ArtistCard: FC<IProps> = ({ item }) => {
     }
 
     const { recent, setRecent } = useContext(UserContext)
-    const handleMiddleClick = (payload: any) => {
-        if (recent.find((item) => item.id === payload.id)) {
+    const handleMiddleClick = (payload: Payload) => {
+        if (
+            recent?.find(
+                (item: Payload) =>
+                    item.id === payload.id || item.tag === payload.tag
+            )
+        ) {
             return
         } else if (recent.length < 6) {
             setRecent([payload, ...recent])
@@ -24,7 +37,6 @@ const ArtistCard: FC<IProps> = ({ item }) => {
             setRecent([payload, ...recent.slice(0, 6)])
         }
     }
-
     const payload = () => {
         return {
             id: item.id,

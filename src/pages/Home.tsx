@@ -1,14 +1,14 @@
 import Cookies from 'js-cookie'
 import { NextPage } from 'next'
+import Link from 'next/link'
 import { useContext, useLayoutEffect } from 'react'
 import GetSalute from '../components/GetSalute/GetSalute'
+import UserImage from '../components/Spotify/UserImage/UserImage'
+import AtomIcon from '../components/SvgDynamic/SvgDynamic'
+import UserArtists from '../components/User/UserTopArtists'
 import UserContext from '../hooks/UserContext/UserContext'
 import * as S from '../styles/general/styles'
-import Link from 'next/link'
 import * as SSHome from '../styles/pages/Home.style'
-import AtomIcon from '../components/SvgDynamic/SvgDynamic'
-import UserImage from '../components/Spotify/UserImage/UserImage'
-import UserArtists from '../components/User/UserTopArtists'
 
 const Home: NextPage = () => {
     const { recent } = useContext(UserContext)
@@ -30,7 +30,6 @@ const Home: NextPage = () => {
             Cookies.set('token', access_token)
         }
     }, [])
-    console.log(recent)
 
     return (
         <S.StyledContainer>

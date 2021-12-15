@@ -1,62 +1,40 @@
-type HomeRecent = {
-    id: string
-    tag: string
-    type: string
-    image: string
+type Payload = {
+    id?: string
+    tag?: string
+    type?: string
+    image?: string
+    url?: string
 }
 
-export type StateUser = {
-    pages: {
-        home: {
-            recent: any
-        }
-    }
+type State = {
+    recent: any
 }
 
 export type StateActions = {
     type: string
-    payload: HomeRecent | any
+    payload: Payload
 }
 
-// const payload = {
-//     id: '1',
-//     title: 'test',
-//     type: 'test',
-//     image: 'https://picsum.photos/200/300',
-// }
-
-const reducer = (state: StateUser, action: StateActions) => {
+const reducer = (state: any, action: StateActions) => {
     switch (action.type) {
         case 'add_recent':
             return {
-                pages: {
-                    ...state.pages,
-                    home: {
-                        recent: (function () {
-                            if (
-                                state.pages.home.recent.find(
-                                    (item: HomeRecent) =>
-                                        item.id === action.payload.id
-                                )
-                            ) {
-                                return state.pages.home.recent
-                            } else if (state.pages.home.recent.length < 5) {
-                                return [
-                                    action.payload,
-                                    ...state.pages.home.recent,
-                                ]
-                            } else {
-                                return [
-                                    action.payload,
-                                    ...state.pages.home.recent.pop(),
-                                ]
-                            }
-                        })(),
-                    },
-                },
+                ...state,
+                recent: (function () {
+                    if (
+                        state?.recent?.find(
+                            (item: Payload) => item.id === action.payload.id
+                        )
+                    ) {
+                        return state?.recent
+                    } else if (state?.recent?.length < 6) {
+                        return [action.payload, ...state.recent]
+                    } else {
+                        return [action.payload, ...state.recent.slice(0, 6)]
+                    }
+                })(),
             }
             break
-
         default:
             return state
     }

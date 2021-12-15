@@ -14,7 +14,6 @@ import GetData from '../../hooks/GetData/GetData'
 import { AlbumArtist } from '../../hooks/types/GetArtistAlbum'
 import { Artist } from '../../hooks/types/GetFollowedArts'
 import UserContext from '../../hooks/UserContext/UserContext'
-import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize'
 import * as SSAlbum from '../../styles/components/albums/albums.style'
 import * as SSwiper from '../../styles/components/albums/Swiper/SwiperContainer.style'
@@ -22,6 +21,15 @@ import { StyledContainer } from '../../styles/general/styles'
 import * as SPlaylist from '../../styles/pages/library/library.style'
 import * as S from '../../styles/pages/User/UserHeader.style'
 import { Tracks } from '../../types/pages/artist/Tracks'
+
+type Payload = {
+    id: string
+    tag: string
+    type: string
+    image: string
+    url: string
+}
+
 const Artist: NextPage = () => {
     const router = useRouter()
     const { pid } = router.query
@@ -42,22 +50,25 @@ const Artist: NextPage = () => {
     useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
 
     const updatedTracks = UpdateTracks(tracks)
-
-    const handlePlayId = (id: number) => {
-        setTracks({
-            tracks: updatedTracks.filter((track) => track.position === id),
-            position: id,
-        })
-    }
-
-    const handleMiddleClick = (payload: any) => {
-        if (recent.find((item) => item.id === payload.id)) {
+    const handleMiddleClick = (payload: Payload) => {
+        if (
+            recent?.find(
+                (item: Payload) =>
+                    item.id === payload.id || item.tag === payload.tag
+            )
+        ) {
             return
         } else if (recent.length < 6) {
             setRecent([payload, ...recent])
         } else {
             setRecent([payload, ...recent.slice(0, 6)])
         }
+    }
+    const handlePlayId = (id: number) => {
+        setTracks({
+            tracks: updatedTracks.filter((track) => track.position === id),
+            position: id,
+        })
     }
 
     const payloadAlbum = (id: number) => {

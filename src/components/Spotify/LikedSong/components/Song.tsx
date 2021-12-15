@@ -13,6 +13,13 @@ interface IProps {
     index: number
     handleId?: () => void
 }
+type Payload = {
+    id: string
+    tag: string
+    type: string
+    image: string
+    url: string
+}
 
 const Song: FC<IProps> = ({ song, handleId, index }) => {
     const { recent, setRecent } = useContext(UserContext)
@@ -20,7 +27,7 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
         ms: song?.track?.duration_ms,
     })
 
-    const handleMiddleClick = (payload: any) => {
+    const handleMiddleClick = (payload: Payload) => {
         if (recent.find((item) => item.id === payload.id)) {
             return
         } else if (recent.length < 6) {
