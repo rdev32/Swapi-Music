@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { colors } from '../colors'
 
 export const Header = styled.header`
     display: flex;
