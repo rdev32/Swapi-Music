@@ -10,7 +10,7 @@ import * as S from '../../styles/pages/auth/login.style'
 //TRUE DEV
 const Buttons = ({ button }: { button: string }) => {
     const url_redirect = `${baseUrl}?client_id=${clientId}&redirect_uri=${getLocalMode(
-        true
+        false
     )}&scope=${ScopesUrlParams}&response_type=token&show_dialog=true`
     return (
         <Link
