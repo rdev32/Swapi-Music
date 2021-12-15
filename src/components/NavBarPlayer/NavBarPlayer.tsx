@@ -10,7 +10,7 @@ import {
 } from 'react'
 import GetData from '../../hooks/GetData/GetData'
 import GetTrack from '../../hooks/types/GetTrack'
-import UserTrackContext from '../../hooks/UserTrackContext/UserTrackContext'
+import UserContext from '../../hooks/UserContext/UserContext'
 import {
     AleatoryButton,
     NavPlayer,
@@ -20,13 +20,12 @@ import {
 import * as SSong from '../../styles/components/Spotify/MainSongs/components/Song/Song.style'
 import { GetIcon, GetPlayerIcons } from '../Icons/Icons'
 import UserImage from '../Spotify/UserImage/UserImage'
+import initState from './assets/initState.json'
 import Artists from './components/Artitsts/Artists'
 import GetSoloUrl from './helpers/GetSoloUrl'
 import GetUrl from './helpers/GetUrl'
 import reducer from './helpers/reducer'
 import { IActions } from './types/types'
-import initState from './assets/initState.json'
-import UserContext from '../../hooks/UserContext/UserContext'
 
 const NavBarPlayer: FC = () => {
     const { tracks, setTracks } = useContext(UserContext)
