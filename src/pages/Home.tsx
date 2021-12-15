@@ -100,9 +100,14 @@ const Home: NextPage = () => {
                                 <SSHome.Card>
                                     <AtomIcon name="Recent Song" active />
                                     <UserImage
-                                        url={item.image}
+                                        url={
+                                            item.image.length > 0
+                                                ? item.image
+                                                : ''
+                                        }
                                         size={69}
                                         bradius={'10px 0 0 10px'}
+                                        name={item.type + 'out'}
                                     />
                                     {item.tag.length > 15 ? (
                                         <p style={{ width: '100px' }}>

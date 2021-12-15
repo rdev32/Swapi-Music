@@ -58,11 +58,7 @@ const Song: FC<IProps> = ({ song, handleId, index }) => {
                                 }}
                                 passHref
                             >
-                                <SSong.SongArtist
-                                // onClick={() =>
-                                //     handleMiddleClick(payload(index))
-                                // }
-                                >
+                                <SSong.SongArtist>
                                     {index === 0 ? '' : `,`} {artist?.name}
                                 </SSong.SongArtist>
                             </Link>

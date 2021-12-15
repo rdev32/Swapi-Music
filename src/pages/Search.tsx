@@ -140,21 +140,13 @@ const Search: NextPage = () => {
                                     ?.filter((_, index) => index < 5)
                                     .map((track, index) => (
                                         <STracks.SongCard key={track.id}>
-                                            <div style={{ width: '1%' }}>
-                                                <STracks.SongNumber>
-                                                    {index + 1}
-                                                </STracks.SongNumber>
-                                            </div>
-                                            <div>
-                                                <button
-                                                    onClick={() =>
-                                                        handlePlayId(index)
-                                                    }
-                                                >
-                                                    Play
-                                                </button>
-                                            </div>
-                                            <Song item={track} />
+                                            <Song
+                                                item={track}
+                                                index={index}
+                                                handleId={() =>
+                                                    handlePlayId(index)
+                                                }
+                                            />
                                         </STracks.SongCard>
                                     ))}
                             </SearchTracksContainer>

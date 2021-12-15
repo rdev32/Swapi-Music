@@ -96,5 +96,7 @@ export const SongNumberItem = styled.div`
 export const SongArtists = styled.div`
     overflow: hidden;
     height: 20px;
+    width: ${({ width }: { width?: number }) =>
+        width ? `${width}px` : 'auto'};
     /* width: ; */
 `

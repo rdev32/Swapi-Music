@@ -17,7 +17,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
     const [active, setActive] = useState(
         router.pathname.replace(/\s+/g, '').substring(0, 999999)
     )
-    const [count, setcount] = useState(1)
+    const [count, setcount] = useState(0)
     useLayoutEffect(() => {
         const cookie = Cookies.get('token')
         if (!cookie) {

@@ -110,7 +110,7 @@ const Playlist: NextPage = () => {
                 <option value={JSON.stringify(orderDate)}>Date added</option>
                 <option value={JSON.stringify(orderDuration)}>Duration</option>
             </select>
-
+            <hr />
             <Songs
                 data={tracks}
                 name={data.name}
