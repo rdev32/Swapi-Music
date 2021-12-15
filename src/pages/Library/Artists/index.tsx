@@ -5,9 +5,7 @@ import { Artist } from '../../../hooks/types/GetTopArtist'
 import * as SFollowing from '../../../styles/components/User/Following.style'
 import * as S from '../../../styles/general/styles'
 
-interface IProps {}
-
-const Artists: FC<IProps> = (props) => {
+const Artists: FC = () => {
     const { artists } = GetData<{
         artists: { items: Artist[]; total: number }
     }>('https://api.spotify.com/v1/me/following?type=artist&limit=50')

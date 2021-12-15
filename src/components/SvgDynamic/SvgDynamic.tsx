@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import dynamic from 'next/dynamic'
-import { ReactChild, useMemo } from 'react'
+import { useMemo } from 'react'
 import { colors } from '../../styles/colors'
 interface SvgDynamicProps {
     active: boolean | undefined

@@ -2,7 +2,6 @@ import { FC, useContext } from 'react'
 import Song from '../../../components/Spotify/LikedSong/components/Song'
 import { LikedSongs } from '../../../hooks/types/GetLikedSongs'
 import UserContext from '../../../hooks/UserContext/UserContext'
-import UserTrackContext from '../../../hooks/UserTrackContext/UserTrackContext'
 import * as S from '../../../styles/components/Spotify/MainSongs/Main.style'
 
 type Props = {

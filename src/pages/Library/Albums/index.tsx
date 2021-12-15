@@ -1,16 +1,14 @@
 import Link from 'next/link'
 import { FC } from 'react'
+import UserImage from '../../../components/Spotify/UserImage/UserImage'
 import GetData from '../../../hooks/GetData/GetData'
 import GetUserAlbums from '../../../hooks/types/GetUserAlbums'
-import * as S from '../../../styles/general/styles'
-import * as SFollow from '../../../styles/components/User/Following.style'
 import * as SAlbums from '../../../styles/components/albums/albums.style'
-import UserImage from '../../../components/Spotify/UserImage/UserImage'
+import * as SFollow from '../../../styles/components/User/Following.style'
+import * as S from '../../../styles/general/styles'
 import * as SPlaylist from '../../../styles/pages/library/library.style'
 
-interface IProps {}
-
-const Albums: FC<IProps> = (props) => {
+const Albums: FC = () => {
     const { items } = GetData<GetUserAlbums>(
         'https://api.spotify.com/v1/me/albums?limit=50'
     )

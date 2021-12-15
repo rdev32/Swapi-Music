@@ -1,6 +1,5 @@
 import { FC, useContext } from 'react'
 import UserContext from '../../../../hooks/UserContext/UserContext'
-import UserTrackContext from '../../../../hooks/UserTrackContext/UserTrackContext'
 import * as SSMain from '../../../../styles/components/Spotify/MainSongs/Main.style'
 import Track from '../Track/Track'
 

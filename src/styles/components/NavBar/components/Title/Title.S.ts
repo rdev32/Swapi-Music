@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import link from 'next/link'
 import { colors } from '../../../../colors'
 import { fontWeight } from '../../../../fonts'
 

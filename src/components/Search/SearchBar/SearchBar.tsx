@@ -5,15 +5,12 @@ import {
     FC,
     SetStateAction,
     useMemo,
-    useState,
 } from 'react'
 import {
     FormCancel,
     FormInputStyle,
     FormStyle,
 } from '../../../styles/components/Search/SearchBar.style'
-
-import das from '../../../../public/icons/search/Search.svg'
 
 interface IProps {
     onChange: ChangeEventHandler<HTMLInputElement>

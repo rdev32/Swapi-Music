@@ -12,7 +12,6 @@ import GetSearch from '../hooks/GetSearch/GetSearch'
 import { GetCategories } from '../hooks/types/GetCategories'
 import { IGetSearch } from '../hooks/types/GetSearch'
 import UserContext from '../hooks/UserContext/UserContext'
-import UserTrackContext from '../hooks/UserTrackContext/UserTrackContext'
 import * as SAlbums from '../styles/components/albums/albums.style'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
@@ -138,7 +137,7 @@ const Search: NextPage = () => {
                                     Tracks
                                 </SearchTitleCategory>
                                 {tracks?.items
-                                    ?.filter((track, index) => index < 5)
+                                    ?.filter((_, index) => index < 5)
                                     .map((track, index) => (
                                         <STracks.SongCard key={track.id}>
                                             <div style={{ width: '1%' }}>

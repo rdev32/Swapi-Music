@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { IDataImgUser } from '../../../hooks/types/GetUserProfile'
 
 const UImage = styled(Image)`
