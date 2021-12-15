@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { GetCategories } from '../../../hooks/types/GetCategories'
 import Category from './Category/Category'
 

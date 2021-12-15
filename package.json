@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "next lint"
+    "lint": "next lint",
+    "eslint": "eslint --ext .ts src"
   },
   "dependencies": {
     "@emotion/react": "^11.6.0",
