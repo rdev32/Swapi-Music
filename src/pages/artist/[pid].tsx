@@ -45,9 +45,8 @@ const Artist: NextPage = () => {
     const { tracks } = GetData<Tracks>(validPid(urlTopTracks, pid))
     const [screenItems, setScreenItems] = useState(7)
     const sizeScreen = useWindowSize()
-    const { recent, setRecent, setTracks } = useContext(UserContext)
-
     useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
+    const { recent, setRecent, setTracks } = useContext(UserContext)
 
     const updatedTracks = UpdateTracks(tracks)
     const handleMiddleClick = (payload: Payload) => {
@@ -90,18 +89,20 @@ const Artist: NextPage = () => {
                             <UserImage
                                 key={images[0].url}
                                 url={images[0].url || ''}
-                                bradius={100}
+                                bradius={120}
                                 displayName={name}
-                                size={200}
+                                size={220}
                                 name="artistout"
                             />
                         )}
                     </div>
-                    <div>
-                        <p>Artist</p>
-                        <h1>{name}</h1>
-                        <p>{formatNumber(followers?.total)}</p>
-                    </div>
+                    <aside>
+                        <S.UserProfile>ARTIST</S.UserProfile>
+                        <S.UserName>{name}</S.UserName>
+                        <S.UserFooterButton>
+                            {formatNumber(followers?.total)}
+                        </S.UserFooterButton>
+                    </aside>
                 </S.UserHeaderStyle>
             )}
             {tracks && (

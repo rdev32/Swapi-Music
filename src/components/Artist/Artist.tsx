@@ -4,7 +4,6 @@ import UserImage from '../../components/Spotify/UserImage/UserImage'
 import { Artist as ArtistCard } from '../../hooks/types/GetTopArtist'
 import UserContext from '../../hooks/UserContext/UserContext'
 import * as S from '../../styles/components/User/Following.style'
-
 interface IProps {
     item: ArtistCard
 }

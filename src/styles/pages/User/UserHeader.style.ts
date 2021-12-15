@@ -4,8 +4,12 @@ export const UserHeaderStyle = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: ${({ width }: { width?: string }) => (width ? width : '755px')};
-    justify-content: space-between;
+    /* width: ${({ width }: { width?: string }) =>
+        width ? width : '755px'}; */
+    /* justify-content: space-between; */
+    aside {
+        margin: 0 0 0 20px;
+    }
 `
 
 export const UserBody = styled.main`

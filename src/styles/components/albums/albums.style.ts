@@ -3,9 +3,10 @@ import { colors } from '../../colors'
 
 export const AlbumsFooterHeader = styled.header`
     display: flex;
+    /* width: 100%; */
     justify-content: space-between;
     align-items: center;
-    margin: 0 30px;
+    /* margin: 0 30px; */
 `
 export const AlbumsFooterButton = styled.a`
     cursor: pointer;

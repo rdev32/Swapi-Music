@@ -27,6 +27,8 @@ const Album: NextPage = () => {
         tracks,
         type,
         id: idFrom,
+        release_date,
+        label,
     } = GetData<Album>(validPid(urlAlbumsTracks, pid))
     const ms = tracks?.items?.reduce(
         (acc, curr) => (acc = acc + curr.duration_ms),
@@ -61,6 +63,8 @@ const Album: NextPage = () => {
             },
         })
     }
+    console.log(release_date)
+
     return (
         <S.AlbumStyle>
             <S.AlbumHeader>
@@ -107,6 +111,7 @@ const Album: NextPage = () => {
                     </SPlaylist.PlaylistHeaderDetails>
                 </S.AlbumContent>
             </S.AlbumHeader>
+            {tracks?.items && <S.AlbumHr />}
             <S.AlbumAside>
                 {tracks?.items?.map((song, index) => (
                     <SMSong.SongCard key={song.id}>
@@ -118,6 +123,11 @@ const Album: NextPage = () => {
                     </SMSong.SongCard>
                 ))}
             </S.AlbumAside>
+            <footer>
+                <S.albumLabel>
+                    {release_date && release_date.slice(0, 4)} {label && label}
+                </S.albumLabel>
+            </footer>
             <AlbumArtist artists={artists} />
         </S.AlbumStyle>
     )

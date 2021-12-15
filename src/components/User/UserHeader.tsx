@@ -1,10 +1,10 @@
+import Link from 'next/link'
 import { FC, useContext } from 'react'
-import UserImage from '../Spotify/UserImage/UserImage'
-import UserContext from '../../hooks/UserContext/UserContext'
-import * as S from '../../styles/pages/User/UserHeader.style'
 import GetData from '../../hooks/GetData/GetData'
 import { Artist } from '../../hooks/types/GetTopArtist'
-import Link from 'next/link'
+import UserContext from '../../hooks/UserContext/UserContext'
+import * as S from '../../styles/pages/User/UserHeader.style'
+import UserImage from '../Spotify/UserImage/UserImage'
 
 const UserHeader: FC = () => {
     const { user } = useContext(UserContext)
@@ -20,8 +20,8 @@ const UserHeader: FC = () => {
                         <UserImage
                             key={img.url}
                             url={img.url}
-                            bradius={100}
-                            size={200}
+                            bradius={120}
+                            size={220}
                             displayName={user?.display_name}
                         />
                     ))}

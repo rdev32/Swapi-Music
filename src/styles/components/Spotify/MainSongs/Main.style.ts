@@ -4,7 +4,7 @@ import { colors } from '../../../colors'
 export const SongCard = styled.div`
     display: flex;
     align-items: center;
-    margin: 0 30px 0 0;
+    /* margin: 0 30px 0 0; */
 `
 export const SongNumber = styled.p`
     font-size: 16px;

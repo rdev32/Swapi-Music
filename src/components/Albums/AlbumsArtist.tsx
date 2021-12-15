@@ -29,7 +29,7 @@ const AlbumArtist: FC<{ artists: Artist[] }> = ({ artists }) => {
     const { items } = GetData<AlbumArtist>(
         validPid(urlArtistAlbums, artists && artists[0]?.id)
     )
-    const [screenItems, setScreenItems] = useState(7)
+    const [screenItems, setScreenItems] = useState(8)
     const sizeScreen = useWindowSize()
     const { recent, setRecent } = useContext(UserContext)
     useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
