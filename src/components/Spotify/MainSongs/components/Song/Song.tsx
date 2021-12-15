@@ -12,7 +12,6 @@ interface IProps {
     handleId?: () => void
     index: number
 }
-
 const Song: FC<IProps> = ({ item, handleId, index }) => {
     const [hour, minutes, seconds] = GetTimeSongs({ ms: item.duration_ms })
 
