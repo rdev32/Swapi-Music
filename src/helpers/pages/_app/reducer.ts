@@ -6,10 +6,6 @@ type Payload = {
     url?: string
 }
 
-type State = {
-    recent: any
-}
-
 export type StateActions = {
     type: string
     payload: Payload
