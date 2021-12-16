@@ -7,14 +7,14 @@ import {
     useLayoutEffect,
     useReducer,
     useRef,
+    useState,
 } from 'react'
 import GetData from '../../hooks/GetData/GetData'
 import GetTrack from '../../hooks/types/GetTrack'
 import UserContext from '../../hooks/UserContext/UserContext'
 import {
     AleatoryButton,
-    NavBarCircle,
-    NavBarPointCircle,
+    NavbarFooterBar,
     NavPlayer,
     PlayerInfoSong,
     RepeatButton,
@@ -34,7 +34,7 @@ const NavBarPlayer: FC = () => {
     const [controls, dispatch] = useReducer(reducer, initState)
     const audio = useRef<HTMLAudioElement>(null)
     const track = GetData<GetTrack>(GetUrl(tracks) || GetSoloUrl(tracks))
-
+    const [, setCurrentTime] = useState(0)
     const handlePlay = () => {
         audio.current?.play()
         if (audio.current) {
@@ -171,10 +171,64 @@ const NavBarPlayer: FC = () => {
             aleatory: Math.random(),
         })
     }
+
+    const handleRepeat = () => {
+        if (controls.repeat) {
+            if (controls.loop) {
+                dispatch({
+                    type: IActions.ON_Repeat,
+                    payload: {
+                        ...controls,
+                        repeat: !controls.repeat,
+                    },
+                })
+                dispatch({
+                    type: IActions.ON_Loop,
+                    payload: {
+                        ...controls,
+                        loop: !controls.loop,
+                    },
+                })
+            } else {
+                dispatch({
+                    type: IActions.ON_Loop,
+                    payload: {
+                        ...controls,
+                        loop: !controls.loop,
+                    },
+                })
+            }
+        } else {
+            dispatch({
+                type: IActions.ON_Repeat,
+                payload: {
+                    ...controls,
+                    repeat: !controls.repeat,
+                },
+            })
+        }
+    }
     useLayoutEffect(() => {
         if (localStorage.getItem('tracks'))
             setTracks(JSON.parse(localStorage.getItem('tracks') || '{}'))
     }, [])
+
+    useEffect(() => {
+        if (audio.current) {
+            audio.current.ontimeupdate = (event: any) => {
+                // if (audio.current) {
+                //     audio.current.currentTime = event.target.currentTime
+                // }
+                setCurrentTime(event.target.currentTime)
+            }
+        }
+    }, [audio.current])
+
+    // useEffect(() => {
+    //     if (audio.current) {
+    //         audio.current.currentTime = currentTime
+    //     }
+    // }, [currentTime])
 
     useEffect(() => {
         if (audio.current) {
@@ -214,9 +268,6 @@ const NavBarPlayer: FC = () => {
         }
     }, [tracks])
 
-    console.log(controls)
-    console.log(audio)
-
     return (
         <>
             {Object.keys(track).length !== 0 && (
@@ -246,75 +297,78 @@ const NavBarPlayer: FC = () => {
                     </audio>
 
                     <SSong.SongPlayerIcons>
-                        <AleatoryButton
-                            aleatory={controls.aleatory}
-                            onClick={handleAleatory}
-                        >
-                            <GetPlayerIcons name="aleatory" />
-                        </AleatoryButton>
-                        <SSong.SongButton onClick={handleBack}>
-                            {<GetIcon name="back" />}
-                        </SSong.SongButton>
-                        <SSong.SongButton
-                            onClick={() => {
-                                controls.play ? handlePause() : handlePlay()
-                            }}
-                        >
-                            <GetPlayerIcons
-                                name={controls.play ? 'pause' : 'play'}
-                            />
-                        </SSong.SongButton>
-                        <SSong.SongButton onClick={handleNext}>
-                            {<GetIcon name="next" />}
-                        </SSong.SongButton>
+                        <header>
+                            <AleatoryButton
+                                aleatory={controls.aleatory}
+                                onClick={handleAleatory}
+                            >
+                                <GetPlayerIcons name="aleatory" />
+                            </AleatoryButton>
+                            <SSong.SongButton onClick={handleBack}>
+                                {<GetIcon name="back" />}
+                            </SSong.SongButton>
+                            <SSong.SongButtonIcon
+                                onClick={() => {
+                                    controls.play ? handlePause() : handlePlay()
+                                }}
+                            >
+                                <GetPlayerIcons
+                                    name={controls.play ? 'pause' : 'play'}
+                                />
+                            </SSong.SongButtonIcon>
+                            <SSong.SongButton onClick={handleNext}>
+                                {<GetIcon name="next" />}
+                            </SSong.SongButton>
 
-                        <RepeatButton
-                            onClick={() => {
-                                if (controls.repeat) {
-                                    if (controls.loop) {
-                                        dispatch({
-                                            type: IActions.ON_Repeat,
-                                            payload: {
-                                                ...controls,
-                                                repeat: !controls.repeat,
-                                            },
-                                        })
-                                        dispatch({
-                                            type: IActions.ON_Loop,
-                                            payload: {
-                                                ...controls,
-                                                loop: !controls.loop,
-                                            },
-                                        })
-                                    } else {
-                                        dispatch({
-                                            type: IActions.ON_Loop,
-                                            payload: {
-                                                ...controls,
-                                                loop: !controls.loop,
-                                            },
-                                        })
+                            <RepeatButton
+                                onClick={handleRepeat}
+                                repeat={controls.repeat}
+                            >
+                                <GetPlayerIcons
+                                    name={`${
+                                        controls.repeat && controls.loop
+                                            ? 'repeatloop'
+                                            : 'repeat'
+                                    }`}
+                                />
+                            </RepeatButton>
+                        </header>
+                        <NavbarFooterBar>
+                            <p>
+                                {Math.round(
+                                    audio.current?.currentTime
+                                        ? audio.current.currentTime
+                                        : 0
+                                ) > 9
+                                    ? `0:${Math.round(
+                                          audio.current?.currentTime
+                                              ? audio.current.currentTime
+                                              : 0
+                                      )}`
+                                    : `0:0${Math.round(
+                                          audio.current?.currentTime
+                                              ? audio.current.currentTime
+                                              : 0
+                                      )}`}
+                            </p>
+                            <input
+                                type="range"
+                                name="progress"
+                                id="progress"
+                                value={Math.round(
+                                    Number(audio.current?.currentTime || 0)
+                                )}
+                                onChange={(event: any) => {
+                                    if (audio.current) {
+                                        audio.current.currentTime =
+                                            event.target.value
                                     }
-                                } else {
-                                    dispatch({
-                                        type: IActions.ON_Repeat,
-                                        payload: {
-                                            ...controls,
-                                            repeat: !controls.repeat,
-                                        },
-                                    })
-                                }
-                            }}
-                            repeat={controls.repeat}
-                        >
-                            <GetPlayerIcons
-                                name={`${
-                                    controls.repeat && controls.loop
-                                        ? 'repeatloop'
-                                        : 'repeat'
-                                }`}
+                                }}
+                                min="0"
+                                max="30"
                             />
-                        </RepeatButton>
+                            <p>0:30</p>
+                        </NavbarFooterBar>
                     </SSong.SongPlayerIcons>
                     <SSong.SongPlayerVolumen>
                         <Link href="/queue">
@@ -323,11 +377,6 @@ const NavBarPlayer: FC = () => {
                                 <GetPlayerIcons name="queue" />
                             </a>
                         </Link>
-                        <NavBarCircle>
-                            <NavBarPointCircle
-                                rotate={audio.current?.currentTime}
-                            ></NavBarPointCircle>
-                        </NavBarCircle>
                         <input
                             type="range"
                             min="0"

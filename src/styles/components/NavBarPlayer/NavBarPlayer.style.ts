@@ -6,7 +6,7 @@ export const NavPlayer = styled.nav`
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 90px;
+    height: 100px;
     display: flex;
     z-index: 1;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
@@ -97,5 +97,16 @@ export const NavBarPointCircle = styled.div`
         padding-bottom: 200%;
         border-radius: 50%;
         cursor: pointer;
+    }
+`
+export const NavbarFooterBar = styled.footer`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    input {
+        width: 335px;
     }
 `

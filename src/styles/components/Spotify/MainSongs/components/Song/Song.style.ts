@@ -64,8 +64,19 @@ export const SongButton = styled.button`
     border: none;
     background-color: transparent;
     cursor: pointer;
-    height: 60px;
-    width: 60px;
+    /* height: 60px;
+    width: 60px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const SongButtonIcon = styled.button`
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 62px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +84,13 @@ export const SongButton = styled.button`
 export const SongPlayerIcons = styled.div`
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
+    header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 `
 export const SongPlayerVolumen = styled.div`
     display: flex;
