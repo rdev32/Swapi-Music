@@ -13,6 +13,8 @@ import GetTrack from '../../hooks/types/GetTrack'
 import UserContext from '../../hooks/UserContext/UserContext'
 import {
     AleatoryButton,
+    NavBarCircle,
+    NavBarPointCircle,
     NavPlayer,
     PlayerInfoSong,
     RepeatButton,
@@ -202,14 +204,18 @@ const NavBarPlayer: FC = () => {
     useEffect(() => {
         if (audio.current) {
             audio.current.volume = controls.volumen / 100
+            audio.current.loop = controls.loop
         }
-    }, [controls.volumen])
+    }, [controls.volumen, controls.loop])
 
     useEffect(() => {
         if (Object.keys(tracks).length > 0) {
             localStorage.setItem('tracks', JSON.stringify(tracks))
         }
     }, [tracks])
+
+    console.log(controls)
+    console.log(audio)
 
     return (
         <>
@@ -261,19 +267,53 @@ const NavBarPlayer: FC = () => {
                         <SSong.SongButton onClick={handleNext}>
                             {<GetIcon name="next" />}
                         </SSong.SongButton>
+
                         <RepeatButton
-                            onClick={() =>
-                                dispatch({
-                                    type: IActions.ON_Repeat,
-                                    payload: {
-                                        ...controls,
-                                        repeat: !controls.repeat,
-                                    },
-                                })
-                            }
+                            onClick={() => {
+                                if (controls.repeat) {
+                                    if (controls.loop) {
+                                        dispatch({
+                                            type: IActions.ON_Repeat,
+                                            payload: {
+                                                ...controls,
+                                                repeat: !controls.repeat,
+                                            },
+                                        })
+                                        dispatch({
+                                            type: IActions.ON_Loop,
+                                            payload: {
+                                                ...controls,
+                                                loop: !controls.loop,
+                                            },
+                                        })
+                                    } else {
+                                        dispatch({
+                                            type: IActions.ON_Loop,
+                                            payload: {
+                                                ...controls,
+                                                loop: !controls.loop,
+                                            },
+                                        })
+                                    }
+                                } else {
+                                    dispatch({
+                                        type: IActions.ON_Repeat,
+                                        payload: {
+                                            ...controls,
+                                            repeat: !controls.repeat,
+                                        },
+                                    })
+                                }
+                            }}
                             repeat={controls.repeat}
                         >
-                            <GetPlayerIcons name="repeat" />
+                            <GetPlayerIcons
+                                name={`${
+                                    controls.repeat && controls.loop
+                                        ? 'repeatloop'
+                                        : 'repeat'
+                                }`}
+                            />
                         </RepeatButton>
                     </SSong.SongPlayerIcons>
                     <SSong.SongPlayerVolumen>
@@ -283,6 +323,11 @@ const NavBarPlayer: FC = () => {
                                 <GetPlayerIcons name="queue" />
                             </a>
                         </Link>
+                        <NavBarCircle>
+                            <NavBarPointCircle
+                                rotate={audio.current?.currentTime}
+                            ></NavBarPointCircle>
+                        </NavBarCircle>
                         <input
                             type="range"
                             min="0"

@@ -2,5 +2,6 @@
     "play": false,
     "repeat": false,
     "aleatory": false,
+    "loop": false,
     "volumen": 5
 }

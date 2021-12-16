@@ -1,4 +1,4 @@
-import { IPlayer, IAction, IActions } from '../types/types'
+import { IAction, IActions, IPlayer } from '../types/types'
 
 const reducer = (state: IPlayer, action: IAction): IPlayer => {
     switch (action.type) {
@@ -10,6 +10,8 @@ const reducer = (state: IPlayer, action: IAction): IPlayer => {
             return { ...state, aleatory: action.payload.aleatory }
         case IActions.ON_Volumen:
             return { ...state, volumen: action.payload.volumen }
+        case IActions.ON_Loop:
+            return { ...state, loop: action.payload.loop }
         default:
             return state
     }
