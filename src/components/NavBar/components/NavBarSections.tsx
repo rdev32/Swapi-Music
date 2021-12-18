@@ -29,6 +29,7 @@ const NavBarSection: FC<IProps> = ({ Section, Type, icon, styles }) => {
                                 onClick={() => setActive(options.path)}
                             >
                                 <AtomIcon
+                                    width="100%"
                                     active={
                                         active.replace(/\s+/g, '') ===
                                         options.path.replace(/\s+/g, '')

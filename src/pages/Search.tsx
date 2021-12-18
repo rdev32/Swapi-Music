@@ -1,28 +1,30 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { Navigation } from 'swiper'
+import { SwiperSlide } from 'swiper/react'
+import typeSizeCreen from '../components/Albums/helpers/typeSizeCreen'
 import ArtistCard from '../components/Artist/Artist'
-import Categories from '../components/Search/Categories/Categories'
+import { GetIcons } from '../components/Icons/Icons'
 import SearchBar from '../components/Search/SearchBar/SearchBar'
 import Song from '../components/Spotify/MainSongs/components/Song/Song'
 import UserImage from '../components/Spotify/UserImage/UserImage'
 import UserPublicPlaylist from '../components/User/UserPublicPlaylist'
-import GetData from '../hooks/GetData/GetData'
 import GetSearch from '../hooks/GetSearch/GetSearch'
-import { GetCategories } from '../hooks/types/GetCategories'
 import { IGetSearch } from '../hooks/types/GetSearch'
 import UserContext from '../hooks/UserContext/UserContext'
+import useWindowSize from '../hooks/useWindowSize/useWindowSize'
 import * as SAlbums from '../styles/components/albums/albums.style'
+import * as SSwiper from '../styles/components/albums/Swiper/SwiperContainer.style'
 import { FormContainer } from '../styles/components/Search/SearchBar.style'
 import * as STracks from '../styles/components/Spotify/MainSongs/Main.style'
-import * as SFollow from '../styles/components/User/Following.style'
 import * as S from '../styles/general/styles'
 import * as SPlaylist from '../styles/pages/library/library.style'
 import {
     SearchArstitMainDesc,
     SearchArtist,
-    SearchArtistMain,
     SearchImageContainer,
+    SearchInit,
     SearchProfileContainer,
     SearchSection1,
     SearchTitleCategory,
@@ -31,17 +33,16 @@ import {
 } from '../styles/pages/Search/Search.style'
 
 const Search: NextPage = () => {
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState<string>('')
     const [mount, setMount] = useState(false)
     const {
         data: { albums, artists, playlists, tracks },
         setCount,
     } = GetSearch<IGetSearch>(search, setMount)
     const { setTracks } = useContext(UserContext)
-
-    const url = `https://api.spotify.com/v1/browse/categories?limit=50`
-
-    const { categories } = GetData<GetCategories>(url)
+    const [screenItems, setScreenItems] = useState(7)
+    const sizeScreen = useWindowSize()
+    useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen])
 
     const newTracks = tracks?.items?.map((track, index) => {
         return {
@@ -84,7 +85,13 @@ const Search: NextPage = () => {
                     setMount={setMount}
                 />
             </FormContainer>
-            {!search && <Categories Categories={categories} />}
+
+            {!search && !mount && !artists ? (
+                <SearchInit>
+                    <GetIcons />
+                    <h3>Search your favorite content</h3>
+                </SearchInit>
+            ) : null}
             {mount && (
                 <>
                     <SearchSection1>
@@ -94,13 +101,14 @@ const Search: NextPage = () => {
                                     <SearchTitleCategory>
                                         Result
                                     </SearchTitleCategory>
-                                    <SearchArtistMain
+                                    <Link
                                         href={{
-                                            pathname: '/artists/[pid]/',
+                                            pathname: '/artist/[pid]/',
                                             query: {
                                                 pid: artists?.items[0].id,
                                             },
                                         }}
+                                        passHref
                                     >
                                         <SearchArstitMainDesc>
                                             <SearchImageContainer>
@@ -126,7 +134,7 @@ const Search: NextPage = () => {
                                                 {artists?.items[0]?.name}
                                             </SearchArtist>
                                         </SearchArstitMainDesc>
-                                    </SearchArtistMain>
+                                    </Link>
                                 </SearchProfileContainer>
                             </>
                         )}
@@ -152,28 +160,38 @@ const Search: NextPage = () => {
                             </SearchTracksContainer>
                         )}
                     </SearchSection1>
-                    <div>
+                    <aside>
                         {playlists?.items?.length !== 0 && (
                             <UserPublicPlaylist
                                 title="Playlists"
                                 data={playlists?.items}
                             />
                         )}
-                    </div>
+                    </aside>
                     <div>
                         {artists?.items?.length !== 0 && (
                             <>
                                 <SearchTitleCategory>
                                     Artist
                                 </SearchTitleCategory>
-                                <SFollow.ArtistCards height="260px">
-                                    {artists?.items?.map((artist) => (
-                                        <ArtistCard
-                                            key={artist.id}
-                                            item={artist}
-                                        />
-                                    ))}
-                                </SFollow.ArtistCards>
+                                <SSwiper.SwiperContainer>
+                                    <SSwiper.SwiperMain
+                                        className="mySwiper"
+                                        modules={[Navigation]}
+                                        navigation
+                                        spaceBetween={1}
+                                        slidesPerView={screenItems}
+                                    >
+                                        {artists?.items?.map((artist) => (
+                                            <SwiperSlide key={artist.id}>
+                                                <ArtistCard
+                                                    key={artist.id}
+                                                    item={artist}
+                                                />
+                                            </SwiperSlide>
+                                        ))}
+                                    </SSwiper.SwiperMain>
+                                </SSwiper.SwiperContainer>
                             </>
                         )}
                     </div>
@@ -183,47 +201,69 @@ const Search: NextPage = () => {
                                 <SearchTitleCategory>
                                     Albums
                                 </SearchTitleCategory>
-                                <SFollow.ArtistCards height="248px">
-                                    {albums.items.map((album) => (
-                                        <Link
-                                            href={{
-                                                pathname: '/album/[pid]',
-                                                query: { pid: album?.id },
-                                            }}
-                                            passHref
-                                            key={album.id}
-                                        >
-                                            <SAlbums.AlbumRedirect>
-                                                {album.images.length > 0 && (
-                                                    <UserImage
-                                                        url={
-                                                            album.images[0].url
-                                                        }
-                                                        displayName={album.name}
-                                                        size={166}
-                                                        bradius={10}
-                                                    />
-                                                )}
-                                                <SPlaylist.PlaylistTitle>
-                                                    {album.name.length > 16
-                                                        ? `${album.name
-                                                              .slice(0, 16)
-                                                              .trim()}...`
-                                                        : album.name.slice(
-                                                              0,
-                                                              16
-                                                          )}
-                                                </SPlaylist.PlaylistTitle>
-                                                <SPlaylist.PlaylistAuthor>
-                                                    {album.release_date.slice(
-                                                        0,
-                                                        4
-                                                    )}
-                                                </SPlaylist.PlaylistAuthor>
-                                            </SAlbums.AlbumRedirect>
-                                        </Link>
-                                    ))}
-                                </SFollow.ArtistCards>
+                                <SSwiper.SwiperContainer>
+                                    <SSwiper.SwiperMain
+                                        className="mySwiper"
+                                        modules={[Navigation]}
+                                        navigation
+                                        spaceBetween={1}
+                                        slidesPerView={screenItems}
+                                    >
+                                        {albums.items.map((album) => (
+                                            <SwiperSlide key={album.id}>
+                                                <Link
+                                                    href={{
+                                                        pathname:
+                                                            '/album/[pid]',
+                                                        query: {
+                                                            pid: album?.id,
+                                                        },
+                                                    }}
+                                                    passHref
+                                                    key={album.id}
+                                                >
+                                                    <SAlbums.AlbumRedirect>
+                                                        {album.images.length >
+                                                            0 && (
+                                                            <UserImage
+                                                                url={
+                                                                    album
+                                                                        .images[0]
+                                                                        .url
+                                                                }
+                                                                displayName={
+                                                                    album.name
+                                                                }
+                                                                size={166}
+                                                                bradius={10}
+                                                            />
+                                                        )}
+                                                        <SPlaylist.PlaylistTitle>
+                                                            {album.name.length >
+                                                            16
+                                                                ? `${album.name
+                                                                      .slice(
+                                                                          0,
+                                                                          16
+                                                                      )
+                                                                      .trim()}...`
+                                                                : album.name.slice(
+                                                                      0,
+                                                                      16
+                                                                  )}
+                                                        </SPlaylist.PlaylistTitle>
+                                                        <SPlaylist.PlaylistAuthor>
+                                                            {album.release_date.slice(
+                                                                0,
+                                                                4
+                                                            )}
+                                                        </SPlaylist.PlaylistAuthor>
+                                                    </SAlbums.AlbumRedirect>
+                                                </Link>
+                                            </SwiperSlide>
+                                        ))}
+                                    </SSwiper.SwiperMain>
+                                </SSwiper.SwiperContainer>
                             </>
                         )}
                     </div>

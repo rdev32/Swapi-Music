@@ -14,7 +14,7 @@ const NavBarHeader: FC = () => {
         <S.ItemBox>
             <Link href="/" passHref>
                 <S.ItemT>
-                    <SSlogin.LoginTitle>{<Icon />}Swapy</SSlogin.LoginTitle>
+                    <SSlogin.LoginTitle>{<Icon />}Swapi</SSlogin.LoginTitle>
                 </S.ItemT>
             </Link>
         </S.ItemBox>

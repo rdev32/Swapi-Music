@@ -22,7 +22,6 @@ const Playlist: NextPage = () => {
     const url = `${spotify}v1/playlists/${pid}`
     const data = GetData<GetPlaylistId>(validPid(url, pid))
     const [tracks, setTracks] = useState<any>([])
-
     useEffect(() => {
         setTracks(data?.tracks?.items)
     }, [data.tracks])
@@ -86,7 +85,6 @@ const Playlist: NextPage = () => {
 
             return 0
         })
-    console.log(tracks)
 
     return (
         <S.StyledContainer>

@@ -119,6 +119,7 @@ export type GetPlaylistId = {
     tracks: {
         total: number
         items: LikedSongs[]
+        offset: number
     }
     type: string
     uri: string

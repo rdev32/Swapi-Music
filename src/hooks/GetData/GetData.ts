@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 function GetData<Type>(url: string) {
     const [data, setData] = useState<Type>({} as Type)
@@ -26,6 +26,7 @@ function GetData<Type>(url: string) {
                     if (err?.response?.status === 401) {
                         router.replace('/')
                     }
+                    console.log(err)
                 })
         return () => {}
     }, [url])

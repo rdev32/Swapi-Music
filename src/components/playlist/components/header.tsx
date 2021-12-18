@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { FC } from 'react'
 import UserImage from '../../../components/Spotify/UserImage/UserImage'
 import GetTimeSongs from '../../../hooks/GetTimeSongs/GetTimeSongs'
@@ -27,7 +26,7 @@ const Header: FC<{ data: GetPlaylistId }> = ({ data }) => {
                 <h5>{data?.type?.toUpperCase()}</h5>
                 <h1>{data?.name}</h1>
                 <S.PlaylistHeaderDetails>
-                    <Link
+                    {/* <Link
                         href={{
                             pathname: `${
                                 data?.owner?.type === 'user'
@@ -37,9 +36,9 @@ const Header: FC<{ data: GetPlaylistId }> = ({ data }) => {
                             query: { pid: data?.owner?.id },
                         }}
                         passHref
-                    >
-                        <a>{data?.owner?.display_name}</a>
-                    </Link>
+                    > */}
+                    <p>{data?.owner?.display_name}</p>
+                    {/* </Link> */}
                     <p>
                         {data?.tracks?.total > 0 ? (
                             <>

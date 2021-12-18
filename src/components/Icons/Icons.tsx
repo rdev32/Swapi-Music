@@ -31,4 +31,5 @@ export const GetIcons = () => {
     if (Icon) {
         return <Icon />
     }
+    return null
 }

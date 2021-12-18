@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 function GetSearch<Type>(
     search: string,
@@ -25,6 +25,12 @@ function GetSearch<Type>(
                     } else {
                         setData(resp.data)
                         setMount(true)
+                        router.push({
+                            pathname: '/Search',
+                            query: {
+                                q: search,
+                            },
+                        })
                     }
 
                     // resp.data && setMount(true)

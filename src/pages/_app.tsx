@@ -41,7 +41,6 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
             }
         }
     }, [router.asPath])
-    console.log(count)
 
     return (
         <useActiveOptContext.Provider value={{ active, setActive }}>

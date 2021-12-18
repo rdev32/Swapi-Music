@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { colors } from '../../colors'
 import Link from 'next/link'
+import { colors } from '../../colors'
 
 export const SearchSection1 = styled.div`
     display: flex;
@@ -20,6 +20,10 @@ export const SearchArstitMainDesc = styled.a`
     justify-content: center;
     flex-wrap: wrap;
     cursor: pointer;
+    border-radius: 10px;
+    &:hover {
+        background-color: ${colors.gray};
+    }
 `
 export const SearchProfileContainer = styled.div`
     width: 345px;
@@ -29,9 +33,6 @@ export const SearchProfileContainer = styled.div`
     border-radius: 10px;
     padding: 20px;
     margin: 0 20px 0 0;
-    &:hover {
-        background-color: ${colors.gray};
-    }
 `
 
 export const SearchTracksContainer = styled.div`
@@ -52,4 +53,23 @@ export const SearchType = styled.h4`
     /* position: fixed; */
     font-size: 14px;
     margin: 10px 0;
+`
+export const SearchInit = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 74vh;
+    svg {
+        height: 100px;
+        width: 100px;
+        /* padding: 10px; */
+        path {
+            stroke: ${colors.black};
+            fill: ${colors.black};
+        }
+        rect {
+            stroke: ${colors.black};
+        }
+    }
 `
