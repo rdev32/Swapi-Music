@@ -5,6 +5,7 @@ import * as S from "../../styles/pages/auth/login.style";
 //FALSE DEPLOY
 //TRUE DEV
 
+
 const Buttons = ({ button }: { button: string }) => {
   const url_redirect = `${Swapi.baseUrl}?client_id=${
     Swapi.clientId
