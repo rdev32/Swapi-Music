@@ -1,11 +1,11 @@
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
-export const PlaylistHeader = styled.div``
+export const PlaylistHeader = styled.div``;
 
 export const PlaylistHeaderDetails = styled.div`
-    display: flex;
-    align-items: center;
-`
+  display: flex;
+  align-items: center;
+`;
 export const PlayListSeparator = styled.span`
-    margin: 0 5px;
-`
+  margin: 0 5px;
+`;

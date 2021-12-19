@@ -1,5 +1,5 @@
 export type Playlist = {
-    id: string
-    name: string
-    path: string
-}[]
+  id: string;
+  name: string;
+  path: string;
+}[];

@@ -1,10 +1,10 @@
-import { createContext, Dispatch, SetStateAction } from 'react'
+import { createContext, Dispatch, SetStateAction } from "react";
 
 interface IProps {
-    active: string
-    setActive: Dispatch<SetStateAction<string>>
+  active: string;
+  setActive: Dispatch<SetStateAction<string>>;
 }
 
-const useActiveOptContext = createContext<IProps>({} as IProps)
+const useActiveOptContext = createContext<IProps>({} as IProps);
 
-export default useActiveOptContext
+export default useActiveOptContext;

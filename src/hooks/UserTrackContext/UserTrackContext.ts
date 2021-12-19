@@ -1,11 +1,11 @@
-import { createContext, Dispatch, SetStateAction } from 'react'
-import { Tracks } from './types'
+import { createContext, Dispatch, SetStateAction } from "react";
+import { Tracks } from "./types";
 
 interface IProps {
-    tracks: Tracks
-    setTracks: Dispatch<SetStateAction<Tracks>>
+  tracks: Tracks;
+  setTracks: Dispatch<SetStateAction<Tracks>>;
 }
 
-const UserTrackContext = createContext<IProps>({} as IProps)
+const UserTrackContext = createContext<IProps>({} as IProps);
 
-export default UserTrackContext
+export default UserTrackContext;

@@ -1,58 +1,58 @@
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 function GetSearch<Type>(
-    search: string,
-    setMount: Dispatch<SetStateAction<boolean>>
+  search: string,
+  setMount: Dispatch<SetStateAction<boolean>>
 ) {
-    const [data, setData] = useState<Type>({} as Type)
-    const [count, setCount] = useState<number>(0)
-    const router = useRouter()
-    useEffect(() => {
-        const handler = () => {
-            const url = `https://api.spotify.com/v1/search?&include_external=audio&q=${search}&type=album,track,artist,playlist,episode,show`
-            axios
-                .get(url, {
-                    headers: {
-                        Authorization: `Bearer ${Cookies.get('token')}`,
-                    },
-                })
-                .then((resp: any | { error: { status: number } }) => {
-                    if (resp?.error?.status === 401) {
-                        router.replace('/')
-                    } else {
-                        setData(resp.data)
-                        setMount(true)
-                        router.push({
-                            pathname: '/Search',
-                            query: {
-                                q: search,
-                            },
-                        })
-                    }
+  const [data, setData] = useState<Type>({} as Type);
+  const [count, setCount] = useState<number>(0);
+  const router = useRouter();
+  useEffect(() => {
+    const handler = () => {
+      const url = `https://api.spotify.com/v1/search?&include_external=audio&q=${search}&type=album,track,artist,playlist,episode,show`;
+      axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        })
+        .then((resp: any | { error: { status: number } }) => {
+          if (resp?.error?.status === 401) {
+            router.replace("/");
+          } else {
+            setData(resp.data);
+            setMount(true);
+            router.push({
+              pathname: "/Search",
+              query: {
+                q: search,
+              },
+            });
+          }
 
-                    // resp.data && setMount(true)
-                    // return setData(resp.data)
-                })
-                .catch((err) => console.log(err))
-        }
-        if (count === 20 && search !== '') {
-            handler()
-        }
-    }, [count])
+          // resp.data && setMount(true)
+          // return setData(resp.data)
+        })
+        .catch((err) => console.log(err));
+    };
+    if (count === 20 && search !== "") {
+      handler();
+    }
+  }, [count]);
 
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            if (search !== '' && count < 20) {
-                setCount(count + 1)
-                setMount(false)
-            }
-        }, 50)
-        return () => clearTimeout(handler)
-    }, [count, search])
-    return { data, setCount }
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (search !== "" && count < 20) {
+        setCount(count + 1);
+        setMount(false);
+      }
+    }, 50);
+    return () => clearTimeout(handler);
+  }, [count, search]);
+  return { data, setCount };
 }
 
-export default GetSearch
+export default GetSearch;

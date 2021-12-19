@@ -1,30 +1,30 @@
-import { createContext, Dispatch, SetStateAction } from 'react'
-import { Tracks } from '../../hooks/UserTrackContext/types'
-import { GetPlaylist } from '../types/GetCurrentUserPlaylist'
-import { User } from '../types/GetUserProfile'
+import { createContext, Dispatch, SetStateAction } from "react";
+import { Tracks } from "../../hooks/UserTrackContext/types";
+import { GetPlaylist } from "../types/GetCurrentUserPlaylist";
+import { User } from "../types/GetUserProfile";
 
 type Payload = {
-    id: string
-    tag: string
-    type: string
-    image: string
-    url: string
-}
+  id: string;
+  tag: string;
+  type: string;
+  image: string;
+  url: string;
+};
 
 export type StateActions = {
-    type: string
-    payload: Payload
-}
+  type: string;
+  payload: Payload;
+};
 
 interface IProps {
-    tracks: Tracks
-    user: User
-    playlists?: GetPlaylist[]
-    setTracks: Dispatch<SetStateAction<Tracks>>
-    recent: Payload[]
-    setRecent: Dispatch<SetStateAction<Payload[]>>
+  tracks: Tracks;
+  user: User;
+  playlists?: GetPlaylist[];
+  setTracks: Dispatch<SetStateAction<Tracks>>;
+  recent: Payload[];
+  setRecent: Dispatch<SetStateAction<Payload[]>>;
 }
 
-const UserContext = createContext<IProps>({} as IProps)
+const UserContext = createContext<IProps>({} as IProps);
 
-export default UserContext
+export default UserContext;

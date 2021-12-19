@@ -1,24 +1,16 @@
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import { FC, useMemo } from 'react'
-import * as S from '../../../../styles/components/NavBar/components/Title/Title.S'
-import * as SSlogin from '../../../../styles/pages/auth/login.style'
+import { FC } from "react";
+import * as S from "../../../../styles/components/NavBar/components/Title/Title.S";
+import * as SSlogin from "../../../../styles/pages/auth/login.style";
+import { GetIcons } from "../../../Icons/Icons";
 
 const NavBarHeader: FC = () => {
-    const Icon = useMemo(
-        () => dynamic(() => import(`../../../../../public/landing/swapi.svg`)),
-        []
-    )
+  return (
+    <S.ItemBox>
+      <S.ItemT>
+        <SSlogin.LoginTitle>{<GetIcons />}Swapi</SSlogin.LoginTitle>
+      </S.ItemT>
+    </S.ItemBox>
+  );
+};
 
-    return (
-        <S.ItemBox>
-            <Link href="/" passHref>
-                <S.ItemT>
-                    <SSlogin.LoginTitle>{<Icon />}Swapi</SSlogin.LoginTitle>
-                </S.ItemT>
-            </Link>
-        </S.ItemBox>
-    )
-}
-
-export default NavBarHeader
+export default NavBarHeader;

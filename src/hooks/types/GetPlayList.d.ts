@@ -1,40 +1,40 @@
 type GetPlaylistImgs = {
-    height: number
-    width: number
-    url: string
-}
+  height: number;
+  width: number;
+  url: string;
+};
 export type IPlaylist = {
-    collaborative: boolean
-    description: string
+  collaborative: boolean;
+  description: string;
+  external_urls: {
+    spotify: string;
+  };
+  href: string;
+  id: string;
+  images: GetPlaylistImgs[];
+  name: string;
+  owner: {
+    display_name: string;
     external_urls: {
-        spotify: string
-    }
-    href: string
-    id: string
-    images: GetPlaylistImgs[]
-    name: string
-    owner: {
-        display_name: string
-        external_urls: {
-            spotify: string
-        }
-        href: string
-        id: string
-        type: string
-        uri: string
-    }
-    public: boolean
-    snapshot_id: string
-    tracks: {
-        href: string
-        total: number
-    }
-    type: string
-    uri: string
-}
+      spotify: string;
+    };
+    href: string;
+    id: string;
+    type: string;
+    uri: string;
+  };
+  public: boolean;
+  snapshot_id: string;
+  tracks: {
+    href: string;
+    total: number;
+  };
+  type: string;
+  uri: string;
+};
 export type GetPlayList = {
-    items: IPlaylist[]
-}
+  items: IPlaylist[];
+};
 
 /*
   {

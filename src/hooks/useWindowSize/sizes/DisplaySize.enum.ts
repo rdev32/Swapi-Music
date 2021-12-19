@@ -1,12 +1,12 @@
 enum DisplaySize {
-    NotSupported = 0,
-    MobileS = 320,
-    MobileM = 375,
-    MobileL = 425,
-    Tablet = 768,
-    ComputerS = 1024,
-    ComputerM = 1440,
-    ComputerL = 2560,
+  NotSupported = 0,
+  MobileS = 320,
+  MobileM = 375,
+  MobileL = 425,
+  Tablet = 768,
+  ComputerS = 1024,
+  ComputerM = 1440,
+  ComputerL = 2560,
 }
 
-export default DisplaySize
+export default DisplaySize;
