@@ -9,7 +9,7 @@ import * as S from "../../styles/pages/auth/login.style";
 const Buttons = ({ button }: { button: string }) => {
   const url_redirect = `${Swapi.baseUrl}?client_id=${
     Swapi.clientId
-  }&redirect_uri=${Swapi.modeDev(false)}&scope=${
+  }&redirect_uri=${Swapi.modeDev(true)}&scope=${
     Swapi.ScopesUrlParams
   }&response_type=token&show_dialog=true`;
   const url_spotify = "https://www.spotify.com/gt/";

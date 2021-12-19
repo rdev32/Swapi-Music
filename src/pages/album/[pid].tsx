@@ -63,7 +63,6 @@ const Album: NextPage = () => {
       },
     });
   };
-  console.log(release_date);
 
   return (
     <S.AlbumStyle>

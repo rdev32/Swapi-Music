@@ -80,7 +80,6 @@ const Home: NextPage = () => {
       url: `/album/${albums?.items && albums?.items[id].id}`,
     };
   };
-  console.log(albums);
 
   return (
     <S.StyledContainer>

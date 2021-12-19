@@ -36,7 +36,6 @@ const LikedSongs: NextPage = () => {
       };
     }
   }, [Container, count, data]);
-  console.log(scroll);
 
   return (
     <>

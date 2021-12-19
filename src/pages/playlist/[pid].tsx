@@ -6,6 +6,7 @@ import Header from "../../components/playlist/components/header";
 import Songs from "../../components/Spotify/LikedSong/Songs";
 import validPid from "../../helpers/pages/artist/ValidPid";
 import GetData from "../../hooks/GetData/GetData";
+import { LikedSongs } from "../../hooks/types/GetLikedSongs";
 import { GetPlaylistId } from "../../hooks/types/GetPlayListId";
 import useActiveOptContext from "../../hooks/useActiveOptContext/useActiveOptContext";
 import * as S from "../../styles/general/styles";
@@ -21,10 +22,14 @@ const Playlist: NextPage = () => {
   const { pid } = router.query;
   const url = `${spotify}v1/playlists/${pid}`;
   const data = GetData<GetPlaylistId>(validPid(url, pid));
-  const [tracks, setTracks] = useState<any>([]);
+  const [tracks, setTracks] = useState<LikedSongs[]>([]);
+
+
   useEffect(() => {
     setTracks(data?.tracks?.items);
   }, [data.tracks]);
+
+
 
   const orderArtists =
     data?.tracks?.items &&
@@ -41,12 +46,10 @@ const Playlist: NextPage = () => {
   const orderTitles =
     data?.tracks?.items &&
     [...data?.tracks?.items]?.sort((a, b) => {
-      if (a.track.name < b.track.name) {
-        return -1;
-      }
-      if (a.track.name > b.track.name) {
-        return 1;
-      }
+      if (a.track.name < b.track.name)  return -1;
+      
+      if (a.track.name > b.track.name) return 1;
+
       return 0;
     });
 
@@ -86,6 +89,21 @@ const Playlist: NextPage = () => {
       return 0;
     });
 
+  const orders = ["Custom Order","Title", "Artist", "Album", "Date", "Duration"];
+
+  type OrderData = {
+    [key: string]: LikedSongs[];
+  }
+
+  const orderData:OrderData  = {
+    "Custom Order": data?.tracks?.items,
+    "Title": orderTitles,
+    "Artist": orderArtists,
+    "Album": orderAlbums,
+    "Date": orderDate,
+    "Duration": orderDuration,
+  }
+  
   return (
     <S.StyledContainer>
       <Header data={data} />
@@ -95,18 +113,18 @@ const Playlist: NextPage = () => {
         onChange={(event: { target: { value: string } }) => {
           if (event.target.value === "DEFAULT") {
             setTracks(data?.tracks?.items);
-          } else {
+          } else{
+
             setTracks(JSON.parse(event.target.value));
           }
         }}
         defaultValue="DEFAULT"
       >
-        <option value="DEFAULT">Custom Order</option>
-        <option value={JSON.stringify(orderTitles)}>Title</option>
-        <option value={JSON.stringify(orderArtists)}>Artist</option>
-        <option value={JSON.stringify(orderAlbums)}>Album</option>
-        <option value={JSON.stringify(orderDate)}>Date added</option>
-        <option value={JSON.stringify(orderDuration)}>Duration</option>
+        {orders.map((order) => (
+          <option key={order} value={JSON.stringify(orderData[order])}>
+            {order}
+          </option>
+        ))}
       </select>
       <hr />
       <Songs data={tracks} name={data.name} id={data.id} type={data.type} />
