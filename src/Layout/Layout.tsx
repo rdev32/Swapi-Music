@@ -13,7 +13,7 @@ import { Tracks } from "../hooks/UserTrackContext/types";
 import * as S from "../styles/components/layout/layout.style";
 import {
   NavLibrary,
-  NavLibraryItem,
+  NavLibraryItem
 } from "../styles/components/layout/NavLibrary.style";
 import { IProps } from "./types";
 
@@ -83,7 +83,7 @@ const Layout: FC<IProps> = ({ children, router }) => {
             </NavLibrary>
           )}
           {children}
-          {!invalidPages.includes(router?.pathname) && <NavBarPlayer />}
+          {!invalidPages.includes(router?.pathname) && <NavBarPlayer mini_player />}
         </S.AppBodyBox>
         {!invalidPages.includes(router?.pathname) && <UserIcon {...{ user }} />}
       </S.AppMain>

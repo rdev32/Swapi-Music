@@ -96,7 +96,9 @@ export const SongPlayerVolumen = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: ${({cssPosition}:{cssPosition:boolean})=> cssPosition ? 'fixed' : 'static'};
+
+  /* position: fixed; */
   right: 0;
   margin: 0 50px 0 0;
 `;

@@ -64,7 +64,7 @@ export const Buttons = styled.a`
   align-items: center;
   padding: 10px;
   background-color: ${colors.blue};
-  border-radius: 10px;
+  border-radius: 5px;
   outline: none;
   border: none;
   color: white;
@@ -90,6 +90,7 @@ export const LoginTitle = styled.h1`
 export const LoginQuestion = styled.h1`
   width: 376px;
   font-size: 52px;
+  margin: 10px 0;
   span {
     color: ${colors.blue};
   }
@@ -113,14 +114,14 @@ export const NavBar = styled.nav`
 export const NavBarButtons = styled.div`
   display: flex;
   justify-content: space-between;
-  flex-direction: ${({ signup }: { signup: boolean }) =>
-    signup ? "row-reverse" : "row"};
+
 `;
 export const NavBarPhrase = styled.p`
   width: 331px;
   font-family: Inter;
   font-size: 18px;
   opacity: 0.5;
+  margin: 10px 0;
 `;
 
 export const Aside = styled.aside`
@@ -128,9 +129,9 @@ export const Aside = styled.aside`
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 50px 0;
-  div {
+  /* div {
     margin: 20px;
-  }
+  } */
 `;
 export const Footer = styled.footer`
   background-color: black;
@@ -140,3 +141,9 @@ export const Footer = styled.footer`
   padding: 20px;
   border-radius: 15px 15px 0 0;
 `;
+export const ListTracks = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 563px;
+  width: 906px;
+`

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import {
   ChangeEvent,
+  Dispatch,
   FC,
+  SetStateAction,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -12,6 +14,7 @@ import {
 import GetData from "../../hooks/GetData/GetData";
 import GetTrack from "../../hooks/types/GetTrack";
 import UserContext from "../../hooks/UserContext/UserContext";
+import { Tracks } from "../../hooks/UserTrackContext/types";
 import * as SNavBarPlayer from "../../styles/components/NavBarPlayer/NavBarPlayer.style";
 import * as SSong from "../../styles/components/Spotify/MainSongs/components/Song/Song.style";
 import { GetIcon, GetPlayerIcons } from "../Icons/Icons";
@@ -23,13 +26,19 @@ import GetUrl from "./helpers/GetUrl";
 import reducer from "./helpers/reducer";
 import { IActions } from "./types/types";
 
-const NavBarPlayer: FC = () => {
+type  IPropsPlayer = {
+   mini_player?: boolean;
+   position?: boolean;
+   track?: Tracks;
+   setTracks?: Dispatch<SetStateAction<Tracks>>
+}
+
+const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = true,track:mini_player_track,setTracks:setTracksMiniPlayer}) => {
   const { tracks, setTracks } = useContext(UserContext);
   const [controls, dispatch] = useReducer(reducer, initState);
   const audio = useRef<HTMLAudioElement>(null);
-  const track = GetData<GetTrack>(GetUrl(tracks) || GetSoloUrl(tracks));
+  const track = GetData<GetTrack>(mini_player ? GetUrl(tracks) || GetSoloUrl(tracks) : GetUrl(mini_player_track) );
   const [, setCurrentTime] = useState(0);
-
   const handlePlay = () => {
     audio.current?.play();
     if (audio.current) {
@@ -54,6 +63,15 @@ const NavBarPlayer: FC = () => {
         type: IActions.ON_Play,
         payload: { ...controls, play: true },
       });
+      if (mini_player_track && setTracksMiniPlayer) {
+        
+        setTracksMiniPlayer({
+          ...mini_player_track,
+          position:
+            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+        });
+      }
+
       setTracks({
         ...tracks,
         position:
@@ -71,6 +89,15 @@ const NavBarPlayer: FC = () => {
         position:
           tracks.position >= tracks.tracks.length - 1 ? 0 : tracks.position + 1,
       });
+      if (mini_player_track && setTracksMiniPlayer) {
+        
+        setTracksMiniPlayer({
+          ...mini_player_track,
+          position:
+            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+        });
+      }
+
     } else if (controls.aleatory) {
       dispatch({
         type: IActions.ON_Play,
@@ -93,6 +120,15 @@ const NavBarPlayer: FC = () => {
         position:
           tracks.position >= tracks.tracks.length - 1 ? 0 : tracks.position + 1,
       });
+      if (mini_player_track && setTracksMiniPlayer) {
+        
+        setTracksMiniPlayer({
+          ...mini_player_track,
+          position:
+            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+        });
+      }
+
     }
   };
   const handleBack = () => {
@@ -129,7 +165,26 @@ const NavBarPlayer: FC = () => {
               ? 0
               : Math.floor(Math.random() * tracks?.tracks?.length),
         });
+        if (mini_player_track && setTracksMiniPlayer) {
+            
+          setTracksMiniPlayer({
+            ...mini_player_track,
+            position:
+                mini_player_track.position >= mini_player_track.tracks.length - 1
+                  ? 0
+                  : Math.floor(Math.random() * mini_player_track?.tracks?.length),
+          });
+        }
       } else {
+        if (mini_player_track && setTracksMiniPlayer) {
+        
+          setTracksMiniPlayer({
+            ...mini_player_track,
+            position:
+              mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+          });
+        }
+  
         setTracks({
           ...tracks,
           position:
@@ -247,8 +302,8 @@ const NavBarPlayer: FC = () => {
   return (
     <>
       {Object.keys(track).length !== 0 && (
-        <SNavBarPlayer.NavPlayer>
-          <SNavBarPlayer.PlayerInfoSong>
+        <SNavBarPlayer.NavPlayer cssPosition={cssPosition}>
+          <SNavBarPlayer.PlayerInfoSong cssPosition={cssPosition}>
             <UserImage
               url={track?.album?.images[2].url}
               displayName={track.album.name}
@@ -330,13 +385,16 @@ const NavBarPlayer: FC = () => {
               <p>0:30</p>
             </SNavBarPlayer.NavbarFooterBar>
           </SSong.SongPlayerIcons>
-          <SSong.SongPlayerVolumen>
-            <Link href="/queue">
-              <a>
-                {" "}
-                <GetPlayerIcons name="queue" />
-              </a>
-            </Link>
+          <SSong.SongPlayerVolumen cssPosition={cssPosition}>
+            {mini_player && (
+
+              <Link href="/queue">
+                <a>
+                  {" "}
+                  <GetPlayerIcons name="queue" />
+                </a>
+              </Link>
+            )}
             <input
               type="range"
               min="0"

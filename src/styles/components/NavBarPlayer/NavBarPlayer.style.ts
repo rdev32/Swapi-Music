@@ -3,7 +3,8 @@ import { colors } from "../../colors";
 
 export const NavPlayer = styled.nav`
   background-color: white;
-  position: fixed;
+  position: ${({cssPosition}:{cssPosition:boolean})=> cssPosition ? 'fixed' : 'static'};
+  /* position: ${({cssPosition}:{cssPosition:boolean | undefined}) => cssPosition ? 'fixed' : 'static'}})}; */
   bottom: 0;
   width: 100%;
   height: 111px;
@@ -13,12 +14,13 @@ export const NavPlayer = styled.nav`
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: ${({cssPosition}:{cssPosition:boolean})=> cssPosition ? 'center':'space-around' };
 `;
 export const PlayerInfoSong = styled.div`
   display: flex;
-  position: fixed;
-  margin: 0 0 0 50px;
+  position: ${({cssPosition}:{cssPosition:boolean})=> cssPosition ? 'fixed' : 'static'};
+  /* margin: 0 0 0 50px; */
+  margin: ${({cssPosition}:{cssPosition:boolean})=> cssPosition ? '0 0 0 50px':'0' };
   left: 0;
 `;
 export const RepeatButton = styled.button`
@@ -52,8 +54,6 @@ export const NavBarCircle = styled.main`
   position: absolute;
   top: 50%;
   left: 50%;
-  /* background-color: #9b59b6; */
-  /* background: ${colors.blue}; */
   border-radius: 50%;
   width: 50%;
   height: 50%;
@@ -61,13 +61,11 @@ export const NavBarCircle = styled.main`
   padding-bottom: 50%;
   transform: translate3d(-50%, -50%, 0);
   border: 1px solid ${colors.blue};
-  /* box-shadow: 0 0 10px rgba(#000, 0.5); */
   &:before {
     content: "";
     position: absolute;
     width: 90%;
     height: 90%;
-    /* background-color: #ecf0f1; */
     border-radius: 50%;
     top: 5%;
     left: 5%;
