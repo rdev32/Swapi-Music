@@ -11,7 +11,7 @@ function GetData<Type>(url: string) {
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
+            Authorization: `Bearer ${Cookies.get("token") || Cookies.get("reserve_token")}`,
           },
         })
         .then((resp: any | { error: { status: number } }) => {
@@ -20,7 +20,9 @@ function GetData<Type>(url: string) {
         })
         .catch((err) => {
           if (err?.response?.status === 401) {
-            router.replace("/");
+            if (!Cookies.get("reserve_token")) {
+              router.replace("/");
+            }
           }
           console.log(err);
         }); 

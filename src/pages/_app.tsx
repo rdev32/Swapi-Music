@@ -19,8 +19,10 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
   );
   const [count, setcount] = useState(0);
   useLayoutEffect(() => {
-    const cookie = Cookies.get("token");
+    const cookie = Cookies.get("token") || Cookies.get("reserve_token");
     if (!cookie) {
+      console.log("no cookie");
+      
       router.push("/");
     }
   }, []);

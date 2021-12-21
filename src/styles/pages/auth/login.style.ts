@@ -88,7 +88,7 @@ export const LoginTitle = styled.h1`
   color: ${colors.blue};
 `;
 export const LoginQuestion = styled.h1`
-  width: 376px;
+  width: 405px;
   font-size: 52px;
   margin: 10px 0;
   span {
@@ -127,6 +127,7 @@ export const NavBarPhrase = styled.p`
 export const Aside = styled.aside`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-around;
   margin: 50px 0;
   /* div {
@@ -146,4 +147,20 @@ export const ListTracks = styled.div`
   flex-direction: column;
   height: 563px;
   width: 906px;
+`
+
+export const SpotifyTitle = styled.h1`
+width: 550px;
+font-size: 52px;
+span{
+  color: ${colors.green};
+}
+
+`
+export const SpotifyPhrase  = styled.p`
+  width: 450px;
+  font-family: Inter;
+  font-size: 18px;
+  opacity: 0.5;
+  margin: 10px 0;
 `

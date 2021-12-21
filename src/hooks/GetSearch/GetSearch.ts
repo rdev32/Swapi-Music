@@ -16,27 +16,34 @@ function GetSearch<Type>(
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
+            Authorization: `Bearer ${Cookies.get("token") || Cookies.get("reserve_token")}`,
           },
         })
         .then((resp: any | { error: { status: number } }) => {
-          if (resp?.error?.status === 401) {
-            router.replace("/");
-          } else {
-            setData(resp.data);
-            setMount(true);
-            router.push({
-              pathname: "/Search",
-              query: {
-                q: search,
-              },
-            });
-          }
+          // if (resp?.error?.status === 401) {
+          // router.replace("/");
+          // } else {
+          setData(resp.data);
+          setMount(true);
+          router.push({
+            pathname: "/Search",
+            query: {
+              q: search,
+            },
+          });
+          // }
 
           // resp.data && setMount(true)
           // return setData(resp.data)
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err?.response?.status === 401) {
+            if (!Cookies.get("reserve_token")) {
+              router.replace("/");
+            }
+          }
+          console.log(err);
+        }); 
     };
     if (count === 20 && search !== "") {
       handler();
