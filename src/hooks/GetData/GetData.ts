@@ -20,11 +20,20 @@ function GetData<Type>(url: string) {
         })
         .catch((err) => {
           if (err?.response?.status === 401) {
-            if (!Cookies.get("reserve_token")) {
-              router.replace("/");
+
+            if (Cookies.get("token")  && err?.response?.status === 401 ) {
+              router.push("/")
+              Cookies.remove("token");
+            }  
+            else if ( Cookies.get("reserve_token") && err?.response?.status === 401) {
+              router.push("/")
+
+              Cookies.remove("reserve_token");
+
             }
+            router.push("/")
+
           }
-          console.log(err);
         }); 
     return () => {};
   }, [url]);

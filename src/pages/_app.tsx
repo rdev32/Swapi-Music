@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Global } from "@emotion/react";
-import Cookies from "js-cookie";
 import type { AppProps } from "next/app";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import AppHead from "../components/Head/Head";
@@ -18,14 +17,16 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
     router.pathname.replace(/\s+/g, "").substring(0, 999999)
   );
   const [count, setcount] = useState(0);
-  useLayoutEffect(() => {
-    const cookie = Cookies.get("token") || Cookies.get("reserve_token");
-    if (!cookie) {
-      console.log("no cookie");
+  // useEffect(() => {
+  //   const cookie = Cookies.get("token") && Cookies.get("reserve_token");
+  //   console.log(cookie);
+    
+  //   if (!cookie) {
+  //     console.log("no cookie");
       
-      router.push("/");
-    }
-  }, []);
+  //     router.push("/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     for (

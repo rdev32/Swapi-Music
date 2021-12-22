@@ -37,12 +37,20 @@ function GetSearch<Type>(
           // return setData(resp.data)
         })
         .catch((err) => {
-          if (err?.response?.status === 401) {
-            if (!Cookies.get("reserve_token")) {
-              router.replace("/");
-            }
+          if (Cookies.get("token")  && err?.response?.status === 401 ) {
+            router.push("/")
+
+            Cookies.remove("token");
+
+          } 
+          else if ( Cookies.get("reserve_token") && err?.response?.status === 401) {
+            router.push("/")
+
+            Cookies.remove("reserve_token");
+
           }
-          console.log(err);
+          router.push("/")
+
         }); 
     };
     if (count === 20 && search !== "") {

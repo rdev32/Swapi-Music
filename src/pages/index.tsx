@@ -45,6 +45,7 @@ export type Tracks = {
 
 const Index: NextPage = () => {
   const [track, setTracks] = useState<Tracks>({} as Tracks )
+  const [state, setstate] = useState<TrackId[]>([])
   const GetIcons = () => {
     const Icon = useMemo(
       () => dynamic(() => import("../../public/landing/swapi.svg")),
@@ -56,11 +57,7 @@ const Index: NextPage = () => {
     return null;
   };
 
-  const data = GetData<Album>("https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV")
-  
-  useEffect(() => {
-    Object.keys(data).length > 0 &&  localStorage.setItem("miniPlayer", JSON.stringify(data));
-  }, [data])
+
 
   useEffect(() => {
     // Api call for retrieving token
@@ -78,38 +75,47 @@ const Index: NextPage = () => {
     })
       .then((tokenresponse) => {
         tokenresponse.data.access_token &&Cookies.set("reserve_token", tokenresponse.data.access_token)
-        // localStorage.setItem('token', tokenresponse.data.access_token)
-        // setToken(tokenresponse.data.access_token)
+        // Cookies.set("token","BQBtSDS0fVp1tK7D6FF3syuasnzYGwPRnivjYM_Y53eLjREsu_1GtNNEhd2SFI5bCq9x65Wx9c0dJW-Wfkmxf6yyY7VdClhhiJH76bf5tj3-IeGWZ8mWy0LzO17x9KTOC0eyywHcdMjD-0mF3y_-UEp_Hg")
       })
       .catch((error) => console.log(error))
   }, [])
   
+  const data = GetData<Album>("https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV")
   
-  const newTracks = data?.tracks?.items?.map((item, index) => {
-    return {
-      id: item.id,
-      position: index,
-      trackname: item.name,
-      artist: item.artists,
-      album: {
-        id: data?.id,
-        name: data?.name,
-        type: data?.type,
-      },
-      duration_ms: item.duration_ms,
-      images: data.images[2]?.url,
-    };
-  });
+  useEffect(() => {
+    Object.keys(data).length > 0 &&  localStorage.setItem("miniPlayer", JSON.stringify(data));
+  }, [data])
+  
+
+  useEffect(() => {
+    const newTracks = data?.tracks?.items?.map((item, index) => {
+      return {
+        id: item.id,
+        position: index,
+        trackname: item.name,
+        artist: item.artists,
+        album: {
+          id: data?.id,
+          name: data?.name,
+          type: data?.type,
+        },
+        duration_ms: item.duration_ms,
+        images: data.images[2]?.url,
+      };
+    });
+    data && setstate(newTracks)
+  }, [data])
   const handlePlayId = (id: number) => {
     setTracks({
-      tracks: newTracks,
+      tracks: state,
       position: id,
     });
   };
 
   const tecnologies = ["next", "react", "typescript", "emotion"];
+  console.log(data);
   
-  console.log(track);
+  console.log(state);
   
   return (
     <S.LoginBody>
@@ -139,7 +145,7 @@ const Index: NextPage = () => {
         <S.ListTracks>
           <div>
             <h4>{data?.name} - Album</h4>
-            {newTracks?.map((track, index) => (
+            {state?.map((track, index) => (
               <SSMain.SongCard key={track.id}>
                 <Track
                   // editPosition={1}
