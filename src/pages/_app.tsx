@@ -10,23 +10,12 @@ import useActiveOptContext from "../hooks/useActiveOptContext/useActiveOptContex
 import Layout from "../Layout/Layout";
 import "../styles/globals.css";
 import { Materialize } from "../styles/Normalize";
-// import initUser from '../assets/user.json'
 
 const MyApp = ({ Component, pageProps, router }: AppProps) => {
   const [active, setActive] = useState(
     router.pathname.replace(/\s+/g, "").substring(0, 999999)
   );
   const [count, setcount] = useState(0);
-  // useEffect(() => {
-  //   const cookie = Cookies.get("token") && Cookies.get("reserve_token");
-  //   console.log(cookie);
-    
-  //   if (!cookie) {
-  //     console.log("no cookie");
-      
-  //     router.push("/");
-  //   }
-  // }, []);
 
   useEffect(() => {
     for (
@@ -36,7 +25,8 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
     ) {
       if (
         router.asPath.split(" ").join("")[index] === "/" ||
-        router.asPath.split(" ").join("")[index] === "#"
+        router.asPath.split(" ").join("")[index] === "#" ||
+        router.asPath.split(" ").join("")[index] === "?"
       ) {
         return;
       } else {

@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import orders from '../../assets/orders.json';
 import { spotify } from "../../assets/spotify";
 import Header from "../../components/playlist/components/header";
 import Songs from "../../components/Spotify/LikedSong/Songs";
@@ -89,7 +90,6 @@ const Playlist: NextPage = () => {
       return 0;
     });
 
-  const orders = ["Custom Order","Title", "Artist", "Album", "Date", "Duration"];
 
   type OrderData = {
     [key: string]: LikedSongs[];

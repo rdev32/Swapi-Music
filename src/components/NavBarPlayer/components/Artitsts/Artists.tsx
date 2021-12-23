@@ -6,7 +6,7 @@ import * as SSong from "../../../../styles/components/Spotify/MainSongs/componen
 const Artists: FC<{ track: { artists: IArtists[] } }> = ({ track }) => {
   return (
     <>
-      {track?.artists.map((artist, index) => (
+      {track?.artists?.map((artist, index) => (
         <Link
           key={artist?.id}
           href={{

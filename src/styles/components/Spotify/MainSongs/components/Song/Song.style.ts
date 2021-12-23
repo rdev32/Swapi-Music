@@ -21,6 +21,10 @@ export const SongMain = styled.div`
 
 export const SongTitleAlbum = styled.div`
   width: 100%;
+  overflow: hidden;
+  height: 18px;
+  /* 
+display: block; */
   a {
     font-weight: 500;
     opacity: 0.5;
@@ -34,6 +38,7 @@ export const SontTitle = styled.p`
   font-weight: 700;
   margin: 0;
   overflow: hidden;
+  width: 200px;
   height: 20px;
 `;
 export const SongArtist = styled.a`

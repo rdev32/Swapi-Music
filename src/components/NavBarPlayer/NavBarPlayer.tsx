@@ -87,7 +87,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       setTracks({
         ...tracks,
         position:
-          tracks.position >= tracks.tracks.length - 1 ? 0 : tracks.position + 1,
+          tracks.position >= tracks?.tracks?.length - 1 ? 0 : tracks?.position + 1,
       });
       if (mini_player_track && setTracksMiniPlayer) {
         
@@ -118,7 +118,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       setTracks({
         ...tracks,
         position:
-          tracks.position >= tracks.tracks.length - 1 ? 0 : tracks.position + 1,
+          tracks.position >= tracks?.tracks?.length - 1 ? 0 : tracks?.position + 1,
       });
       if (mini_player_track && setTracksMiniPlayer) {
         
@@ -142,6 +142,14 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         position:
           tracks.position <= 0 ? tracks.tracks.length - 1 : tracks.position - 1,
       });
+      if (mini_player_track && setTracksMiniPlayer) {
+        
+        setTracksMiniPlayer({
+          ...mini_player_track,
+          position:
+            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+        });
+      }
     } else {
       dispatch({
         type: IActions.ON_Play,
@@ -150,8 +158,16 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       setTracks({
         ...tracks,
         position:
-          tracks.position <= 0 ? tracks.tracks.length - 1 : tracks.position - 1,
+          tracks.position <= 0 ? tracks?.tracks?.length - 1 : tracks?.position - 1,
       });
+      if (mini_player_track && setTracksMiniPlayer) {
+        
+        setTracksMiniPlayer({
+          ...mini_player_track,
+          position:
+            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+        });
+      }
     }
   };
 
@@ -188,7 +204,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         setTracks({
           ...tracks,
           position:
-            tracks.position >= tracks.tracks.length - 1
+            tracks.position >= tracks?.tracks?.length - 1
               ? 0
               : tracks.position + 1,
         });
@@ -301,119 +317,119 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
 
   return (
     <>
-      {Object.keys(track).length !== 0 && (
-        <SNavBarPlayer.NavPlayer cssPosition={cssPosition}>
-          <SNavBarPlayer.PlayerInfoSong cssPosition={cssPosition}>
-            <UserImage
-              url={track?.album?.images[2].url}
-              displayName={track.album.name}
-              size={66}
-              bradius={10}
-            />
-            <SSong.SongDescription>
-              <SSong.SontTitle>{track?.name}</SSong.SontTitle>
-              <SSong.SongArtists>
-                <Artists {...{ track }} />
-              </SSong.SongArtists>
-            </SSong.SongDescription>
-          </SNavBarPlayer.PlayerInfoSong>
-          <audio ref={audio} preload="auto" onEnded={handleOnEnded}>
-            <source src={track?.preview_url} type="audio/mpeg" />
-            <picture>
-              <source srcSet={track?.album?.images[2].url} type="image/jpeg" />
-            </picture>
-          </audio>
+      {/* {Object.keys(track).length !== 0 && ( */}
+      <SNavBarPlayer.NavPlayer cssPosition={cssPosition}>
+        <SNavBarPlayer.PlayerInfoSong cssPosition={cssPosition}>
+          <UserImage
+            url={track?.album?.images[2].url}
+            displayName={track?.album?.name}
+            size={66}
+            bradius={10}
+          />
+          <SSong.SongDescription>
+            <SSong.SontTitle>{track?.name}</SSong.SontTitle>
+            <SSong.SongArtists>
+              <Artists {...{ track }} />
+            </SSong.SongArtists>
+          </SSong.SongDescription>
+        </SNavBarPlayer.PlayerInfoSong>
+        <audio ref={audio} preload="auto" onEnded={handleOnEnded}>
+          <source src={track?.preview_url} type="audio/mpeg" />
+          <picture>
+            <source srcSet={track?.album?.images[2].url} type="image/jpeg" />
+          </picture>
+        </audio>
 
-          <SSong.SongPlayerIcons>
-            <header>
-              <SNavBarPlayer.AleatoryButton
-                aleatory={controls.aleatory}
-                onClick={handleAleatory}
-              >
-                <GetPlayerIcons name="aleatory" />
-              </SNavBarPlayer.AleatoryButton>
-              <SSong.SongButton onClick={handleBack}>
-                {<GetIcon name="back" />}
-              </SSong.SongButton>
-              <SSong.SongButtonIcon
-                onClick={() => {
-                  controls.play ? handlePause() : handlePlay();
-                }}
-              >
-                <GetPlayerIcons name={controls.play ? "pause" : "play"} />
-              </SSong.SongButtonIcon>
-              <SSong.SongButton onClick={handleNext}>
-                {<GetIcon name="next" />}
-              </SSong.SongButton>
+        <SSong.SongPlayerIcons>
+          <header>
+            <SNavBarPlayer.AleatoryButton
+              aleatory={controls.aleatory}
+              onClick={handleAleatory}
+            >
+              <GetPlayerIcons name="aleatory" />
+            </SNavBarPlayer.AleatoryButton>
+            <SSong.SongButton onClick={handleBack}>
+              {<GetIcon name="back" />}
+            </SSong.SongButton>
+            <SSong.SongButtonIcon
+              onClick={() => {
+                controls.play ? handlePause() : handlePlay();
+              }}
+            >
+              <GetPlayerIcons name={controls.play ? "pause" : "play"} />
+            </SSong.SongButtonIcon>
+            <SSong.SongButton onClick={handleNext}>
+              {<GetIcon name="next" />}
+            </SSong.SongButton>
 
-              <SNavBarPlayer.RepeatButton
-                onClick={handleRepeat}
-                repeat={controls.repeat}
-              >
-                <GetPlayerIcons
-                  name={`${
-                    controls.repeat && controls.loop ? "repeatloop" : "repeat"
-                  }`}
-                />
-              </SNavBarPlayer.RepeatButton>
-            </header>
-            <SNavBarPlayer.NavbarFooterBar>
-              <p>
-                {Math.round(
-                  audio.current?.currentTime ? audio.current.currentTime : 0
-                ) > 9
-                  ? `0:${Math.round(
-                    audio.current?.currentTime ? audio.current.currentTime : 0
-                  )}`
-                  : `0:0${Math.round(
-                    audio.current?.currentTime ? audio.current.currentTime : 0
-                  )}`}
-              </p>
-              <input
-                type="range"
-                name="progress"
-                id="progress"
-                value={Math.round(Number(audio.current?.currentTime || 0))}
-                onChange={(event: any) => {
-                  if (audio.current) {
-                    audio.current.currentTime = event.target.value;
-                  }
-                }}
-                min="0"
-                max="30"
+            <SNavBarPlayer.RepeatButton
+              onClick={handleRepeat}
+              repeat={controls.repeat}
+            >
+              <GetPlayerIcons
+                name={`${
+                  controls.repeat && controls.loop ? "repeatloop" : "repeat"
+                }`}
               />
-              <p>0:30</p>
-            </SNavBarPlayer.NavbarFooterBar>
-          </SSong.SongPlayerIcons>
-          <SSong.SongPlayerVolumen cssPosition={cssPosition}>
-            {mini_player && (
-
-              <Link href="/queue">
-                <a>
-                  {" "}
-                  <GetPlayerIcons name="queue" />
-                </a>
-              </Link>
-            )}
+            </SNavBarPlayer.RepeatButton>
+          </header>
+          <SNavBarPlayer.NavbarFooterBar>
+            <p>
+              {Math.round(
+                audio.current?.currentTime ? audio.current.currentTime : 0
+              ) > 9
+                ? `0:${Math.round(
+                  audio.current?.currentTime ? audio.current.currentTime : 0
+                )}`
+                : `0:0${Math.round(
+                  audio.current?.currentTime ? audio.current.currentTime : 0
+                )}`}
+            </p>
             <input
               type="range"
+              name="progress"
+              id="progress"
+              value={Math.round(Number(audio.current?.currentTime || 0))}
+              onChange={(event: any) => {
+                if (audio.current) {
+                  audio.current.currentTime = event.target.value;
+                }
+              }}
               min="0"
-              max="50"
-              value={controls.volumen}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                dispatch({
-                  type: IActions.ON_Volumen,
-                  payload: {
-                    ...controls,
-                    volumen: parseInt(event.target.value),
-                  },
-                })
-              }
-              step="any"
+              max="30"
             />
-          </SSong.SongPlayerVolumen>
-        </SNavBarPlayer.NavPlayer>
-      )}
+            <p>0:30</p>
+          </SNavBarPlayer.NavbarFooterBar>
+        </SSong.SongPlayerIcons>
+        <SSong.SongPlayerVolumen cssPosition={cssPosition}>
+          {mini_player && (
+
+            <Link href="/queue">
+              <a>
+                {" "}
+                <GetPlayerIcons name="queue" />
+              </a>
+            </Link>
+          )}
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value={controls.volumen}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              dispatch({
+                type: IActions.ON_Volumen,
+                payload: {
+                  ...controls,
+                  volumen: parseInt(event.target.value),
+                },
+              })
+            }
+            step="any"
+          />
+        </SSong.SongPlayerVolumen>
+      </SNavBarPlayer.NavPlayer>
+      {/* )} */}
     </>
   );
 };

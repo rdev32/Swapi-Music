@@ -56,6 +56,10 @@ function GetSearch<Type>(
     if (count === 20 && search !== "") {
       handler();
     }
+    return () => {
+      setData({} as Type);
+    }
+    
   }, [count]);
 
   useEffect(() => {

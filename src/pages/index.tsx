@@ -1,72 +1,35 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/alt-text */
 import axios from "axios";
 import Cookies from "js-cookie";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "../assets/Login.json";
 import { clientId, clientSecret } from "../assets/swapi";
+import tecnologies from '../assets/tecnologies.json';
 import Buttons from "../components/Buttons/Buttons";
+import { GetIcons } from "../components/Icons/Icons";
 import NavBarPlayer from "../components/NavBarPlayer/NavBarPlayer";
 import Track from "../components/queue/components/Track/Track";
 import UserImage from "../components/Spotify/UserImage/UserImage";
 import GetData from "../hooks/GetData/GetData";
 import { Album } from "../hooks/types/GetAlbum";
-import { LikedArtistSongs } from "../hooks/types/GetLikedSongs";
+import { Tracks } from "../hooks/UserTrackContext/types";
 import * as SSMain from "../styles/components/Spotify/MainSongs/Main.style";
 import * as S from "../styles/pages/auth/login.style";
-
-export type TrackId = {
-  id: string;
-  position: number;
-  trackname: string;
-  artist: LikedArtistSongs[];
-  album: {
-    name: string;
-    id: string;
-  };
-  duration_ms: number;
-  images: string;
-};
-export type Tracks = {
-  position: number;
-  from?: {
-    name?: string;
-    id?: string | undefined;
-    type?: string;
-  };
-  tracks: TrackId[];
-  aleatory?: number;
-};
-
-
 
 
 const Index: NextPage = () => {
   const [track, setTracks] = useState<Tracks>({} as Tracks )
-  const [state, setstate] = useState<TrackId[]>([])
-  const GetIcons = () => {
-    const Icon = useMemo(
-      () => dynamic(() => import("../../public/landing/swapi.svg")),
-      []
-    );
-    if (Icon) {
-      return <Icon />;
-    }
-    return null;
-  };
-
-
 
   useEffect(() => {
-    // Api call for retrieving token
     axios('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization:
-                  'Basic ' +
+                  'Basic ' + 
                   new Buffer(clientId + ':' + clientSecret).toString(
                     'base64'
                   ),
@@ -75,48 +38,35 @@ const Index: NextPage = () => {
     })
       .then((tokenresponse) => {
         tokenresponse.data.access_token &&Cookies.set("reserve_token", tokenresponse.data.access_token)
-        // Cookies.set("token","BQBtSDS0fVp1tK7D6FF3syuasnzYGwPRnivjYM_Y53eLjREsu_1GtNNEhd2SFI5bCq9x65Wx9c0dJW-Wfkmxf6yyY7VdClhhiJH76bf5tj3-IeGWZ8mWy0LzO17x9KTOC0eyywHcdMjD-0mF3y_-UEp_Hg")
       })
       .catch((error) => console.log(error))
   }, [])
   
   const data = GetData<Album>("https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV")
   
-  useEffect(() => {
-    Object.keys(data).length > 0 &&  localStorage.setItem("miniPlayer", JSON.stringify(data));
-  }, [data])
-  
-
-  useEffect(() => {
-    const newTracks = data?.tracks?.items?.map((item, index) => {
-      return {
-        id: item.id,
-        position: index,
-        trackname: item.name,
-        artist: item.artists,
-        album: {
-          id: data?.id,
-          name: data?.name,
-          type: data?.type,
-        },
-        duration_ms: item.duration_ms,
-        images: data.images[2]?.url,
-      };
-    });
-    data && setstate(newTracks)
-  }, [data])
+  const newTracks = data?.tracks?.items?.map((item, index) => {
+    return {
+      id: item.id,
+      position: index,
+      trackname: item.name,
+      artist: item.artists,
+      album: {
+        id: data?.id,
+        name: data?.name,
+        type: data?.type,
+      },
+      duration_ms: item.duration_ms,
+      images: data.images[2]?.url,
+    };
+  });
   const handlePlayId = (id: number) => {
     setTracks({
-      tracks: state,
+      tracks: newTracks,
       position: id,
     });
   };
+  
 
-  const tecnologies = ["next", "react", "typescript", "emotion"];
-  console.log(data);
-  
-  console.log(state);
-  
   return (
     <S.LoginBody>
       <S.NavBar>
@@ -145,10 +95,9 @@ const Index: NextPage = () => {
         <S.ListTracks>
           <div>
             <h4>{data?.name} - Album</h4>
-            {state?.map((track, index) => (
+            {newTracks?.map((track, index) => (
               <SSMain.SongCard key={track.id}>
                 <Track
-                  // editPosition={1}
                   key={track.id}
                   track={track}
                   index={index  - 1}

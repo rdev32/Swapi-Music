@@ -13,10 +13,11 @@ const Queue: NextPage = () => {
   const { tracks } = useContext(UserContext);
   const [scroll, setScroll] = useState(0);
   useEffect(() => {
-    if (!tracks) {
-      router.push("/");
+    if (!localStorage.getItem("tracks")) {
+      router.back();
+      
     }
-  }, [tracks]);
+  }, []);
 
   useEffect(() => {
     window.onscroll = () => {

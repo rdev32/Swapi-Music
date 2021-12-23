@@ -73,11 +73,12 @@ const Album: NextPage = () => {
             url={images && images[0]?.url}
             bradius={10}
             size={220}
+            name="albumout"
           />
         </div>
         <S.AlbumContent>
           <h5>{type?.toUpperCase()}</h5>
-          <h1>{name}</h1>
+          <S.albumTitle>{name}</S.albumTitle>
           <SPlaylist.PlaylistHeaderDetails>
             <Link
               href={{
@@ -94,7 +95,7 @@ const Album: NextPage = () => {
                   <SPlaylist.PlayListSeparator> • </SPlaylist.PlayListSeparator>
                   {tracks?.total} Songs,{" "}
                   {hour ? `${hour} Hrs ${minutes}Min` : ""}{" "}
-                  {!hour ? `${minutes} Min ${Math.round(seconds)} Sec` : ""}
+                  {!hour ? `${minutes} Min ${Math.round(seconds) > 5 ? `${Math.round(seconds)} Sec` : ""} ` : ""}
                 </>
               ) : (
                 ""
@@ -103,7 +104,7 @@ const Album: NextPage = () => {
           </SPlaylist.PlaylistHeaderDetails>
         </S.AlbumContent>
       </S.AlbumHeader>
-      {tracks?.items && <S.AlbumHr />}
+      {tracks?.items && <hr />}
       <S.AlbumAside>
         {tracks?.items?.map((song, index) => (
           <SMSong.SongCard key={song.id}>

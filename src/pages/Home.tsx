@@ -19,14 +19,7 @@ import * as SSwiper from "../styles/components/albums/Swiper/SwiperContainer.sty
 import * as S from "../styles/general/styles";
 import * as SSHome from "../styles/pages/Home.style";
 import * as SPlaylist from "../styles/pages/library/library.style";
-
-type Payload = {
-  id: string;
-  tag: string;
-  type: string;
-  image: string;
-  url: string;
-};
+import { Payload } from "../types/pages/payload.types";
 
 const Home: NextPage = () => {
   const { recent, setRecent } = useContext(UserContext);
@@ -47,7 +40,6 @@ const Home: NextPage = () => {
   useLayoutEffect(() => {
     if (window.location.hash) {
       const { access_token } = getTokenParams(window.location.hash);
-      localStorage.setItem("token", access_token);
       Cookies.set("token", access_token);
     }
   }, []);

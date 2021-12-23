@@ -21,14 +21,9 @@ import { StyledContainer } from "../../styles/general/styles";
 import * as SPlaylist from "../../styles/pages/library/library.style";
 import * as S from "../../styles/pages/User/UserHeader.style";
 import { Tracks } from "../../types/pages/artist/Tracks";
+import { Payload } from "../../types/pages/payload.types";
 
-type Payload = {
-  id: string;
-  tag: string;
-  type: string;
-  image: string;
-  url: string;
-};
+
 
 const Artist: NextPage = () => {
   const router = useRouter();

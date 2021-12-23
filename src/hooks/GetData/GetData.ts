@@ -35,7 +35,10 @@ function GetData<Type>(url: string) {
 
           }
         }); 
-    return () => {};
+    return () => {
+      setData({} as Type);
+    }
+        
   }, [url]);
   return data;
 }

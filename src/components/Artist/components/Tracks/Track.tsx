@@ -37,7 +37,7 @@ const ArtistTrack: FC<IProps> = ({ index, handlePlayId, song }) => {
           )}
           <SSong.SongDescription>
             <SSong.SontTitle>{song?.name}</SSong.SontTitle>
-            <SSong.SongArtists>
+            <SSong.SongArtists width={200}>
               {song?.artists.map((artist, index) => (
                 <Link
                   key={artist?.id}
