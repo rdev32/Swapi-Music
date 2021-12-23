@@ -40,6 +40,9 @@ const Index: NextPage = () => {
         tokenresponse.data.access_token &&Cookies.set("reserve_token", tokenresponse.data.access_token)
       })
       .catch((error) => console.log(error))
+    return () => { 
+      
+    }
   }, [])
   
   const data = GetData<Album>("https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV")

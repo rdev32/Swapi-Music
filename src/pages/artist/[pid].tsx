@@ -38,7 +38,12 @@ const Artist: NextPage = () => {
   const { tracks } = GetData<Tracks>(validPid(urlTopTracks, pid));
   const [screenItems, setScreenItems] = useState(7);
   const sizeScreen = useWindowSize();
-  useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen]);
+  useEffect(() =>{ 
+    setScreenItems(typeSizeCreen(sizeScreen)) 
+    return ()=> {
+      setScreenItems(7)
+    }
+  } , [sizeScreen]);
   const { recent, setRecent, setTracks } = useContext(UserContext);
 
   const updatedTracks = UpdateTracks(tracks);

@@ -39,6 +39,11 @@ const Layout: FC<IProps> = ({ children, router }) => {
     if (recent?.length !== 0) {
       localStorage.setItem("recent", JSON.stringify(recent));
     }
+    return () => {
+      if (recent?.length !== 0) {
+        localStorage.setItem("recent", JSON.stringify(recent));
+      }
+    }
   }, [recent]);
   return (
     <UserContext.Provider

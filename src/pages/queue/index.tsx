@@ -17,6 +17,12 @@ const Queue: NextPage = () => {
       router.back();
       
     }
+    return () => {
+      if (!localStorage.getItem("tracks")) {
+        router.back();
+        
+      }}
+
   }, []);
 
   useEffect(() => {

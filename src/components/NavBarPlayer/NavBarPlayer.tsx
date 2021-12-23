@@ -275,11 +275,21 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         setCurrentTime(event?.target?.currentTime);
       };
     }
+    return () => {
+      if (audio.current) {
+        audio.current.ontimeupdate = null;
+      }
+    }
   }, [audio.current]);
 
   useEffect(() => {
     if (audio.current) {
       audio.current.autoplay = controls.aleatory || controls.repeat;
+    }
+    return () => {
+      if (audio.current) {
+        audio.current.autoplay = false;
+      }
     }
   }, [controls.aleatory, controls.repeat]);
 
@@ -295,10 +305,21 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         payload: { ...controls, play: false },
       });
     }
+    return () => {
+      dispatch({
+        type: IActions.ON_Play,
+        payload: { ...controls, play: false },
+      });
+    }
   }, [track]);
   useEffect(() => {
     if (audio.current) {
       audio.current.src = track?.preview_url;
+    }
+    return () => {
+      if (audio.current) {
+        audio.current.src = "";
+      }
     }
   }, [track]);
 
@@ -307,11 +328,22 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       audio.current.volume = controls.volumen / 100;
       audio.current.loop = controls.loop;
     }
+    return () => {
+      if (audio.current) {
+        audio.current.volume = 1;
+        audio.current.loop = false;
+      }
+    }
   }, [controls.volumen, controls.loop]);
 
   useEffect(() => {
     if (Object.keys(tracks).length > 0) {
       localStorage.setItem("tracks", JSON.stringify(tracks));
+    }
+    return () => {
+      if (Object.keys(tracks).length > 0) {
+        localStorage.setItem("tracks", JSON.stringify(tracks));
+      }
     }
   }, [tracks]);
 

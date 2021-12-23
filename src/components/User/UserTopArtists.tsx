@@ -13,7 +13,12 @@ const UserArtists: FC<{ title?: string }> = ({ title }) => {
   const { items } = GetData<Artists>(`${domain}/top/artists?limit=10&offset=0`);
   const [screenItems, setScreenItems] = useState(7);
   const sizeScreen = useWindowSize();
-  useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen]);
+  useEffect(() =>{ 
+    setScreenItems(typeSizeCreen(sizeScreen)) 
+    return ()=> {
+      setScreenItems(7)
+    }
+  } , [sizeScreen]);
 
   return (
     { items } && (

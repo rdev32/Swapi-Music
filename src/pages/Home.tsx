@@ -25,7 +25,12 @@ const Home: NextPage = () => {
   const { recent, setRecent } = useContext(UserContext);
   const [screenItems, setScreenItems] = useState(7);
   const sizeScreen = useWindowSize();
-  useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen]);
+  useEffect(() =>{ 
+    setScreenItems(typeSizeCreen(sizeScreen)) 
+    return ()=> {
+      setScreenItems(7)
+    }
+  } , [sizeScreen]);
   const getTokenParams = (hash: string) => {
     const strHashTag = hash.substring(1);
     const paramsUrl = strHashTag.split("&");
@@ -41,6 +46,8 @@ const Home: NextPage = () => {
     if (window.location.hash) {
       const { access_token } = getTokenParams(window.location.hash);
       Cookies.set("token", access_token);
+    }
+    return () => {
     }
   }, []);
 

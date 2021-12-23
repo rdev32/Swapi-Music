@@ -30,7 +30,7 @@ import {
   SearchSection1,
   SearchTitleCategory,
   SearchTracksContainer,
-  SearchType,
+  SearchType
 } from "../styles/pages/Search/Search.style";
 
 const Search: NextPage = () => {
@@ -44,7 +44,12 @@ const Search: NextPage = () => {
   const { setTracks } = useContext(UserContext);
   const [screenItems, setScreenItems] = useState(7);
   const sizeScreen = useWindowSize();
-  useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen]);
+  useEffect(() =>{ 
+    setScreenItems(typeSizeCreen(sizeScreen)) 
+    return ()=> {
+      setScreenItems(7)
+    }
+  } , [sizeScreen]);
 
   const newTracks = tracks?.items?.map((track, index) => {
     return {
@@ -77,6 +82,9 @@ const Search: NextPage = () => {
   useEffect(() => {
     if (router.query.q) {
       setSearch(router.query.q || "");
+    }
+    return () => {
+      setSearch("");
     }
   }, [router]);
 

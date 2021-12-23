@@ -33,6 +33,9 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
         setcount(index);
       }
     }
+    return () => {
+      setcount(0);
+    }
   }, [router.asPath]);
 
   return (

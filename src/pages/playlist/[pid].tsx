@@ -18,6 +18,9 @@ const Playlist: NextPage = () => {
   const { setActive } = useContext(useActiveOptContext);
   useEffect(() => {
     asPath && setActive(asPath);
+    return () => {
+      setActive(asPath)
+    }
   }, [asPath]);
 
   const { pid } = router.query;
@@ -28,6 +31,9 @@ const Playlist: NextPage = () => {
 
   useEffect(() => {
     setTracks(data?.tracks?.items);
+    return () => {
+      setTracks([]);
+    }
   }, [data.tracks]);
 
 

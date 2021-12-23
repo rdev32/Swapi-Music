@@ -14,7 +14,12 @@ const UserPublicPlaylist: FC<{ title: string; data?: GetPlaylist[] }> = ({
 }) => {
   const [screenItems, setScreenItems] = useState(7);
   const sizeScreen = useWindowSize();
-  useEffect(() => setScreenItems(typeSizeCreen(sizeScreen)), [sizeScreen]);
+  useEffect(() =>{ 
+    setScreenItems(typeSizeCreen(sizeScreen)) 
+    return ()=> {
+      setScreenItems(7)
+    }
+  } , [sizeScreen]);
   return (
     { data } && (
       <>

@@ -18,6 +18,9 @@ const NavBar: FC<{ data: GetPlaylist[] }> = ({ data }) => {
       };
     });
     data && setPlaylist(playlist);
+    return () => {
+      setPlaylist([]);
+    };
   }, [data]);
   return (
     <S.NavBar>

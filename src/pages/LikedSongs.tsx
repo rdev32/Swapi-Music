@@ -16,6 +16,9 @@ const LikedSongs: NextPage = () => {
 
   useEffect(() => {
     data?.items?.length > 0 && setTracks([...tracks, ...data.items]);
+    return () => {
+      setTracks([]);
+    }
   }, [data]);
   const tabla: any = {};
 
