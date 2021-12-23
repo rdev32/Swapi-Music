@@ -3,7 +3,7 @@ export const clientSecret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
 export const baseUrl = "https://accounts.spotify.com/authorize";
 
 export const redirect = "http://localhost:3000/Home";
-export const redirectDeploy = "https://swapi-music.vercel.app//Home";
+export const redirectDeploy = "https://swapi-music.vercel.app/Home";
 
 export const modeDev = (local: boolean) => {
   return local ? redirect : redirectDeploy;
