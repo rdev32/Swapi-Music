@@ -1,10 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/alt-text */
 import axios from "axios";
 import Cookies from "js-cookie";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import {  useLayoutEffect, useState } from "react";
 import Login from "../assets/Login.json";
 import { account } from "../assets/spotify";
 import { clientId, clientSecret } from "../assets/swapi";
@@ -19,27 +17,14 @@ import { Album } from "../hooks/types/GetAlbum";
 import { Tracks } from "../hooks/UserTrackContext/types";
 import * as SSMain from "../styles/components/Spotify/MainSongs/Main.style";
 import * as S from "../styles/pages/auth/login.style";
+import Index from "../types/pages/index.types";
 
-const Index: NextPage = () => {
+const Index: NextPage<Index> = ({access_token}) => {
   const [track, setTracks] = useState<Tracks>({} as Tracks);
-  useEffect(() => {
-    axios(account, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization:
-          "Basic " +
-          Buffer.from(clientId + ":" + clientSecret).toString("base64"),
-      },
-      data: "grant_type=client_credentials",
-    })
-      .then(
-        ({ data: { access_token } }) =>
-          access_token && Cookies.set("reserve_token", access_token)
-      )
-      .catch((error) => console.log(error));
-    return () => {};
-  }, []);
+
+  useLayoutEffect(() => {
+    access_token && Cookies.set("reserve_token", access_token);
+  }, [access_token])
 
   const data = GetData<Album>(
     "https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV"
@@ -163,11 +148,33 @@ const Index: NextPage = () => {
       </S.Aside>
       <S.Footer>
         <a href="https://github.com/Whil117" target="_blank" rel="noreferrer">
-          <Image src={"/landing/me.png"} width={100} height={100} />
+          <Image src={"/landing/me.png"} width={100} height={100} alt="whil"/>
         </a>
       </S.Footer>
     </S.LoginBody>
   );
 };
+
+export async function getStaticProps() {
+
+  const res = await axios(account,{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization:
+          "Basic " +
+          Buffer.from(clientId + ":" + clientSecret).toString("base64"),
+    },
+    data: "grant_type=client_credentials",
+  })
+  const { data: { access_token } } = res
+
+
+  access_token && Cookies.set("reserve_token", access_token)
+
+  return {
+    props: {access_token}, 
+  }
+}
 
 export default Index;
