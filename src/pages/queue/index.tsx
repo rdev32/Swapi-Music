@@ -1,17 +1,19 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import NavBarScroll from "../../components/NavBar/components/NavBarScroll/NavBarScroll";
 import Track from "../../components/queue/components/Track/Track";
 import TrackList from "../../components/queue/components/TrackList/TrackList";
 import UserContext from "../../hooks/UserContext/UserContext";
+import useScroll from "../../hooks/useScroll/useScroll";
 import * as SSMain from "../../styles/components/Spotify/MainSongs/Main.style";
 import * as S from "../../styles/general/styles";
-import { NavBarLikedSongs } from "../../styles/pages/likedSongs/likedSongs.style";
 const Queue: NextPage = () => {
   const router = useRouter();
   const { tracks } = useContext(UserContext);
-  const [scroll, setScroll] = useState(0);
+  const [scroll] = useScroll({ ref: { current: {} }, data: {} });
+
   useEffect(() => {
     if (!localStorage.getItem("tracks")) {
       router.back();
@@ -25,20 +27,11 @@ const Queue: NextPage = () => {
 
   }, []);
 
-  useEffect(() => {
-    window.onscroll = () => {
-      setScroll(window.scrollY);
-    };
-    return () => {
-      window.onscroll = () => {};
-    };
-  });
+ 
 
   return (
     <>
-      <NavBarLikedSongs scroll={scroll}>
-        <h1>Queue</h1>
-      </NavBarLikedSongs>
+      <NavBarScroll title="Queue" scroll={scroll} />
       <S.StyledContainer>
         <h1>Queue</h1>
         <div>

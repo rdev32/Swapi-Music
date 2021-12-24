@@ -10,15 +10,19 @@ import * as S from "../../styles/general/styles";
 
 const User: NextPage = () => {
   const { playlists } = useContext(UserContext);
-
+  // const [scroll] = useScroll({ ref: { current: {} }, data: {} });
   return (
-    <S.StyledContainer>
-      <UserHeader />
-      <UserArtists />
-      <UserPublicPlaylist title="Public Playlists" data={playlists} />
-      <UserTopSongs />
-      <UserFollowing />
-    </S.StyledContainer>
+    <>
+      {/* <NavBarScroll title={user && user.display_name}  scroll={scroll}/> */}
+
+      <S.StyledContainer>
+        <UserHeader />
+        <UserArtists />
+        <UserPublicPlaylist title="Public Playlists" data={playlists} />
+        <UserTopSongs />
+        <UserFollowing />
+      </S.StyledContainer>
+    </>
   );
 };
 

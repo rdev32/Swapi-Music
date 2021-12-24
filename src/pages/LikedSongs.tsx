@@ -1,51 +1,31 @@
 import { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
+import NavBarScroll from "../components/NavBar/components/NavBarScroll/NavBarScroll";
 import Songs from "../components/Spotify/LikedSong/Songs";
 import GetData from "../hooks/GetData/GetData";
 import { GetLikedSongs, LikedSongs } from "../hooks/types/GetLikedSongs";
+import useScroll from "../hooks/useScroll/useScroll";
 import * as S from "../styles/general/styles";
-import { NavBarLikedSongs } from "../styles/pages/likedSongs/likedSongs.style";
 
 const LikedSongs: NextPage = () => {
-  const [count, setcount] = useState(0);
-  const url = `https://api.spotify.com/v1/me/tracks?limit=50&offset=${count}`;
-  const data = GetData<GetLikedSongs>(url);
   const [tracks, setTracks] = useState<LikedSongs[]>([]);
+  const [data, setData] = useState<GetLikedSongs>({} as GetLikedSongs);
   const Container = useRef<HTMLDivElement>(null);
-  const [scroll, setScroll] = useState(0);
+  const [scroll, count] =  useScroll({ ref: Container, data });
+  const url = `https://api.spotify.com/v1/me/tracks?limit=50&offset=${count}`;
+  const newData = GetData<GetLikedSongs>(url);
 
   useEffect(() => {
+    newData && setData(newData);
+  }, [newData])
+  useEffect(() => {
     data?.items?.length > 0 && setTracks([...tracks, ...data.items]);
-    // return () => {
-    //   setTracks([]);
-    // }
   }, [data]);
   const tabla: any = {};
 
-  useEffect(() => {
-    if (Container.current) {
-      window.onscroll = () => {
-        if (Container.current) {
-          if (
-            window.innerHeight + window.scrollY >=
-            Container.current.scrollHeight
-          ) {
-            if (data?.offset <= data.total) {
-              setcount(count + 50);
-            }
-          }
-          setScroll(window.scrollY);
-        }
-      };
-    }
-  }, [Container, count, data]);
-
   return (
     <>
-      {" "}
-      <NavBarLikedSongs scroll={scroll}>
-        <h1>Liked Songs</h1>
-      </NavBarLikedSongs>
+      <NavBarScroll title="Liked Songs" scroll={scroll} />
       <S.StyledContainer ref={Container}>
         <h1>Liked Songs</h1>
         <Songs

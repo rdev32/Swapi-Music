@@ -10,7 +10,10 @@ export const ArtistCard = styled.div`
   flex-direction: column;
   align-items: center;
   transition: 0.3s;
+  z-index: 1;
   &:hover {
+    z-index: 1;
+
     transition: 0.3s;
     background-color: ${colors.gray};
   }

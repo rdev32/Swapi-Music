@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import orders from '../../assets/orders.json';
 import { spotify } from "../../assets/spotify";
+import NavBarScroll from "../../components/NavBar/components/NavBarScroll/NavBarScroll";
 import Header from "../../components/playlist/components/header";
 import Songs from "../../components/Spotify/LikedSong/Songs";
 import validPid from "../../helpers/pages/artist/ValidPid";
@@ -10,6 +11,7 @@ import GetData from "../../hooks/GetData/GetData";
 import { LikedSongs } from "../../hooks/types/GetLikedSongs";
 import { GetPlaylistId } from "../../hooks/types/GetPlayListId";
 import useActiveOptContext from "../../hooks/useActiveOptContext/useActiveOptContext";
+import useScroll from "../../hooks/useScroll/useScroll";
 import * as S from "../../styles/general/styles";
 
 const Playlist: NextPage = () => {
@@ -28,7 +30,7 @@ const Playlist: NextPage = () => {
   const data = GetData<GetPlaylistId>(validPid(url, pid));
   const [tracks, setTracks] = useState<LikedSongs[]>([]);
 
-
+  const [scroll] = useScroll({ ref: { current: {} }, data: {} });
   useEffect(() => {
     setTracks(data?.tracks?.items);
     return () => {
@@ -111,30 +113,32 @@ const Playlist: NextPage = () => {
   }
   
   return (
-    <S.StyledContainer>
-      <Header data={data} />
-      <select
-        name="tracks"
-        id="tracks"
-        onChange={(event: { target: { value: string } }) => {
-          if (event.target.value === "DEFAULT") {
-            setTracks(data?.tracks?.items);
-          } else{
-
-            setTracks(JSON.parse(event.target.value));
-          }
-        }}
-        defaultValue="DEFAULT"
-      >
-        {orders.map((order) => (
-          <option key={order} value={JSON.stringify(orderData[order])}>
-            {order}
-          </option>
-        ))}
-      </select>
-      <hr />
-      <Songs data={tracks} name={data.name} id={data.id} type={data.type} />
-    </S.StyledContainer>
+    <>
+      <NavBarScroll title={data?.name} scroll={scroll} />
+      <S.StyledContainer>
+        <Header data={data} />
+        <select
+          name="tracks"
+          id="tracks"
+          onChange={(event: { target: { value: string } }) => {
+            if (event.target.value === "DEFAULT") {
+              setTracks(data?.tracks?.items);
+            } else {
+              setTracks(JSON.parse(event.target.value));
+            }
+          }}
+          defaultValue="DEFAULT"
+        >
+          {orders.map((order) => (
+            <option key={order} value={JSON.stringify(orderData[order])}>
+              {order}
+            </option>
+          ))}
+        </select>
+        <hr />
+        <Songs data={tracks} name={data.name} id={data.id} type={data.type} />
+      </S.StyledContainer>
+    </>
   );
 };
 

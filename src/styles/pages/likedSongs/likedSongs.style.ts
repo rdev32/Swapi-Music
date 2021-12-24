@@ -21,5 +21,6 @@ export const NavBarLikedSongs = styled.nav`
       position: fixed;
       z-index: 1;
       color: white;
+      border-radius: 0 0 10px 0;
     `}
 `;

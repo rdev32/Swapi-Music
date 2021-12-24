@@ -9,6 +9,7 @@ import * as SSwiper from "../../styles/components/albums/Swiper/SwiperContainer.
 import * as S from "../../styles/components/User/Following.style";
 import typeSizeCreen from "../Albums/helpers/typeSizeCreen";
 import ArtistCard from "../Artist/Artist";
+
 const UserArtists: FC<{ title?: string }> = ({ title }) => {
   const { items } = GetData<Artists>(`${domain}/top/artists?limit=10&offset=0`);
   const [screenItems, setScreenItems] = useState(7);

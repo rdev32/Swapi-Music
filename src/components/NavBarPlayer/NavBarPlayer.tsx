@@ -1,9 +1,7 @@
 import Link from "next/link";
 import {
   ChangeEvent,
-  Dispatch,
   FC,
-  SetStateAction,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -14,7 +12,6 @@ import {
 import GetData from "../../hooks/GetData/GetData";
 import GetTrack from "../../hooks/types/GetTrack";
 import UserContext from "../../hooks/UserContext/UserContext";
-import { Tracks } from "../../hooks/UserTrackContext/types";
 import * as SNavBarPlayer from "../../styles/components/NavBarPlayer/NavBarPlayer.style";
 import * as SSong from "../../styles/components/Spotify/MainSongs/components/Song/Song.style";
 import { GetIcon, GetPlayerIcons } from "../Icons/Icons";
@@ -24,20 +21,22 @@ import Artists from "./components/Artitsts/Artists";
 import GetSoloUrl from "./helpers/GetSoloUrl";
 import GetUrl from "./helpers/GetUrl";
 import reducer from "./helpers/reducer";
-import { IActions } from "./types/types";
+import { IActions, IPropsPlayer } from "./types/types";
 
-type  IPropsPlayer = {
-   mini_player?: boolean;
-   position?: boolean;
-   track?: Tracks;
-   setTracks?: Dispatch<SetStateAction<Tracks>>
-}
-
-const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = true,track:mini_player_track,setTracks:setTracksMiniPlayer}) => {
+const NavBarPlayer: FC<IPropsPlayer> = ({
+  mini_player,
+  position: cssPosition = true,
+  track: mini_player_track,
+  setTracks: setTracksMiniPlayer,
+}) => {
   const { tracks, setTracks } = useContext(UserContext);
   const [controls, dispatch] = useReducer(reducer, initState);
   const audio = useRef<HTMLAudioElement>(null);
-  const track = GetData<GetTrack>(mini_player ? GetUrl(tracks) || GetSoloUrl(tracks) : GetUrl(mini_player_track) );
+  const track = GetData<GetTrack>(
+    mini_player
+      ? GetUrl(tracks) || GetSoloUrl(tracks)
+      : GetUrl(mini_player_track)
+  );
   const [, setCurrentTime] = useState(0);
   const handlePlay = () => {
     audio.current?.play();
@@ -64,11 +63,12 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         payload: { ...controls, play: true },
       });
       if (mini_player_track && setTracksMiniPlayer) {
-        
         setTracksMiniPlayer({
           ...mini_player_track,
           position:
-            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+            mini_player_track.position >= mini_player_track.tracks.length - 1
+              ? 0
+              : mini_player_track.position + 1,
         });
       }
 
@@ -87,17 +87,19 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       setTracks({
         ...tracks,
         position:
-          tracks.position >= tracks?.tracks?.length - 1 ? 0 : tracks?.position + 1,
+          tracks.position >= tracks?.tracks?.length - 1
+            ? 0
+            : tracks?.position + 1,
       });
       if (mini_player_track && setTracksMiniPlayer) {
-        
         setTracksMiniPlayer({
           ...mini_player_track,
           position:
-            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+            mini_player_track.position >= mini_player_track.tracks.length - 1
+              ? 0
+              : mini_player_track.position + 1,
         });
       }
-
     } else if (controls.aleatory) {
       dispatch({
         type: IActions.ON_Play,
@@ -118,17 +120,19 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       setTracks({
         ...tracks,
         position:
-          tracks.position >= tracks?.tracks?.length - 1 ? 0 : tracks?.position + 1,
+          tracks.position >= tracks?.tracks?.length - 1
+            ? 0
+            : tracks?.position + 1,
       });
       if (mini_player_track && setTracksMiniPlayer) {
-        
         setTracksMiniPlayer({
           ...mini_player_track,
           position:
-            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+            mini_player_track.position >= mini_player_track.tracks.length - 1
+              ? 0
+              : mini_player_track.position + 1,
         });
       }
-
     }
   };
   const handleBack = () => {
@@ -143,11 +147,12 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
           tracks.position <= 0 ? tracks.tracks.length - 1 : tracks.position - 1,
       });
       if (mini_player_track && setTracksMiniPlayer) {
-        
         setTracksMiniPlayer({
           ...mini_player_track,
           position:
-            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+            mini_player_track.position >= mini_player_track.tracks.length - 1
+              ? 0
+              : mini_player_track.position + 1,
         });
       }
     } else {
@@ -158,14 +163,17 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       setTracks({
         ...tracks,
         position:
-          tracks.position <= 0 ? tracks?.tracks?.length - 1 : tracks?.position - 1,
+          tracks.position <= 0
+            ? tracks?.tracks?.length - 1
+            : tracks?.position - 1,
       });
       if (mini_player_track && setTracksMiniPlayer) {
-        
         setTracksMiniPlayer({
           ...mini_player_track,
           position:
-            mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+            mini_player_track.position >= mini_player_track.tracks.length - 1
+              ? 0
+              : mini_player_track.position + 1,
         });
       }
     }
@@ -182,25 +190,25 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
               : Math.floor(Math.random() * tracks?.tracks?.length),
         });
         if (mini_player_track && setTracksMiniPlayer) {
-            
           setTracksMiniPlayer({
             ...mini_player_track,
             position:
-                mini_player_track.position >= mini_player_track.tracks.length - 1
-                  ? 0
-                  : Math.floor(Math.random() * mini_player_track?.tracks?.length),
+              mini_player_track.position >= mini_player_track.tracks.length - 1
+                ? 0
+                : Math.floor(Math.random() * mini_player_track?.tracks?.length),
           });
         }
       } else {
         if (mini_player_track && setTracksMiniPlayer) {
-        
           setTracksMiniPlayer({
             ...mini_player_track,
             position:
-              mini_player_track.position >= mini_player_track.tracks.length - 1 ? 0 : mini_player_track.position + 1,
+              mini_player_track.position >= mini_player_track.tracks.length - 1
+                ? 0
+                : mini_player_track.position + 1,
           });
         }
-  
+
         setTracks({
           ...tracks,
           position:
@@ -279,7 +287,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       if (audio.current) {
         audio.current.ontimeupdate = null;
       }
-    }
+    };
   }, [audio.current]);
 
   useEffect(() => {
@@ -290,7 +298,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       if (audio.current) {
         audio.current.autoplay = false;
       }
-    }
+    };
   }, [controls.aleatory, controls.repeat]);
 
   useEffect(() => {
@@ -310,7 +318,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         type: IActions.ON_Play,
         payload: { ...controls, play: false },
       });
-    }
+    };
   }, [track]);
   useEffect(() => {
     if (audio.current) {
@@ -320,7 +328,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       if (audio.current) {
         audio.current.src = "";
       }
-    }
+    };
   }, [track]);
 
   useEffect(() => {
@@ -333,7 +341,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         audio.current.volume = 1;
         audio.current.loop = false;
       }
-    }
+    };
   }, [controls.volumen, controls.loop]);
 
   useEffect(() => {
@@ -344,7 +352,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
       if (Object.keys(tracks).length > 0) {
         localStorage.setItem("tracks", JSON.stringify(tracks));
       }
-    }
+    };
   }, [tracks]);
 
   return (
@@ -435,7 +443,6 @@ const NavBarPlayer: FC<IPropsPlayer> = ({mini_player, position:cssPosition = tru
         </SSong.SongPlayerIcons>
         <SSong.SongPlayerVolumen cssPosition={cssPosition}>
           {mini_player && (
-
             <Link href="/queue">
               <a>
                 {" "}

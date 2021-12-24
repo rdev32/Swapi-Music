@@ -24,7 +24,7 @@ export const Button = styled.button`
   width: 55px;
   height: 55px;
   border-radius: 10px;
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   display: flex;
   align-items: center;
