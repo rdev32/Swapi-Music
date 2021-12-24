@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useReducer,
   useRef,
   useState
@@ -18,13 +19,14 @@ import { GetIcon, GetPlayerIcons } from "../Icons/Icons";
 import UserImage from "../Spotify/UserImage/UserImage";
 import initState from "./assets/initState.json";
 import Artists from "./components/Artitsts/Artists";
+import FooterBar from "./components/BarStatus/BarStatus";
 import GetSoloUrl from "./helpers/GetSoloUrl";
 import GetUrl from "./helpers/GetUrl";
 import reducer from "./helpers/reducer";
 import { IActions, IPropsPlayer } from "./types/types";
 
 const NavBarPlayer: FC<IPropsPlayer> = ({
-  mini_player,
+  mini_player = true,
   position: cssPosition = true,
   track: mini_player_track,
   setTracks: setTracksMiniPlayer,
@@ -290,6 +292,10 @@ const NavBarPlayer: FC<IPropsPlayer> = ({
     };
   }, [audio.current]);
 
+  // evitar re render
+
+
+
   useEffect(() => {
     if (audio.current) {
       audio.current.autoplay = controls.aleatory || controls.repeat;
@@ -302,33 +308,31 @@ const NavBarPlayer: FC<IPropsPlayer> = ({
   }, [controls.aleatory, controls.repeat]);
 
   useEffect(() => {
-    if (controls.repeat || controls.aleatory) {
-      dispatch({
-        type: IActions.ON_Play,
-        payload: { ...controls, play: true },
-      });
-    } else {
-      dispatch({
-        type: IActions.ON_Play,
-        payload: { ...controls, play: false },
-      });
+
+    if (track) {
+      if (controls.repeat || controls.aleatory) {
+        dispatch({
+          type: IActions.ON_Play,
+          payload: { ...controls, play: true },
+        });
+      } else {
+        dispatch({
+          type: IActions.ON_Play,
+          payload: { ...controls, play: false },
+        });
+      }
+      
     }
-    return () => {
-      dispatch({
-        type: IActions.ON_Play,
-        payload: { ...controls, play: false },
-      });
-    };
+
   }, [track]);
   useEffect(() => {
     if (audio.current) {
-      audio.current.src = track?.preview_url;
-    }
-    return () => {
-      if (audio.current) {
-        audio.current.src = "";
+      if (track) {
+        
+        audio.current.src = track?.preview_url;
       }
-    };
+    }
+
   }, [track]);
 
   useEffect(() => {
@@ -336,12 +340,6 @@ const NavBarPlayer: FC<IPropsPlayer> = ({
       audio.current.volume = controls.volumen / 100;
       audio.current.loop = controls.loop;
     }
-    return () => {
-      if (audio.current) {
-        audio.current.volume = 1;
-        audio.current.loop = false;
-      }
-    };
   }, [controls.volumen, controls.loop]);
 
   useEffect(() => {
@@ -355,6 +353,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({
     };
   }, [tracks]);
 
+ 
   return (
     <>
       {/* {Object.keys(track).length !== 0 && ( */}
@@ -373,6 +372,7 @@ const NavBarPlayer: FC<IPropsPlayer> = ({
             </SSong.SongArtists>
           </SSong.SongDescription>
         </SNavBarPlayer.PlayerInfoSong>
+
         <audio ref={audio} preload="auto" onEnded={handleOnEnded}>
           <source src={track?.preview_url} type="audio/mpeg" />
           <picture>
@@ -413,34 +413,9 @@ const NavBarPlayer: FC<IPropsPlayer> = ({
               />
             </SNavBarPlayer.RepeatButton>
           </header>
-          <SNavBarPlayer.NavbarFooterBar>
-            <p>
-              {Math.round(
-                audio.current?.currentTime ? audio.current.currentTime : 0
-              ) > 9
-                ? `0:${Math.round(
-                  audio.current?.currentTime ? audio.current.currentTime : 0
-                )}`
-                : `0:0${Math.round(
-                  audio.current?.currentTime ? audio.current.currentTime : 0
-                )}`}
-            </p>
-            <input
-              type="range"
-              name="progress"
-              id="progress"
-              value={Math.round(Number(audio.current?.currentTime || 0))}
-              onChange={(event: any) => {
-                if (audio.current) {
-                  audio.current.currentTime = event.target.value;
-                }
-              }}
-              min="0"
-              max="30"
-            />
-            <p>0:30</p>
-          </SNavBarPlayer.NavbarFooterBar>
+          <FooterBar audio={useMemo(() => audio, [audio])} />
         </SSong.SongPlayerIcons>
+
         <SSong.SongPlayerVolumen cssPosition={cssPosition}>
           {mini_player && (
             <Link href="/queue">

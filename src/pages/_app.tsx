@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Global } from "@emotion/react";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import AppHead from "../components/Head/Head";
@@ -39,7 +39,9 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
   }, [router.asPath]);
 
   return (
-    <useActiveOptContext.Provider value={{ active, setActive }}>
+    <useActiveOptContext.Provider
+      value={useMemo(() => ({ active, setActive }), [active, setActive])}
+    >
       <AppHead
         title={`SwapiMusic ${
           Characters(router.asPath.slice(1, count + 1))
