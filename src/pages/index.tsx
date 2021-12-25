@@ -170,7 +170,7 @@ export async function getStaticProps() {
   const { data: { access_token } } = res
 
 
-  access_token && Cookies.set("reserve_token", access_token)
+  // access_token && Cookies.set("reserve_token", access_token)
 
   return {
     props: {access_token}, 

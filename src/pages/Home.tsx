@@ -80,8 +80,6 @@ const Home: NextPage = () => {
     };
   };
 
-  
-
   return (
     <S.StyledContainer>
       <GetSalute />
