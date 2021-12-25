@@ -36,7 +36,7 @@ function GetData<Type>(url: string) {
           }
         }); 
     return () => {
-      setData({...data} as Type);
+      setData({} as Type);
     }
         
   }, [url]);
