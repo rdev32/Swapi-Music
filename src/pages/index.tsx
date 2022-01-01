@@ -2,55 +2,22 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import Login from "../assets/Login.json";
 import { account } from "../assets/spotify";
 import { clientId, clientSecret } from "../assets/swapi";
 import tecnologies from "../assets/tecnologies.json";
 import Buttons from "../components/Buttons/Buttons";
 import { GetIcons } from "../components/Icons/Icons";
-import NavBarPlayer from "../components/NavBarPlayer/NavBarPlayer";
-import Track from "../components/queue/components/Track/Track";
 import UserImage from "../components/Spotify/UserImage/UserImage";
-import GetData from "../hooks/GetData/GetData";
-import { Album } from "../hooks/types/GetAlbum";
-import { Tracks } from "../hooks/UserTrackContext/types";
-import * as SSMain from "../styles/components/Spotify/MainSongs/Main.style";
+
 import * as S from "../styles/pages/auth/login.style";
 import Index from "../types/pages/index.types";
 
 const Index: NextPage<Index> = ({ access_token }) => {
-  const [track, setTracks] = useState<Tracks>({} as Tracks);
-
   useLayoutEffect(() => {
     access_token && Cookies.set("reserve_token", access_token);
   }, [access_token]);
-
-  const data = GetData<Album>(
-    "https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV"
-  );
-
-  const newTracks = data?.tracks?.items?.map((item, index) => {
-    return {
-      id: item.id,
-      position: index,
-      trackname: item.name,
-      artist: item.artists,
-      album: {
-        id: data?.id,
-        name: data?.name,
-        type: data?.type,
-      },
-      duration_ms: item.duration_ms,
-      images: data.images[2]?.url,
-    };
-  });
-  const handlePlayId = (id: number) => {
-    setTracks({
-      tracks: newTracks,
-      position: id,
-    });
-  };
 
   return (
     <S.LoginBody>
