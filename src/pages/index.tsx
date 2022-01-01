@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { NextPage } from "next";
 import Image from "next/image";
-import {  useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Login from "../assets/Login.json";
 import { account } from "../assets/spotify";
 import { clientId, clientSecret } from "../assets/swapi";
@@ -19,12 +19,12 @@ import * as SSMain from "../styles/components/Spotify/MainSongs/Main.style";
 import * as S from "../styles/pages/auth/login.style";
 import Index from "../types/pages/index.types";
 
-const Index: NextPage<Index> = ({access_token}) => {
+const Index: NextPage<Index> = ({ access_token }) => {
   const [track, setTracks] = useState<Tracks>({} as Tracks);
 
   useLayoutEffect(() => {
     access_token && Cookies.set("reserve_token", access_token);
-  }, [access_token])
+  }, [access_token]);
 
   const data = GetData<Album>(
     "https://api.spotify.com/v1/albums/6Pe5LGQgU3mmvuRjFMsACV"
@@ -77,7 +77,7 @@ const Index: NextPage<Index> = ({access_token}) => {
             ))}
           </S.NavBarButtons>
         </div>
-        <S.ListTracks>
+        {/* <S.ListTracks>
           <div>
             {data && <h4>{data?.name} - Album</h4>}
             {newTracks?.map((track, index) => (
@@ -97,7 +97,7 @@ const Index: NextPage<Index> = ({access_token}) => {
             mini_player={false}
             track={track}
           />
-        </S.ListTracks>
+        </S.ListTracks> */}
       </S.Aside>
       <S.Aside>
         <UserImage url="/landing/caset.png" size={563} />
@@ -148,7 +148,7 @@ const Index: NextPage<Index> = ({access_token}) => {
       </S.Aside>
       <S.Footer>
         <a href="https://github.com/Whil117" target="_blank" rel="noreferrer">
-          <Image src={"/landing/me.png"} width={100} height={100} alt="whil"/>
+          <Image src={"/landing/me.png"} width={100} height={100} alt="whil" />
         </a>
       </S.Footer>
     </S.LoginBody>
@@ -156,25 +156,25 @@ const Index: NextPage<Index> = ({access_token}) => {
 };
 
 export async function getStaticProps() {
-
-  const res = await axios(account,{
+  const res = await axios(account, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization:
-          "Basic " +
-          Buffer.from(clientId + ":" + clientSecret).toString("base64"),
+        "Basic " +
+        Buffer.from(clientId + ":" + clientSecret).toString("base64"),
     },
     data: "grant_type=client_credentials",
-  })
-  const { data: { access_token } } = res
-
+  });
+  const {
+    data: { access_token },
+  } = res;
 
   // access_token && Cookies.set("reserve_token", access_token)
 
   return {
-    props: {access_token}, 
-  }
+    props: { access_token },
+  };
 }
 
 export default Index;
